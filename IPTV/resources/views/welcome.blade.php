@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,6 +59,9 @@
                 text-transform: uppercase;
             }
 
+            .m-b-md {
+                margin-bottom: 30px;
+            }
         </style>
     </head>
     <body>
@@ -75,10 +78,9 @@
             @endif
 
             <div class="content">
-                <div class="title">
-                    IPTV 
+                <div class="title m-b-md">
+                    Laravel
                 </div>
-                <div><p>by XMSpro</p></div>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>

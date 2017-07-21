@@ -17,14 +17,4 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function () {
-
-	Route::get('/channels', function () {
-		return view('Admin.channels	');
-	});
-
-});
-
-Route::get('/home', 'HomeController@index');
-
-
+Route::get('/home', 'HomeController@index')->name('home');

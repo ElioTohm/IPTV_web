@@ -1,36 +1,41 @@
 
 /**
  * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
+ * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 
 require('./bootstrap');
 
+window.Vue = require('vue');
+
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * We will create a fresh Vue application instance and attach it to
+ * the body of the page. From here, you may begin adding components to
+ * the application, or feel free to tweak this setup for your needs.
  */
+import VueRouter  from 'vue-router'
+import router     from './router'
+// import Vue        from 'vue'
 
-Vue.component('example', require('./components/Example.vue'));
+Vue.use(VueRouter)
 
-Vue.component(
-    'passport-clients',
-    require('./components/passport/Clients.vue')
-);
+// lazy load components
+const Example = (resolve) => require(['./components/Example.vue'], resolve)
 
-Vue.component(
-    'passport-authorized-clients',
-    require('./components/passport/AuthorizedClients.vue')
-);
+// Create and mount root instance.
+// Make sure to inject the router.
+// Route components will be rendered inside <router-view>.
+new Vue({
 
-Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue')
-);
+  router,
 
-const app = new Vue({
-    el: '#app'
-});
+  components : {
+    Example
+  },
 
+  data : {
+
+  }
+ 
+}).$mount('#app')

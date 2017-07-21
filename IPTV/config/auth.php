@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'passport',
+            'driver' => 'token',
             'provider' => 'users',
         ],
     ],
@@ -70,10 +70,10 @@ return [
             'model' => App\User::class,
         ],
 
-        'clients' => [
-            'driver' => 'eloquent',
-            'table' => App\Client::class,
-        ],
+        // 'users' => [
+        //     'driver' => 'database',
+        //     'table' => 'users',
+        // ],
     ],
 
     /*
