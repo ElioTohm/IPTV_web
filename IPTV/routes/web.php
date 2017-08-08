@@ -1,5 +1,8 @@
 <?php
 
+use App\Events\NotificationEvent;
+use App\Events\ClientSettingsEvent;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +21,26 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth'])->group(function () {
+    
+    /* 
+    * Push notifcation routes
+    */
+    // notification route
+    Route::get('/clientnotification/{id}', function ($id) {
+        if ($id == 0) {
+            // if id 0 broadcast
+            event(new NotificationEvent());
+        }
+    });
+
+    // notify client settigns update route
+    Route::get('/clientsettings/{id}', function ($id) {
+        if ($id == 0) {
+            // if id 0 broadcast
+            event(new ClientSettingsEvent());
+        }
+    });
+
+});

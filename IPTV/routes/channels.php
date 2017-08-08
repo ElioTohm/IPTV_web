@@ -11,6 +11,11 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
+Broadcast::channel('Notification', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('ClientSettings', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});
+
