@@ -16,12 +16,14 @@ window.Vue = require('vue');
  */
 import VueRouter  from 'vue-router'
 import router     from './router'
-// import Vue        from 'vue'
 
 Vue.use(VueRouter)
 
 // lazy load components
-const Example = (resolve) => require(['./components/Example.vue'], resolve)
+// const Example = (resolve) => require(['./components/Example.vue'], resolve)
+const clients = (resolve) => require(['./components/passport/Clients.vue'], resolve)
+const authorizedclients = (resolve) => require(['./components/passport/AuthorizedClients.vue'], resolve)
+const personalaccesstokens = (resolve) => require(['./components/passport/PersonalAccessTokens.vue'], resolve)
 
 // Create and mount root instance.
 // Make sure to inject the router.
@@ -31,7 +33,9 @@ new Vue({
   router,
 
   components : {
-    Example
+    clients,
+    authorizedclients,
+    personalaccesstokens
   },
 
   data : {
