@@ -13,7 +13,5 @@ export default new VueRouter({
     base: __dirname,
 	routes: [
 		{ path: '/', component: Example },
-		{ path: '/foo', component: Foo },
-		{ path: '/bar', component: Bar },
 	]
 });
