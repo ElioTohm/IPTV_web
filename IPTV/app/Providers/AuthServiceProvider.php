@@ -27,5 +27,15 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+
+        Passport::enableImplicitGrant();
+
+        Passport::tokensCan([
+            'iptv' => 'Ip TV access',
+            'vod' => 'VOD Access',
+            'mature-content' => 'mature content access',
+            'shopping' => 'shopping access',
+            'reception' => 'reception access'
+        ]);
     }
 }
