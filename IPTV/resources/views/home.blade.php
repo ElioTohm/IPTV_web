@@ -10,10 +10,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Notification and Client Settings</div>
                 <div class="panel-body">
-                    <router-link></router-link>
-                    <a href='/clientnotification/0'>Notifify all</a>                
+                    test
                 </div>
             </div>
+        </div>
+        <div>
+            <Channels></Channels>
         </div>
     </div>
 </div>

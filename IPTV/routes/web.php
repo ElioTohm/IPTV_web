@@ -22,11 +22,12 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
 Route::middleware(['auth'])->group(function () {
     /* 
      * Channels controller and view
      */
-    Route::get('/channels', 'ChannelController@index');
+    Route::get('/channels', 'ChannelController@getchannels');
     
     /* 
     * Push notifcation routes
