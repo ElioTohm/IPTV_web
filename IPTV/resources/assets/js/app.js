@@ -20,10 +20,11 @@ import router     from './router'
 Vue.use(VueRouter)
 
 // lazy load components
-// const Example = (resolve) => require(['./components/Example.vue'], resolve)
+const Example = (resolve) => require(['./components/Example.vue'], resolve)
 const clients = (resolve) => require(['./components/passport/Clients.vue'], resolve)
 const authorizedclients = (resolve) => require(['./components/passport/AuthorizedClients.vue'], resolve)
 const personalaccesstokens = (resolve) => require(['./components/passport/PersonalAccessTokens.vue'], resolve)
+const channels = (resolve) => require(['./components/channels.vue'], resolve)
 
 // Create and mount root instance.
 // Make sure to inject the router.
@@ -35,7 +36,8 @@ new Vue({
   components : {
     clients,
     authorizedclients,
-    personalaccesstokens
+    personalaccesstokens,
+    channels
   },
 
   data : {

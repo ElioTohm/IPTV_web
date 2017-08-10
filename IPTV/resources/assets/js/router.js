@@ -7,11 +7,13 @@ const Bar = { template: '<div>Bar</div>' }
 
 // lazy load components
 const Example = (resolve) => require(['./components/Example.vue'], resolve)
+const channels = (resolve) => require(['./components/channels.vue'], resolve)
 
 export default new VueRouter({
     mode: 'history',
     base: __dirname,
 	routes: [
 		{ path: '/', component: Example },
+		{ path: '/channels', component: channels},
 	]
 });
