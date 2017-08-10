@@ -27,7 +27,8 @@ Route::middleware(['auth'])->group(function () {
     /* 
      * Channels controller and view
      */
-    Route::get('/channels', 'ChannelController@getchannels');
+    Route::get('/channel', 'ChannelController@getChannels');
+    Route::post('/channel', 'ChannelController@addChannel');
     
     /* 
     * Push notifcation routes
