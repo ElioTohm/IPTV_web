@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-`     <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> 
+    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> 
 </head>
 <body>
     <div id="app">
@@ -37,7 +37,9 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li>
+                            <a href="/channels">Channels</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
