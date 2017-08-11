@@ -673,6 +673,114 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -688,6 +796,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 stream: '',
                 thumbnail: '',
                 description: ''
+            },
+
+            editForm: {
+                errors: [],
+                name: '',
+                stream: '',
+                thumbnail: '',
+                description: ''
             }
         };
     },
@@ -697,16 +813,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * Prepare the component (Vue 2.x).
      */
     mounted: function mounted() {
-        this.getClients();
+        this.getChannel();
     },
 
 
     methods: {
 
         /**
-         * Get all of the OAuth clients for the user.
+         * Get all of the OAuth channels for the user.
          */
-        getClients: function getClients() {
+        getChannel: function getChannel() {
             var _this = this;
 
             axios.get('/channel').then(function (response) {
@@ -724,27 +840,51 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 
         /**
-         * Create a new OAuth client for the user.
+         * Create a new OAuth channel for the user.
          */
         store: function store() {
-            this.persistClient('post', '/channel', this.createForm, '#modal-create-client');
+            this.persistChannel('post', '/channel', this.createForm, '#modal-create-channel');
+        },
+
+
+        /**
+         * Edit the given channel.
+         */
+        edit: function edit(channel) {
+            this.editForm.id = channel.id;
+            this.editForm.name = channel.name;
+            this.editForm.stream = channel.stream;
+            this.editForm.thumbnail = channel.thumbnail;
+            this.editForm.description = channel.description;
+
+            $('#modal-edit-channel').modal('show');
+        },
+
+
+        /**
+         * Update the channel being edited.
+         */
+        update: function update() {
+            this.persistChannel('put', '/channel/' + this.editForm.id, this.editForm, '#modal-edit-channel');
         },
 
 
         /**
         * Persist the channel to storage using the given form.
         */
-        persistClient: function persistClient(method, uri, form, modal) {
+        persistChannel: function persistChannel(method, uri, form, modal) {
             var _this2 = this;
 
             form.errors = [];
 
             axios[method](uri, form).then(function (response) {
-                _this2.getClients();
+                _this2.getChannel();
 
-                form.name = '';
-                form.redirect = '';
                 form.errors = [];
+                form.name = '';
+                form.stream = '';
+                form.thumbnail = '';
+                form.description = '';
 
                 $(modal).modal('hide');
             }).catch(function (error) {
@@ -754,6 +894,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     form.errors = ['Something went wrong. Please try again.'];
                     console.log(error.response.data);
                 }
+            });
+        },
+
+
+        /**
+         * Destroy the given client.
+         */
+        destroy: function destroy(channel) {
+            var _this3 = this;
+
+            axios.delete('/channel/' + channel.id).then(function (response) {
+                _this3.getChannel();
             });
         }
     }
@@ -787,7 +939,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.channels), function(channel) {
     return _c('tr', {
       key: channel.id
-    }, [_c('td', [_vm._v(_vm._s(channel.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.description))])])
+    }, [_c('td', [_vm._v(_vm._s(channel.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.stream))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.description))]), _vm._v(" "), _c('td', {
+      staticStyle: {
+        "vertical-align": "middle"
+      }
+    }, [_c('a', {
+      staticClass: "action-link",
+      on: {
+        "click": function($event) {
+          _vm.edit(channel)
+        }
+      }
+    }, [_vm._v("\n                                Edit\n                            ")])]), _vm._v(" "), _c('td', {
+      staticStyle: {
+        "vertical-align": "middle"
+      }
+    }, [_c('a', {
+      staticClass: "action-link text-danger",
+      on: {
+        "click": function($event) {
+          _vm.destroy(channel)
+        }
+      }
+    }, [_vm._v("\n                                Delete\n                            ")])])])
   }))])])]), _vm._v(" "), _c('div', {
     staticClass: "modal fade",
     attrs: {
@@ -825,7 +999,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "id": "create-client-name",
+      "id": "create-channel-name",
       "type": "text"
     },
     domProps: {
@@ -854,7 +1028,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "id": "create-client-name",
+      "id": "create-channel-name",
       "type": "text"
     },
     domProps: {
@@ -883,7 +1057,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "id": "create-client-name",
+      "id": "create-channel-name",
       "type": "text"
     },
     domProps: {
@@ -942,9 +1116,163 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.store
     }
-  }, [_vm._v("\n                        Create\n                    ")])])])])])])
+  }, [_vm._v("\n                        Create\n                    ")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "modal fade",
+    attrs: {
+      "id": "modal-edit-channel",
+      "tabindex": "-1",
+      "role": "dialog"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog"
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_vm._m(3), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [(_vm.editForm.errors.length > 0) ? _c('div', {
+    staticClass: "alert alert-danger"
+  }, [_vm._m(4), _vm._v(" "), _c('br'), _vm._v(" "), _c('ul', _vm._l((_vm.editForm.errors), function(error) {
+    return _c('li', [_vm._v("\n                                " + _vm._s(error) + "\n                            ")])
+  }))]) : _vm._e(), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal",
+    attrs: {
+      "role": "form"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label"
+  }, [_vm._v("Name")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-7"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editForm.name),
+      expression: "editForm.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "create-channel-name",
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editForm.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editForm.name = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\n                                    Chanel name\n                                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label"
+  }, [_vm._v("Stream")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-7"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editForm.stream),
+      expression: "editForm.stream"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "create-channel-name",
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editForm.stream)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editForm.stream = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\n                                    Stream of the channel\n                                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label"
+  }, [_vm._v("Thumbnail")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-7"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editForm.thumbnail),
+      expression: "editForm.thumbnail"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "create-channel-name",
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editForm.thumbnail)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editForm.thumbnail = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\n                                    thumbnail picture to show in list\n                                ")])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label"
+  }, [_vm._v("Description")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-7"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editForm.description),
+      expression: "editForm.description"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "redirect"
+    },
+    domProps: {
+      "value": (_vm.editForm.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editForm.description = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "help-block"
+  }, [_vm._v("\n                                    Description\n                                ")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Close")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.update
+    }
+  }, [_vm._v("\n                        Save Changes\n                    ")])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("ID")]), _vm._v(" "), _c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("stream")]), _vm._v(" "), _c('th', [_vm._v("thumbnail")]), _vm._v(" "), _c('th', [_vm._v("description")])])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("ID")]), _vm._v(" "), _c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("stream")]), _vm._v(" "), _c('th', [_vm._v("thumbnail")]), _vm._v(" "), _c('th', [_vm._v("description")]), _vm._v(" "), _c('th'), _vm._v(" "), _c('th')])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"
@@ -958,6 +1286,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("×")]), _vm._v(" "), _c('h4', {
     staticClass: "modal-title"
   }, [_vm._v("\n                        Add New Channel\n                    ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('strong', [_vm._v("Whoops!")]), _vm._v(" Something went wrong!")])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal-header"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button ",
+      "data-dismiss": "modal",
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('h4', {
+    staticClass: "modal-title"
+  }, [_vm._v("\n                        Edit Channel\n                    ")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('p', [_c('strong', [_vm._v("Whoops!")]), _vm._v(" Something went wrong!")])
 }]}

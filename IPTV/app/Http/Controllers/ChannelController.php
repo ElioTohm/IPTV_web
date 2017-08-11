@@ -28,4 +28,23 @@ class ChannelController extends Controller
 
         return $channel;
     }
+
+    public function updateChannel ($id, ChannelRequest $request) 
+    {
+        $channel = Channel::find($id);
+
+        $channel->name = $request->input('name');
+        $channel->stream = $request->input('stream');
+        $channel->description = $request->input('description');
+        $channel->thumbnail = $request->input('thumbnail');
+
+        $channel->save();
+    }
+
+    public function deleteChannel ($id) 
+    {
+        $channel = Channel::find($id);
+        $channel->delete();
+
+    }
 }

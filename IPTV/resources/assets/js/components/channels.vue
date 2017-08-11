@@ -31,21 +31,37 @@
                             <th>stream</th>
                             <th>thumbnail</th>
                             <th>description</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="channel in channels" :key="channel.id">
                             <td>{{channel.id}}</td>
                             <td>{{channel.name}}</td>
-                            <td>{{channel.thumbnail}}</td>
+                            <td>{{channel.stream}}</td>
                             <td>{{channel.thumbnail}}</td>
                             <td>{{channel.description}}</td>
+                            <!-- Edit Button -->
+                            <td style="vertical-align: middle;">
+                                <a class="action-link" @click="edit(channel)">
+                                    Edit
+                                </a>
+                            </td>
+
+                            <!-- Delete Button -->
+                            <td style="vertical-align: middle;">
+                                <a class="action-link text-danger" @click="destroy(channel)">
+                                    Delete
+                                </a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <!-- Create Client Modal -->
+
+        <!-- Create Channel Modal -->
         <div class="modal fade" id="modal-add-channel" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -70,14 +86,14 @@
                             </ul>
                         </div>
 
-                        <!-- Create Client Form -->
+                        <!-- Create Channel Form -->
                         <form class="form-horizontal" role="form">
                             <!-- name -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Name</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-client-name" type="text" class="form-control" v-model="createForm.name">
+                                    <input id="create-channel-name" type="text" class="form-control" v-model="createForm.name">
 
                                     <span class="help-block">
                                         Chanel name
@@ -90,7 +106,7 @@
                                 <label class="col-md-3 control-label">Stream</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-client-name" type="text" class="form-control" v-model="createForm.stream">
+                                    <input id="create-channel-name" type="text" class="form-control" v-model="createForm.stream">
 
                                     <span class="help-block">
                                         Stream of the channel
@@ -103,7 +119,7 @@
                                 <label class="col-md-3 control-label">Thumbnail</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-client-name" type="text" class="form-control" v-model="createForm.thumbnail">
+                                    <input id="create-channel-name" type="text" class="form-control" v-model="createForm.thumbnail">
 
                                     <span class="help-block">
                                         thumbnail picture to show in list
@@ -137,6 +153,98 @@
                 </div>
             </div>
         </div>
+
+         <!-- Edit Channel Modal -->
+        <div class="modal fade" id="modal-edit-channel" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button " class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                        <h4 class="modal-title">
+                            Edit Channel
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- Form Errors -->
+                        <div class="alert alert-danger" v-if="editForm.errors.length > 0">
+                            <p><strong>Whoops!</strong> Something went wrong!</p>
+                            <br>
+                            <ul>
+                                <li v-for="error in editForm.errors">
+                                    {{ error }}
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Edit Channel Form -->
+                        <form class="form-horizontal" role="form">
+                            <!-- name -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Name</label>
+
+                                <div class="col-md-7">
+                                    <input id="create-channel-name" type="text" class="form-control" v-model="editForm.name">
+
+                                    <span class="help-block">
+                                        Chanel name
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- stream  -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Stream</label>
+
+                                <div class="col-md-7">
+                                    <input id="create-channel-name" type="text" class="form-control" v-model="editForm.stream">
+
+                                    <span class="help-block">
+                                        Stream of the channel
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- thumbnail  -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Thumbnail</label>
+
+                                <div class="col-md-7">
+                                    <input id="create-channel-name" type="text" class="form-control" v-model="editForm.thumbnail">
+
+                                    <span class="help-block">
+                                        thumbnail picture to show in list
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- description -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Description</label>
+
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" name="redirect" v-model="editForm.description">
+
+                                    <span class="help-block">
+                                        Description
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Modal Actions -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                        <button type="button" class="btn btn-primary" @click="update">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -156,6 +264,14 @@
                     thumbnail: '',
                     description: ''
                 },
+
+                editForm: {
+                    errors: [],
+                    name: '',
+                    stream: '',
+                    thumbnail: '',
+                    description: ''
+                }
             };
         },
 
@@ -163,15 +279,15 @@
          * Prepare the component (Vue 2.x).
          */
         mounted() {
-            this.getClients();
+            this.getChannel();
         },
 
         methods: {
 
             /**
-             * Get all of the OAuth clients for the user.
+             * Get all of the OAuth channels for the user.
              */
-            getClients() {
+            getChannel() {
                 axios.get('/channel')
                         .then(response => {
                             this.channels = response.data;
@@ -186,28 +302,54 @@
             },
 
             /**
-             * Create a new OAuth client for the user.
+             * Create a new OAuth channel for the user.
              */
             store() {
-                this.persistClient(
+                this.persistChannel(
                     'post', '/channel',
-                    this.createForm, '#modal-create-client'
+                    this.createForm, '#modal-create-channel'
+                );
+            },
+
+            /**
+             * Edit the given channel.
+             */
+            edit(channel) {
+                this.editForm.id = channel.id;
+                this.editForm.name = channel.name;
+                this.editForm.stream = channel.stream;
+                this.editForm.thumbnail = channel.thumbnail;
+                this.editForm.description = channel.description;
+
+                $('#modal-edit-channel').modal('show');
+            },
+
+            /**
+             * Update the channel being edited.
+             */
+            update() {
+                this.persistChannel(
+                    'put', '/channel/' + this.editForm.id,
+                    this.editForm, '#modal-edit-channel'
                 );
             },
 
              /**
              * Persist the channel to storage using the given form.
              */
-            persistClient(method, uri, form, modal) {
+            persistChannel(method, uri, form, modal) {
                 form.errors = [];
 
                 axios[method](uri, form)
                     .then(response => {
-                        this.getClients();
+                        this.getChannel();
 
-                        form.name = '';
-                        form.redirect = '';
                         form.errors = [];
+                        form.name = '';
+                        form.stream = '';
+                        form.thumbnail = '';
+                        form.description = '';
+
 
                         $(modal).modal('hide');
                     })
@@ -220,6 +362,16 @@
                         }
                     });
             },
+
+            /**
+             * Destroy the given client.
+             */
+            destroy(channel) {
+                axios.delete('/channel/' + channel.id)
+                        .then(response => {
+                            this.getChannel();
+                        });
+            }
 
         }
     }

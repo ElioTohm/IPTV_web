@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ChannelRequest extends FormRequest
 {
@@ -13,6 +14,7 @@ class ChannelRequest extends FormRequest
      */
     public function authorize()
     {
+        // $this->user()->can('update', $comment);
         return true;
     }
 
@@ -24,7 +26,19 @@ class ChannelRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|max:25',
+            'stream' => 'required',
+            'thumbnail' => 'required|url',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'name is required',
+            'stream.required'  => 'stream is required',
+            'stream.url' => 'stream url is incorrect',
+            'thumbnail.url' => 'thumbnail url is not correct'
         ];
     }
 }
