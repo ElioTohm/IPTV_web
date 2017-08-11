@@ -17,6 +17,14 @@
                         Channels 
                     </span>
 
+                     <form class="form-horizontal" role="form">
+                        <!-- name -->
+                        <div class="form-group">
+                                <input v-model="search.query" placeholder="Search"/>
+                        </div>
+                     </form>
+                    
+
                     <a class="action-link" @click="showAddChannelForm">
                         Add New Channel
                     </a>
@@ -26,7 +34,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>name</th>
                             <th>stream</th>
                             <th>thumbnail</th>
@@ -37,7 +44,6 @@
                     </thead>
                     <tbody>
                         <tr v-for="channel in channels" :key="channel.id">
-                            <td>{{channel.id}}</td>
                             <td>{{channel.name}}</td>
                             <td>{{channel.stream}}</td>
                             <td>{{channel.thumbnail}}</td>
@@ -271,7 +277,12 @@
                     stream: '',
                     thumbnail: '',
                     description: ''
+                },
+
+                search: {
+                    query: '',
                 }
+            
             };
         },
 
@@ -280,6 +291,27 @@
          */
         mounted() {
             this.getChannel();
+        },
+
+        /**
+         * Watcher for search data 
+         */
+        watch: {
+            'search.query': function(){
+                if (this.search.query != '') {
+                    axios.get('/search', {params : {query : this.search.query}})
+                        .then(response => {
+                            console.log(response.data)
+                            this.channels = response.data;
+                        })
+                        .catch(error => {
+                            console.log(error.response.data)
+                    });
+                } else {
+                    this.getChannel();
+                }
+                
+            }
         },
 
         methods: {
@@ -371,8 +403,7 @@
                         .then(response => {
                             this.getChannel();
                         });
-            }
-
+            },
         }
     }
 </script>

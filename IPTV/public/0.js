@@ -45,89 +45,6 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 42:
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-
 /***/ 46:
 /***/ (function(module, exports) {
 
@@ -781,6 +698,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -804,7 +727,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 stream: '',
                 thumbnail: '',
                 description: ''
+            },
+
+            search: {
+                query: ''
             }
+
         };
     },
 
@@ -817,16 +745,36 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
 
+    /**
+     * Watcher for search data 
+     */
+    watch: {
+        'search.query': function searchQuery() {
+            var _this = this;
+
+            if (this.search.query != '') {
+                axios.get('/search', { params: { query: this.search.query } }).then(function (response) {
+                    console.log(response.data);
+                    _this.channels = response.data;
+                }).catch(function (error) {
+                    console.log(error.response.data);
+                });
+            } else {
+                this.getChannel();
+            }
+        }
+    },
+
     methods: {
 
         /**
          * Get all of the OAuth channels for the user.
          */
         getChannel: function getChannel() {
-            var _this = this;
+            var _this2 = this;
 
             axios.get('/channel').then(function (response) {
-                _this.channels = response.data;
+                _this2.channels = response.data;
             });
         },
 
@@ -873,12 +821,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         * Persist the channel to storage using the given form.
         */
         persistChannel: function persistChannel(method, uri, form, modal) {
-            var _this2 = this;
+            var _this3 = this;
 
             form.errors = [];
 
             axios[method](uri, form).then(function (response) {
-                _this2.getChannel();
+                _this3.getChannel();
 
                 form.errors = [];
                 form.name = '';
@@ -902,10 +850,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * Destroy the given client.
          */
         destroy: function destroy(channel) {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.delete('/channel/' + channel.id).then(function (response) {
-                _this3.getChannel();
+                _this4.getChannel();
             });
         }
     }
@@ -927,7 +875,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "justify-content": "space-between",
       "align-items": "center"
     }
-  }, [_c('span', [_vm._v("\n                    Channels \n                ")]), _vm._v(" "), _c('a', {
+  }, [_c('span', [_vm._v("\n                    Channels \n                ")]), _vm._v(" "), _c('form', {
+    staticClass: "form-horizontal",
+    attrs: {
+      "role": "form"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.search.query),
+      expression: "search.query"
+    }],
+    attrs: {
+      "placeholder": "Search"
+    },
+    domProps: {
+      "value": (_vm.search.query)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.search.query = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('a', {
     staticClass: "action-link",
     on: {
       "click": _vm.showAddChannelForm
@@ -939,7 +913,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.channels), function(channel) {
     return _c('tr', {
       key: channel.id
-    }, [_c('td', [_vm._v(_vm._s(channel.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.stream))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.description))]), _vm._v(" "), _c('td', {
+    }, [_c('td', [_vm._v(_vm._s(channel.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.stream))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.description))]), _vm._v(" "), _c('td', {
       staticStyle: {
         "vertical-align": "middle"
       }
@@ -1272,7 +1246,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                        Save Changes\n                    ")])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("ID")]), _vm._v(" "), _c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("stream")]), _vm._v(" "), _c('th', [_vm._v("thumbnail")]), _vm._v(" "), _c('th', [_vm._v("description")]), _vm._v(" "), _c('th'), _vm._v(" "), _c('th')])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("stream")]), _vm._v(" "), _c('th', [_vm._v("thumbnail")]), _vm._v(" "), _c('th', [_vm._v("description")]), _vm._v(" "), _c('th'), _vm._v(" "), _c('th')])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"

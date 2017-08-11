@@ -14,7 +14,6 @@ class ChannelRequest extends FormRequest
      */
     public function authorize()
     {
-        // $this->user()->can('update', $comment);
         return true;
     }
 

@@ -31,7 +31,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/channel', 'ChannelController@addChannel');
     Route::put('/channel/{id}', 'ChannelController@updateChannel');
     Route::delete('/channel/{id}', 'ChannelController@deleteChannel');
-    
+
+    /**
+     * Search route
+     */
+    Route::get('/search', 'SearchController@search');
+
     /* 
     * Push notifcation routes
     */
