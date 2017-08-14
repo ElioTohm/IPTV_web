@@ -15,7 +15,10 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['auth:api']], function()
 {
+    // get channel
     Route::get('/channel' , 'ApiController@getChannel');
+
+    // testing route
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
