@@ -7,13 +7,19 @@ use App\Channel;
 
 class SearchController extends Controller
 {
+
     /**
      * Search Controller 
      */
     public function search(Request $request){
 
-        $channels = Channel::search($request->input('query'))->get();
+        switch ($request->input('model')) {
+            case 'Channel':
+                return Channel::search($request->input('query'))->get();
 
-        return $channels;
+            default:
+                $model = [];
+                return $model;
+        }        
     }
 }

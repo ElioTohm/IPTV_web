@@ -13,7 +13,7 @@ class ChannelController extends Controller
      */
     public function getChannels () 
     {
-        $channels = Channel::all();
+        $channels = Channel::get(['id', 'name', 'stream', 'thumbnail', 'description']);
         return $channels;
     }
 
