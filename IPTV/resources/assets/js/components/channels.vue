@@ -280,7 +280,8 @@
                 },
 
                 search: {
-                    query: '',
+                    errors: [],
+                    query: ''
                 }
             
             };

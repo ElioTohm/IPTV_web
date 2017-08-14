@@ -730,6 +730,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             },
 
             search: {
+                errors: [],
                 query: ''
             }
 
