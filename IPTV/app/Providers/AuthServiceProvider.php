@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -28,7 +29,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Passport::routes();
 
-        Passport::enableImplicitGrant();
+        Passport::tokensExpireIn(Carbon::now()->addDays(30));
+        
+        Passport::refreshTokensExpireIn(Carbon::now()->addYear());
 
         Passport::tokensCan([
             'iptv' => 'Ip TV access',
