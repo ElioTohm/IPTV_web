@@ -17,12 +17,7 @@
                         Channels 
                     </span>
 
-                     <form class="form-horizontal" role="form">
-                        <!-- name -->
-                        <div class="form-group">
-                                <input v-model="search.query" placeholder="Search"/>
-                        </div>
-                     </form>
+                    <input v-model="search.query" placeholder="Search"/>
                     
 
                     <a class="action-link" @click="showAddChannelForm">
@@ -281,6 +276,7 @@
 
                 search: {
                     errors: [],
+                    model: 'Channel',
                     query: ''
                 }
             
@@ -300,7 +296,7 @@
         watch: {
             'search.query': function(){
                 if (this.search.query != '') {
-                    axios.get('/search', {params : {query : this.search.query}})
+                    axios.get('/search', {params : this.search})
                         .then(response => {
                             console.log(response.data)
                             this.channels = response.data;
