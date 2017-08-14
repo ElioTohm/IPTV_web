@@ -5,7 +5,6 @@
     <div class="row">
         <clients></clients>
         <authorizedclients></authorizedclients>
-        <personalaccesstokens></personalaccesstokens>
         <div>
             <div class="panel panel-default">
                 <div class="panel-heading">Notification and Client Settings</div>
