@@ -29,4 +29,9 @@ class Channel extends Model
 
         return $array;
     }
+
+    public function genres () 
+    {
+        return $this->belongsToMany('App\Genre', 'channel_genre', 'channel', 'genre');
+    }
 }

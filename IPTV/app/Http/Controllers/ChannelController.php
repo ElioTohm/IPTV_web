@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Channel;
+use App\Genre;
 use App\Http\Requests\ChannelRequest;
 
 class ChannelController extends Controller
@@ -13,8 +14,12 @@ class ChannelController extends Controller
      */
     public function getChannels () 
     {
-        $channels = Channel::get(['id', 'name', 'stream', 'thumbnail', 'description']);
-        return $channels;
+        $channels = Channel::with('genres')->get(['id', 'name', 'stream', 'thumbnail']);
+        $genres = Genre::get(['id', 'name']);
+        return response()->json([
+            'genres' => $genres,
+            'channels' => $channels
+        ]);
     }
 
     public function addChannel (ChannelRequest $request) 
@@ -22,9 +27,10 @@ class ChannelController extends Controller
         $channel = new Channel();
         $channel->name = $request->input('name');
         $channel->stream = $request->input('stream');
-        $channel->description = $request->input('description');
         $channel->thumbnail = $request->input('thumbnail');
         $channel->save();
+
+        $channel->genres()->sync($request->input('genres'));
 
         return $channel;
     }
@@ -35,10 +41,11 @@ class ChannelController extends Controller
 
         $channel->name = $request->input('name');
         $channel->stream = $request->input('stream');
-        $channel->description = $request->input('description');
         $channel->thumbnail = $request->input('thumbnail');
 
         $channel->save();
+
+        $channel->genres()->sync($request->input('genres'));
     }
 
     public function deleteChannel ($id) 

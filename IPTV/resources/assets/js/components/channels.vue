@@ -32,7 +32,7 @@
                             <th>name</th>
                             <th>stream</th>
                             <th>thumbnail</th>
-                            <th>description</th>
+                            <th>genre</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -42,7 +42,11 @@
                             <td>{{channel.name}}</td>
                             <td>{{channel.stream}}</td>
                             <td>{{channel.thumbnail}}</td>
-                            <td>{{channel.description}}</td>
+                            <td>
+                                <p v-for="genre in channel.genres" :key="genre.id">
+                                    {{ genre.name }}
+                                </p>
+                            </td>
                             <!-- Edit Button -->
                             <td style="vertical-align: middle;">
                                 <a class="action-link" @click="edit(channel)">
@@ -128,15 +132,16 @@
                                 </div>
                             </div>
 
-                            <!-- description -->
+                            <!-- genre -->
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Description</label>
+                                <label class="col-md-3 control-label">Genre</label>
 
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="redirect" v-model="createForm.description">
-
+                                    <select class="form-control" v-model="createForm.genres" multiple>
+                                        <option v-for="genre in genres" :key="genre.id" v-bind:value="genre.id">{{genre.name}}</option>
+                                    </select>
                                     <span class="help-block">
-                                        Description
+                                        Genre
                                     </span>
                                 </div>
                             </div>
@@ -189,7 +194,7 @@
                                     <input id="create-channel-name" type="text" class="form-control" v-model="editForm.name">
 
                                     <span class="help-block">
-                                        Chanel name
+                                        Channel name
                                     </span>
                                 </div>
                             </div>
@@ -220,15 +225,16 @@
                                 </div>
                             </div>
 
-                            <!-- description -->
+                            <!-- genre -->
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Description</label>
+                                <label class="col-md-3 control-label">Genre</label>
 
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" name="redirect" v-model="editForm.description">
-
+                                     <select class="form-control" v-model="editForm.genres" multiple>
+                                        <option v-for="genre in genres" :key="genre.id" v-bind:value="genre.id">{{genre.name}}</option>
+                                    </select>
                                     <span class="help-block">
-                                        Description
+                                        Genre
                                     </span>
                                 </div>
                             </div>
@@ -257,13 +263,15 @@
         data() {
             return {
                 channels: [],
+                
+                genres:[],
 
                 createForm: {
                     errors: [],
                     name: '',
                     stream: '',
                     thumbnail: '',
-                    description: ''
+                    genres : []
                 },
 
                 editForm: {
@@ -271,7 +279,7 @@
                     name: '',
                     stream: '',
                     thumbnail: '',
-                    description: ''
+                    genres : []
                 },
 
                 search: {
@@ -298,12 +306,8 @@
                 if (this.search.query != '') {
                     axios.get('/search', {params : this.search})
                         .then(response => {
-                            console.log(response.data)
                             this.channels = response.data;
-                        })
-                        .catch(error => {
-                            console.log(error.response.data)
-                    });
+                        });
                 } else {
                     this.getChannel();
                 }
@@ -319,7 +323,8 @@
             getChannel() {
                 axios.get('/channel')
                         .then(response => {
-                            this.channels = response.data;
+                            this.channels = response.data.channels;
+                            this.genres = response.data.genres;
                         });
             },
 
@@ -348,7 +353,7 @@
                 this.editForm.name = channel.name;
                 this.editForm.stream = channel.stream;
                 this.editForm.thumbnail = channel.thumbnail;
-                this.editForm.description = channel.description;
+                this.editForm.genre = channel.genre;
 
                 $('#modal-edit-channel').modal('show');
             },
@@ -377,7 +382,7 @@
                         form.name = '';
                         form.stream = '';
                         form.thumbnail = '';
-                        form.description = '';
+                        form.genre = '';
 
 
                         $(modal).modal('hide');
@@ -387,7 +392,6 @@
                             form.errors = _.flatten(_.toArray(error.response.data));
                         } else {
                             form.errors = ['Something went wrong. Please try again.'];
-                            console.log(error.response.data)
                         }
                     });
             },

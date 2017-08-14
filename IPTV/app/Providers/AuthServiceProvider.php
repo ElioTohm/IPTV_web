@@ -26,12 +26,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
+ 
         Passport::routes();
-
-        Passport::tokensExpireIn(Carbon::now()->addDays(30));
-        
-        Passport::refreshTokensExpireIn(Carbon::now()->addYear());
+ 
+        Passport::tokensExpireIn(Carbon::now()->addMonths(1));
+ 
+        Passport::refreshTokensExpireIn(Carbon::now()->addYears(1));
 
         Passport::tokensCan([
             'iptv' => 'Ip TV access',

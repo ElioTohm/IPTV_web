@@ -782,6 +782,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -791,12 +797,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return {
             channels: [],
 
+            genres: [],
+
             createForm: {
                 errors: [],
                 name: '',
                 stream: '',
                 thumbnail: '',
-                description: ''
+                genres: []
             },
 
             editForm: {
@@ -804,7 +812,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 name: '',
                 stream: '',
                 thumbnail: '',
-                description: ''
+                genres: []
             },
 
             search: {
@@ -834,10 +842,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             if (this.search.query != '') {
                 axios.get('/search', { params: this.search }).then(function (response) {
-                    console.log(response.data);
                     _this.channels = response.data;
-                }).catch(function (error) {
-                    console.log(error.response.data);
                 });
             } else {
                 this.getChannel();
@@ -854,7 +859,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var _this2 = this;
 
             axios.get('/channel').then(function (response) {
-                _this2.channels = response.data;
+                _this2.channels = response.data.channels;
+                _this2.genres = response.data.genres;
             });
         },
 
@@ -883,7 +889,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.editForm.name = channel.name;
             this.editForm.stream = channel.stream;
             this.editForm.thumbnail = channel.thumbnail;
-            this.editForm.description = channel.description;
+            this.editForm.genre = channel.genre;
 
             $('#modal-edit-channel').modal('show');
         },
@@ -912,7 +918,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 form.name = '';
                 form.stream = '';
                 form.thumbnail = '';
-                form.description = '';
+                form.genre = '';
 
                 $(modal).modal('hide');
             }).catch(function (error) {
@@ -920,7 +926,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     form.errors = _.flatten(_.toArray(error.response.data));
                 } else {
                     form.errors = ['Something went wrong. Please try again.'];
-                    console.log(error.response.data);
                 }
             });
         },
@@ -986,7 +991,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.channels), function(channel) {
     return _c('tr', {
       key: channel.id
-    }, [_c('td', [_vm._v(_vm._s(channel.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.stream))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.description))]), _vm._v(" "), _c('td', {
+    }, [_c('td', [_vm._v(_vm._s(channel.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.stream))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', _vm._l((channel.genres), function(genre) {
+      return _c('p', {
+        key: genre.id
+      }, [_vm._v("\n                                " + _vm._s(genre.name) + "\n                            ")])
+    })), _vm._v(" "), _c('td', {
       staticStyle: {
         "vertical-align": "middle"
       }
@@ -1122,32 +1131,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-md-3 control-label"
-  }, [_vm._v("Description")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Genre")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-7"
-  }, [_c('input', {
+  }, [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.createForm.description),
-      expression: "createForm.description"
+      value: (_vm.createForm.genres),
+      expression: "createForm.genres"
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
-      "name": "redirect"
-    },
-    domProps: {
-      "value": (_vm.createForm.description)
+      "multiple": ""
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.createForm.description = $event.target.value
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.createForm.genres = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }), _vm._v(" "), _c('span', {
+  }, _vm._l((_vm.genres), function(genre) {
+    return _c('option', {
+      key: genre.id,
+      domProps: {
+        "value": genre.id
+      }
+    }, [_vm._v(_vm._s(genre.name))])
+  })), _vm._v(" "), _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\n                                    Description\n                                ")])])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                    Genre\n                                ")])])])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-default",
@@ -1214,7 +1231,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\n                                    Chanel name\n                                ")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                    Channel name\n                                ")])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-md-3 control-label"
@@ -1276,32 +1293,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-md-3 control-label"
-  }, [_vm._v("Description")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Genre")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-7"
-  }, [_c('input', {
+  }, [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.editForm.description),
-      expression: "editForm.description"
+      value: (_vm.editForm.genres),
+      expression: "editForm.genres"
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text",
-      "name": "redirect"
-    },
-    domProps: {
-      "value": (_vm.editForm.description)
+      "multiple": ""
     },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.editForm.description = $event.target.value
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.editForm.genres = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  }), _vm._v(" "), _c('span', {
+  }, _vm._l((_vm.genres), function(genre) {
+    return _c('option', {
+      key: genre.id,
+      domProps: {
+        "value": genre.id
+      }
+    }, [_vm._v(_vm._s(genre.name))])
+  })), _vm._v(" "), _c('span', {
     staticClass: "help-block"
-  }, [_vm._v("\n                                    Description\n                                ")])])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                    Genre\n                                ")])])])])]), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_c('button', {
     staticClass: "btn btn-default",
@@ -1319,7 +1344,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                        Save Changes\n                    ")])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("stream")]), _vm._v(" "), _c('th', [_vm._v("thumbnail")]), _vm._v(" "), _c('th', [_vm._v("description")]), _vm._v(" "), _c('th'), _vm._v(" "), _c('th')])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("stream")]), _vm._v(" "), _c('th', [_vm._v("thumbnail")]), _vm._v(" "), _c('th', [_vm._v("genre")]), _vm._v(" "), _c('th'), _vm._v(" "), _c('th')])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"
