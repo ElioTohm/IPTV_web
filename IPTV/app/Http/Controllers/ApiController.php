@@ -12,10 +12,6 @@ class ApiController extends Controller
     public function getChannel (Request $request) 
     {
         $channels = Channel::with('genres')->get(['id', 'name', 'stream', 'thumbnail']);
-        $genres = Genre::get(['id', 'name']);
-        return response()->json([
-            'genres' => $genres,
-            'channels' => $channels
-        ]);
+        return $channels;
     }
 }
