@@ -46,7 +46,6 @@ Route::middleware(['auth'])->group(function () {
             // if id 0 broadcast
             event(new NotificationEvent());
         }
-        return redirect('/home');
     });
 
     // notify client settigns update route
@@ -55,7 +54,6 @@ Route::middleware(['auth'])->group(function () {
             // if id 0 broadcast
             event(new ClientSettingsEvent());
         }
-        return redirect('/home');
     });
 
 });
