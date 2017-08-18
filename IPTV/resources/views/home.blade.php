@@ -4,7 +4,6 @@
 <div class="container">
     <div class="row">
         <clients></clients>
-        <personalaccesstokens></personalaccesstokens>
         <authorizedclients></authorizedclients>
         <div>
             <div class="panel panel-default">
