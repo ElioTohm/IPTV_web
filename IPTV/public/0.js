@@ -705,6 +705,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     /*
@@ -718,6 +738,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             createForm: {
                 errors: [],
+                number: 0,
                 name: '',
                 stream: '',
                 thumbnail: '',
@@ -726,6 +747,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             editForm: {
                 errors: [],
+                number: 0,
                 name: '',
                 stream: '',
                 thumbnail: '',
@@ -807,6 +829,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.editForm.stream = channel.stream;
             this.editForm.thumbnail = channel.thumbnail;
             this.editForm.genre = channel.genre;
+            this.editForm.number = channel.number;
 
             $('#modal-edit-channel').modal('show');
         },
@@ -835,7 +858,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 form.name = '';
                 form.stream = '';
                 form.thumbnail = '';
-                form.genre = [];
+                form.genre = '';
+                form.number = '';
 
                 $(modal).modal('hide');
             }).catch(function (error) {
@@ -908,14 +932,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.channels), function(channel) {
     return _c('tr', {
       key: channel.id
-    }, [_c('td', [_vm._v(_vm._s(channel.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.stream))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', _vm._l((channel.genres), function(genre) {
+    }, [_c('td', {
+      staticClass: "col-md-2"
+    }, [_vm._v(_vm._s(channel.number))]), _vm._v(" "), _c('td', {
+      staticClass: "col-md-2"
+    }, [_vm._v(_vm._s(channel.name))]), _vm._v(" "), _c('td', {
+      staticClass: "col-md-3"
+    }, [_vm._v(_vm._s(channel.stream))]), _vm._v(" "), _c('td', {
+      staticClass: "col-md-3"
+    }, [_vm._v(_vm._s(channel.thumbnail))]), _vm._v(" "), _c('td', {
+      staticClass: "col-md-2"
+    }, _vm._l((channel.genres), function(genre) {
       return _c('p', {
         key: genre.id
       }, [_vm._v("\n                                " + _vm._s(genre.name) + "\n                            ")])
     })), _vm._v(" "), _c('td', {
-      staticStyle: {
-        "vertical-align": "middle"
-      }
+      staticClass: "col-md-1"
     }, [_c('a', {
       staticClass: "action-link",
       on: {
@@ -924,9 +956,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("\n                                Edit\n                            ")])]), _vm._v(" "), _c('td', {
-      staticStyle: {
-        "vertical-align": "middle"
-      }
+      staticClass: "col-md-1"
     }, [_c('a', {
       staticClass: "action-link text-danger",
       on: {
@@ -958,6 +988,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "role": "form"
     }
   }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label"
+  }, [_vm._v("Number")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-7"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.createForm.number),
+      expression: "createForm.number"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "create-channel-name",
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.createForm.number)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.createForm.number = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-md-3 control-label"
@@ -1123,6 +1180,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "col-md-3 control-label"
+  }, [_vm._v("Number")]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-7"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editForm.number),
+      expression: "editForm.number"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "create-channel-name",
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editForm.number)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editForm.number = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "col-md-3 control-label"
   }, [_vm._v("Name")]), _vm._v(" "), _c('div', {
     staticClass: "col-md-7"
   }, [_c('input', {
@@ -1261,7 +1345,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                        Save Changes\n                    ")])])])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("name")]), _vm._v(" "), _c('th', [_vm._v("stream")]), _vm._v(" "), _c('th', [_vm._v("thumbnail")]), _vm._v(" "), _c('th', [_vm._v("genre")]), _vm._v(" "), _c('th'), _vm._v(" "), _c('th')])])
+  return _c('thead', [_c('tr', [_c('th', {
+    staticClass: "col-md-1"
+  }, [_vm._v("number")]), _vm._v(" "), _c('th', {
+    staticClass: "col-md-3"
+  }, [_vm._v("name")]), _vm._v(" "), _c('th', {
+    staticClass: "col-md-2"
+  }, [_vm._v("stream")]), _vm._v(" "), _c('th', {
+    staticClass: "col-md-2"
+  }, [_vm._v("thumbnail")]), _vm._v(" "), _c('th', {
+    staticClass: "col-md-2"
+  }, [_vm._v("genre")]), _vm._v(" "), _c('th', {
+    staticClass: "col-md-1"
+  }), _vm._v(" "), _c('th', {
+    staticClass: "col-md-1"
+  })])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"

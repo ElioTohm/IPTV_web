@@ -12,4 +12,5 @@ class Genre extends Model
      * @var string
      */
      protected $table = 'genres';
+     protected $hidden = array('pivot', 'created_at', 'updated_at');
 }

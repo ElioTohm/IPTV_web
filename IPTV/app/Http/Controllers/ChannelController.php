@@ -14,7 +14,7 @@ class ChannelController extends Controller
      */
     public function getChannels () 
     {
-        $channels = Channel::with('genres')->get(['id', 'name', 'stream', 'thumbnail']);
+        $channels = Channel::with('genres')->get(['id', 'number', 'name', 'stream', 'thumbnail']);
         $genres = Genre::get(['id', 'name']);
         return response()->json([
             'genres' => $genres,
@@ -25,6 +25,7 @@ class ChannelController extends Controller
     public function addChannel (ChannelRequest $request) 
     {
         $channel = new Channel();
+        $channel->number = $request->input('number');
         $channel->name = $request->input('name');
         $channel->stream = $request->input('stream');
         $channel->thumbnail = $request->input('thumbnail');
@@ -38,7 +39,8 @@ class ChannelController extends Controller
     public function updateChannel ($id, ChannelRequest $request) 
     {
         $channel = Channel::find($id);
-
+        
+        $channel->number = $request->input('number');
         $channel->name = $request->input('name');
         $channel->stream = $request->input('stream');
         $channel->thumbnail = $request->input('thumbnail');

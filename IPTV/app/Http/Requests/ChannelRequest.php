@@ -25,6 +25,7 @@ class ChannelRequest extends FormRequest
     public function rules()
     {
         return [
+            'number' => 'required',
             'name' => 'required|max:25',
             'stream' => 'required',
             'thumbnail' => 'required|url',
@@ -34,6 +35,7 @@ class ChannelRequest extends FormRequest
     public function messages()
     {
         return [
+            'number.required' => 'number is required',
             'name.required' => 'name is required',
             'stream.required'  => 'stream is required',
             'stream.url' => 'stream url is incorrect',

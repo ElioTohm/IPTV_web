@@ -27,17 +27,21 @@ class testDatabaseSeeder extends Seeder
         
         DB::table('channels')->insert([
             ['name' => 'LBCI',
-            'stream' => 'udp://@224.1.1.30:1234',
-            'thumbnail' => 'http://localhost/test.png'],
+                'number' => 1,
+                'stream' => 'udp://@224.1.3.32:1234',
+                'thumbnail' => 'http://localhost/test.png'],
             ['name' => 'MTV',
-            'stream' => 'udp://@224.1.1.28:1234',
-            'thumbnail' => 'http://localhost/test.png'],
+                'number' => 2,
+                'stream' => 'udp://@224.1.1.28:1234',
+                'thumbnail' => 'http://localhost/test.png'],
             ['name' => 'El Jadid',
-            'stream' => 'udp://@224.1.1.27:1234',
-            'thumbnail' => 'http://localhost/test.png'],
-            ['name' => 'Manar',
-            'stream' => 'udp://@224.1.1.26:1234',
-            'thumbnail' => 'http://localhost/test.png']
+                'number' => 3,
+                'stream' => 'udp://@224.1.1.27:1234',
+                'thumbnail' => 'http://localhost/test.png'],
+            ['name' => 'OTV',
+                'number' => 4,
+                'stream' => 'udp://@224.1.1.26:1234',
+                'thumbnail' => 'http://localhost/test.png']
         ]);
     }
 }

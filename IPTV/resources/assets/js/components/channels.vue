@@ -29,33 +29,35 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>name</th>
-                            <th>stream</th>
-                            <th>thumbnail</th>
-                            <th>genre</th>
-                            <th></th>
-                            <th></th>
+                            <th class="col-md-1">number</th>
+                            <th class="col-md-3">name</th>
+                            <th class="col-md-2">stream</th>
+                            <th class="col-md-2">thumbnail</th>
+                            <th class="col-md-2">genre</th>
+                            <th class="col-md-1"></th>
+                            <th class="col-md-1"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="channel in channels" :key="channel.id">
-                            <td>{{channel.name}}</td>
-                            <td>{{channel.stream}}</td>
-                            <td>{{channel.thumbnail}}</td>
-                            <td>
+                            <td class="col-md-2">{{channel.number}}</td>
+                            <td class="col-md-2">{{channel.name}}</td>
+                            <td class="col-md-3">{{channel.stream}}</td>
+                            <td class="col-md-3">{{channel.thumbnail}}</td>
+                            <td class="col-md-2">
                                 <p v-for="genre in channel.genres" :key="genre.id">
                                     {{ genre.name }}
                                 </p>
                             </td>
                             <!-- Edit Button -->
-                            <td style="vertical-align: middle;">
+                            <td  class="col-md-1">
                                 <a class="action-link" @click="edit(channel)">
                                     Edit
                                 </a>
                             </td>
 
                             <!-- Delete Button -->
-                            <td style="vertical-align: middle;">
+                            <td  class="col-md-1">
                                 <a class="action-link text-danger" @click="destroy(channel)">
                                     Delete
                                 </a>
@@ -93,6 +95,15 @@
 
                         <!-- Create Channel Form -->
                         <form class="form-horizontal" role="form">
+                            <!-- number -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Number</label>
+
+                                <div class="col-md-7">
+                                    <input id="create-channel-name" type="text" class="form-control" v-model="createForm.number">
+                                </div>
+                            </div>
+
                             <!-- name -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Name</label>
@@ -186,6 +197,15 @@
 
                         <!-- Edit Channel Form -->
                         <form class="form-horizontal" role="form">
+                            <!-- number -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Number</label>
+
+                                <div class="col-md-7">
+                                    <input id="create-channel-name" type="text" class="form-control" v-model="editForm.number">
+                                </div>
+                            </div>
+
                             <!-- name -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Name</label>
@@ -268,6 +288,7 @@
 
                 createForm: {
                     errors: [],
+                    number: 0,
                     name: '',
                     stream: '',
                     thumbnail: '',
@@ -276,6 +297,7 @@
 
                 editForm: {
                     errors: [],
+                    number: 0,
                     name: '',
                     stream: '',
                     thumbnail: '',
@@ -354,6 +376,7 @@
                 this.editForm.stream = channel.stream;
                 this.editForm.thumbnail = channel.thumbnail;
                 this.editForm.genre = channel.genre;
+                this.editForm.number = channel.number;
 
                 $('#modal-edit-channel').modal('show');
             },
@@ -383,6 +406,7 @@
                         form.stream = '';
                         form.thumbnail = '';
                         form.genre = '';
+                        form.number = '';
 
 
                         $(modal).modal('hide');
