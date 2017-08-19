@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['auth:api']], function()
+Route::group(['middleware' => ['auth_client']], function()
 {
 
     // testing route
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        return 'tse';
     });
 
 });
