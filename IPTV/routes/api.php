@@ -21,7 +21,8 @@ Route::group(['middleware' => ['auth_client']], function()
         return 'tse';
     });
 
+    // get channel
+    Route::get('/channel' , 'ApiController@getChannel');
+
 });
 
-// get channel
-Route::get('/channel' , 'ApiController@getChannel');
