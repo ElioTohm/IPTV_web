@@ -32,6 +32,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/channel/{id}', 'ChannelController@updateChannel');
     Route::delete('/channel/{id}', 'ChannelController@deleteChannel');
 
+    /*
+     * Devices Controller 
+     */
+    Route::get('/device', 'DeviceController@getDevices');
+
     /**
      * Search route
      */

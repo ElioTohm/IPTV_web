@@ -16,6 +16,9 @@
         <div>
             <Channels></Channels>
         </div>
+        <div>
+            <devices></devices>
+        </div>
     </div>
 </div>
 @endsection

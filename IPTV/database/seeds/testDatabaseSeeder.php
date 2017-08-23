@@ -48,7 +48,7 @@ class testDatabaseSeeder extends Seeder
 
         DB::table('devices')->insert([
             'id' => 1,
-            'room_id' => 1
+            'room' => 1
         ]);
 
         DB::table('clients')->insert([
