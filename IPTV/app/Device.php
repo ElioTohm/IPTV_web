@@ -29,4 +29,12 @@ class Device extends Model
 
         return $array;
     }
+
+    /**
+     * Get the device associated with the oauth.
+     */
+     public function oAuthclient()
+     {
+         return $this->hasOne('App\oAuthClient', 'id');
+     }
 }

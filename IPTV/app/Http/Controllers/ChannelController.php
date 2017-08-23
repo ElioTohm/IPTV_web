@@ -16,6 +16,7 @@ class ChannelController extends Controller
     {
         $channels = Channel::with('genres')->get(['id', 'number', 'name', 'stream', 'thumbnail']);
         $genres = Genre::get(['id', 'name']);
+
         return response()->json([
             'genres' => $genres,
             'channels' => $channels

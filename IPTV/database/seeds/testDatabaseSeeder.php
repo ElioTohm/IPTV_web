@@ -46,11 +46,6 @@ class testDatabaseSeeder extends Seeder
                 'thumbnail' => 'http://localhost/test.png']
         ]);
 
-        DB::table('devices')->insert([
-            'id' => 1,
-            'room' => 1
-        ]);
-
         DB::table('clients')->insert([
             'name' => 'client1',
             'email' => 'client@email.com',

@@ -36,6 +36,10 @@ Route::middleware(['auth'])->group(function () {
      * Devices Controller 
      */
     Route::get('/device', 'DeviceController@getDevices');
+    Route::post('/device', 'DeviceController@addDevice');
+    Route::put('/device/{id}', 'DeviceController@updateDevice');
+    Route::delete('/device/{id}', 'DeviceController@deleteDevice');
+
 
     /**
      * Search route
