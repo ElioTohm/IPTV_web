@@ -14,8 +14,10 @@ class testDatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'test',
             'email' => 'test@test.com',
+            'admin' => true,
             'password' => bcrypt('123123'),
         ]);
+        
         DB::table('genres')->insert([
             ['name' => 'Action'],
             ['name' => 'Drama'],
@@ -42,6 +44,19 @@ class testDatabaseSeeder extends Seeder
                 'number' => 4,
                 'stream' => 'udp://@224.1.1.26:1234',
                 'thumbnail' => 'http://localhost/test.png']
+        ]);
+
+        DB::table('devices')->insert([
+            'id' => 1,
+            'room_id' => 1
+        ]);
+
+        DB::table('clients')->insert([
+            'name' => 'client1',
+            'email' => 'client@email.com',
+            'room' => 1,
+            'credits' => 120,
+            'debits' => 230,
         ]);
     }
 }
