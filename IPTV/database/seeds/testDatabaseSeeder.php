@@ -12,12 +12,31 @@ class testDatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'test',
-            'email' => 'test@test.com',
-            'admin' => true,
-            'password' => bcrypt('123123'),
+            ['name' => 'admin',
+                'email' => 'admin@admin.com',
+                'admin' => true,
+                'password' => bcrypt('123123')],
+            ['name' => 'test',
+                'email' => 'test@test.com',
+                'admin' => true,
+                'password' => bcrypt('123123')],
+        ]);
+
+        DB::table('roles')->insert([
+            ['name' => 'SuperAdmin'],
+            ['name' => 'Admin'],
+            ['name' => 'Monitor'],
         ]);
         
+        DB::table('user_roles')->insert([
+            ['user' => 1,
+                'role' => 1],
+            ['user' => 1,
+                'role' => 2],
+            ['user' => 2,
+                'role' => 2],
+        ]);
+
         DB::table('genres')->insert([
             ['name' => 'Action'],
             ['name' => 'Drama'],
