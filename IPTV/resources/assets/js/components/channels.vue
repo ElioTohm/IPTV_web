@@ -1,13 +1,3 @@
-<style scoped>
-    .action-link {
-        cursor: pointer;
-    }
-
-    .m-b-none {
-        margin-bottom: 0;
-    }
-</style>
-
 <template>
     <div>
         <div class="panel panel-default">
@@ -110,10 +100,6 @@
 
                                 <div class="col-md-7">
                                     <input id="create-channel-name" type="text" class="form-control" v-model="createForm.name">
-
-                                    <span class="help-block">
-                                        Chanel name
-                                    </span>
                                 </div>
                             </div>
 
@@ -123,10 +109,6 @@
 
                                 <div class="col-md-7">
                                     <input id="create-channel-name" type="text" class="form-control" v-model="createForm.stream">
-
-                                    <span class="help-block">
-                                        Stream of the channel
-                                    </span>
                                 </div>
                             </div>
 
@@ -136,10 +118,6 @@
 
                                 <div class="col-md-7">
                                     <input id="create-channel-name" type="text" class="form-control" v-model="createForm.thumbnail">
-
-                                    <span class="help-block">
-                                        thumbnail picture to show in list
-                                    </span>
                                 </div>
                             </div>
 
@@ -151,9 +129,6 @@
                                     <select class="form-control" v-model="createForm.genres" multiple>
                                         <option v-for="genre in genres" :key="genre.id" v-bind:value="genre.id">{{genre.name}}</option>
                                     </select>
-                                    <span class="help-block">
-                                        Genre
-                                    </span>
                                 </div>
                             </div>
                         </form>
@@ -212,10 +187,6 @@
 
                                 <div class="col-md-7">
                                     <input id="create-channel-name" type="text" class="form-control" v-model="editForm.name">
-
-                                    <span class="help-block">
-                                        Channel name
-                                    </span>
                                 </div>
                             </div>
 
@@ -225,10 +196,6 @@
 
                                 <div class="col-md-7">
                                     <input id="create-channel-name" type="text" class="form-control" v-model="editForm.stream">
-
-                                    <span class="help-block">
-                                        Stream of the channel
-                                    </span>
                                 </div>
                             </div>
 
@@ -238,10 +205,6 @@
 
                                 <div class="col-md-7">
                                     <input id="create-channel-name" type="text" class="form-control" v-model="editForm.thumbnail">
-
-                                    <span class="help-block">
-                                        thumbnail picture to show in list
-                                    </span>
                                 </div>
                             </div>
 
@@ -253,9 +216,6 @@
                                      <select class="form-control" v-model="editForm.genres" multiple>
                                         <option v-for="genre in genres" :key="genre.id" v-bind:value="genre.id">{{genre.name}}</option>
                                     </select>
-                                    <span class="help-block">
-                                        Genre
-                                    </span>
                                 </div>
                             </div>
                         </form>

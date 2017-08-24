@@ -1,13 +1,3 @@
-<style scoped>
-    .action-link {
-        cursor: pointer;
-    }
-
-    .m-b-none {
-        margin-bottom: 0;
-    }
-</style>
-
 <template>
     <div>
         <div class="panel panel-default">
@@ -17,8 +7,7 @@
                         Devices 
                     </span>
 
-                    <input v-model="search.query" placeholder="Search"/>
-                    
+                    <input v-model="search.query" placeholder="Search"/>           
 
                     <a class="action-link" @click="showAddDeviceForm">
                         Add New Device
@@ -29,8 +18,9 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th class="col-md-1">id</th>
-                            <th class="col-md-3">room</th>
+                            <th class="col-md-1">ID</th>
+                            <th class="col-md-3">Room number</th>
+                            <th class="col-md-3">Secret</th>
                             <th class="col-md-1"></th>
                             <th class="col-md-1"></th>
                         </tr>
@@ -92,10 +82,6 @@
 
                                 <div class="col-md-7">
                                     <input id="create-device-room" type="text" class="form-control" v-model="createForm.room">
-
-                                    <span class="help-block">
-                                        Chanel room
-                                    </span>
                                 </div>
                             </div>
                         </form>
