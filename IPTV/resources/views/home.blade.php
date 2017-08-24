@@ -3,8 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <clients></clients>
-        <authorizedclients></authorizedclients>
+        
+        @if (Auth::user()->role == 1)
+            <clients></clients>
+            <authorizedclients></authorizedclients>    
+        @endif
+
         <div>
             <div class="panel panel-default">
                 <div class="panel-heading">Notification and Client Settings</div>
