@@ -50,7 +50,7 @@ window.Echo = new Echo({
     host: window.location.hostname + ':6001'
 });
 
-window.Echo.channel('Notification')
+window.Echo.channel('Notification_To_1')
     .listen('NotificationEvent', (e) => {
         console.log(e);
     });

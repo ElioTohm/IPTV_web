@@ -51,10 +51,8 @@ Route::middleware(['auth'])->group(function () {
     */
     // notification route
     Route::get('/clientnotification/{id}', function ($id) {
-        if ($id == 0) {
-            // if id 0 broadcast
-            event(new NotificationEvent());
-        }
+        // if id 0 broadcast
+        event(new NotificationEvent($id));
     });
 
     // notify client settigns update route

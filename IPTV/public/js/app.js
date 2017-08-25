@@ -3500,7 +3500,7 @@ window.Echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
     host: window.location.hostname + ':6001'
 });
 
-window.Echo.channel('Notification').listen('NotificationEvent', function (e) {
+window.Echo.channel('Notification_To_1').listen('NotificationEvent', function (e) {
     console.log(e);
 });
 
