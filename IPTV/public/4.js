@@ -370,6 +370,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -379,21 +380,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             createForm: {
                 errors: [],
                 name: name,
-                email: email,
-                room: room,
-                welcome_message: welcome_message,
-                credit: credit,
-                debit: debit
+                email: '',
+                room: '',
+                welcome_message: '',
+                credit: 0,
+                debit: 0
             },
 
             editForm: {
                 errors: [],
-                name: name,
-                email: email,
-                room: room,
-                welcome_message: welcome_message,
-                credit: credit,
-                debit: debit
+                name: '',
+                email: '',
+                room: '',
+                welcome_message: '',
+                credit: 0,
+                debit: 0
             },
 
             search: {
@@ -413,7 +414,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             axios.get('/client').then(function (response) {
                 _this.clients = response.data.clients;
-                _this.welcome_message = response.data.welcome_message;
             }).catch(function (error) {
                 console.log(error.response.data);
             });
@@ -440,7 +440,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * Edit the given client.
          */
         edit: function edit(client) {
+            this.editForm.id = client.id;
+            this.editForm.name = client.name;
+            this.editForm.email = client.email;
             this.editForm.room = client.room;
+            this.editForm.welcome_message = client.welcome_message;
+            this.editForm.credit = client.credit;
+            this.editForm.debit = client.debit;
 
             $('#modal-edit-client').modal('show');
         },
@@ -470,7 +476,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
                     form.errors = [];
                     form.name = '';
-                    form.email = '';
+                    // form.email = '';
                     form.room = '';
                     form.welcome_message = '';
                     form.credits = '';
@@ -546,10 +552,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel-body"
   }, [_c('table', {
     staticClass: "table table-striped"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.clients), function(client, index) {
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.clients), function(client) {
     return _c('tr', {
       key: client.id
-    }, [_c('td', [_vm._v(_vm._s(client.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.welcome_message))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.Credit))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.Debit))]), _vm._v(" "), _c('td', {
+    }, [_c('td', [_vm._v(_vm._s(client.name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.room))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.welcome_message))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.credit))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.debit))]), _vm._v(" "), _c('td', {
       staticClass: "col-md-1"
     }, [_c('a', {
       staticClass: "action-link",

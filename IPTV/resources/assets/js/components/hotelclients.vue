@@ -29,12 +29,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(client, index) in clients" :key="client.id">
+                        <tr v-for="client in clients" :key="client.id">
                             <td>{{client.name}}</td>
                             <td>{{client.email}}</td>
+                            <td>{{client.room}}</td>
                             <td>{{client.welcome_message}}</td>
-                            <td>{{client.Credit}}</td>
-                            <td>{{client.Debit}}</td>
+                            <td>{{client.credit}}</td>
+                            <td>{{client.debit}}</td>
                             <!-- Edit Button --> 
                             <td  class="col-md-1">
                                 <a class="action-link" @click="edit(client)">
@@ -231,21 +232,21 @@ export default {
             createForm: {
                     errors: [],
                     name,
-                    email,
-                    room,
-                    welcome_message,
-                    credit,
-                    debit,
+                    email : '',
+                    room : '',
+                    welcome_message : '',
+                    credit : 0,
+                    debit : 0, 
                 },
 
             editForm: {
                 errors: [],
-                name,
-                email,
-                room,
-                welcome_message,
-                credit,
-                debit,
+                name : '',
+                email : '',
+                room : '',
+                welcome_message : '',
+                credit : 0,
+                debit : 0,
             },
 
             search: {
@@ -263,7 +264,6 @@ export default {
             axios.get('/client')
                 .then(response => {
                         this.clients = response.data.clients;
-                        this.welcome_message = response.data.welcome_message;
                 })
                 .catch(error => {
                     console.log(error.response.data)
@@ -291,7 +291,13 @@ export default {
          * Edit the given client.
          */
         edit(client) {
+            this.editForm.id = client.id;
+            this.editForm.name = client.name;
+            this.editForm.email = client.email
             this.editForm.room = client.room;
+            this.editForm.welcome_message = client.welcome_message;
+            this.editForm.credit = client.credit;
+            this.editForm.debit = client.debit;
 
             $('#modal-edit-client').modal('show');
         },
@@ -321,7 +327,7 @@ export default {
 
                         form.errors = [];
                         form.name = '';
-                        form.email = '';
+                        // form.email = '';
                         form.room = '';
                         form.welcome_message = '';
                         form.credits = '';

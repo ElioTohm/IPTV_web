@@ -19,8 +19,8 @@ class CreateClientTable extends Migration
             $table->string('email');
             $table->integer('room');
             $table->string('welcome_message')->nullable();
-            $table->bigInteger('credits');
-            $table->bigInteger('debits');
+            $table->bigInteger('credit');
+            $table->bigInteger('debit');
             $table->timestamps();
         });
     }

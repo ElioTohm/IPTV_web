@@ -61,8 +61,8 @@ class testDatabaseSeeder extends Seeder
             'name' => 'client1',
             'email' => 'client@email.com',
             'room' => 1,
-            'credits' => 120,
-            'debits' => 230,
+            'credit' => 120,
+            'debit' => 230,
         ]);
     }
 }
