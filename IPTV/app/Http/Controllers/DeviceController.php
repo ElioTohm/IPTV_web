@@ -9,7 +9,8 @@ use App\Http\Requests\DeviceRequest;
 
 class DeviceController extends Controller
 {
-    public function getDevices () {
+    public function getDevices () 
+    {
         // fetch all devices with id and room columns
         $devices = Device::with('oAuthclient')->get(['id', 'room']);
 

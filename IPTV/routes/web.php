@@ -40,6 +40,14 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/device/{id}', 'DeviceController@updateDevice');
     Route::delete('/device/{id}', 'DeviceController@deleteDevice');
 
+    /*
+     * Client Controller 
+     */
+     Route::get('/client', 'ClientController@getClients');
+     Route::post('/client', 'ClientController@addClient');
+     Route::put('/client/{id}', 'ClientController@updateClient');
+     Route::delete('/client/{id}', 'ClientController@deleteClient');
+
 
     /**
      * Search route

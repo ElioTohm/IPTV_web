@@ -23,6 +23,9 @@
         <div>
             <devices></devices>
         </div>
+        <div>
+            <hotelclients></hotelclients>
+        </div>
     </div>
 </div>
 @endsection
