@@ -62,7 +62,6 @@ class testDatabaseSeeder extends Seeder
             'email' => 'client@email.com',
             'room' => 1,
             'credit' => 120,
-            'debit' => 230,
         ]);
     }
 }

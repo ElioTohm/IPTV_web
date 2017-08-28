@@ -20,7 +20,7 @@ class CreateClientTable extends Migration
             $table->integer('room');
             $table->string('welcome_message')->nullable();
             $table->bigInteger('credit');
-            $table->bigInteger('debit');
+            $table->bigInteger('debit')->default(0);
             $table->timestamps();
         });
     }

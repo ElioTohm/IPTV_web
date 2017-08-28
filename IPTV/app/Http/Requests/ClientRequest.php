@@ -28,7 +28,6 @@ class ClientRequest extends FormRequest
              'email' => 'required',
              'room' => 'required',
              'credit' => 'required',
-             'debit' => 'required',
          ];
      }
  
@@ -36,10 +35,9 @@ class ClientRequest extends FormRequest
      {
          return [
              'name.required' => 'Name is required',
-             'email.required' => 'Name is required',
-             'room.required' => 'Name is required',
-             'credit.required' => 'Name is required',
-             'debit.required' => 'Name is required',
+             'email.required' => 'Email is required',
+             'room.required' => 'Room is required',
+             'credit.required' => 'Credit is required',
          ];
      }
 }
