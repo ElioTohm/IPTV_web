@@ -208,6 +208,7 @@ export default {
          * Edit the given device.
          */
         edit(device) {
+            this.editForm.id = device.id;
             this.editForm.room = device.room;
 
             $('#modal-edit-device').modal('show');

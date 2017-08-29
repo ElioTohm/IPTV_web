@@ -24,5 +24,7 @@ Route::group(['middleware' => ['auth_client']], function()
     // get channel
     Route::get('/channel' , 'ApiController@getChannel');
 
-});
+    // get client info
+    Route::get('/clientInfo' , 'ApiController@getClientInfo');
 
+});

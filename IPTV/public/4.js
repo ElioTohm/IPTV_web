@@ -379,7 +379,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             createForm: {
                 errors: [],
-                name: name,
+                name: '',
                 email: '',
                 room: '',
                 welcome_message: '',

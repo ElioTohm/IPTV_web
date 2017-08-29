@@ -10,7 +10,7 @@ class Client extends Model
     use Searchable;
     
     public $asYouType = true;
-
+    
     /**
      * The table associated with the model.
      *
