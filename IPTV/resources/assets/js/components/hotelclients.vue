@@ -231,7 +231,7 @@ export default {
 
             createForm: {
                     errors: [],
-                    name,
+                    name: '',
                     email : '',
                     room : '',
                     welcome_message : '',
