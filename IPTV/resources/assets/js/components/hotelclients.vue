@@ -7,8 +7,6 @@
                         Clients 
                     </span>
 
-                    <!-- <input v-model="search.query" placeholder="Search"/>            -->
-
                     <a class="action-link" @click="showAddClientForm">
                         Add New Client
                     </a>
