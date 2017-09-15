@@ -27,8 +27,8 @@ class ClientController extends Controller
         $client->email = $request->input('email');
         $client->room = $request->input('room');
         $client->welcome_message = $request->input('welcome_message');
-        $client->credits = $request->input('credit');
-        $client->debits = $request->input('debit');
+        $client->credit = $request->input('credit');
+        $client->debit = $request->input('debit');
         $client->save();
 
         return $client;

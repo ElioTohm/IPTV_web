@@ -369,8 +369,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -476,11 +474,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
                     form.errors = [];
                     form.name = '';
-                    // form.email = '';
+                    form.email = '';
                     form.room = '';
                     form.welcome_message = '';
-                    form.credits = '';
-                    form.debits = '';
+                    form.credit = '';
+                    form.debit = '';
 
                     $(modal).modal('hide');
                 }
@@ -524,26 +522,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "justify-content": "space-between",
       "align-items": "center"
     }
-  }, [_c('span', [_vm._v("\n                    Clients \n                ")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.search.query),
-      expression: "search.query"
-    }],
-    attrs: {
-      "placeholder": "Search"
-    },
-    domProps: {
-      "value": (_vm.search.query)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.search.query = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('a', {
+  }, [_c('span', [_vm._v("\n                    Clients \n                ")]), _vm._v(" "), _c('a', {
     staticClass: "action-link",
     on: {
       "click": _vm.showAddClientForm
@@ -715,7 +694,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text"
+      "type": "number"
     },
     domProps: {
       "value": (_vm.createForm.credit)
@@ -909,7 +888,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
-      "type": "text"
+      "type": "number"
     },
     domProps: {
       "value": (_vm.editForm.credit)

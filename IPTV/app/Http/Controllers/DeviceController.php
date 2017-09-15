@@ -12,7 +12,7 @@ class DeviceController extends Controller
     public function getDevices () 
     {
         // fetch all devices with id and room columns
-        $devices = Device::with('oAuthclient')->get(['id', 'room']);
+        $devices = Device::with('oAuthclient')->orderBy('room')->get(['id', 'room']);
 
         return response()->json([
                 'devices' => $devices,

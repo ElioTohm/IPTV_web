@@ -112,7 +112,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Credit</label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" v-model="createForm.credit">
+                                    <input type="number" class="form-control" v-model="createForm.credit">
                                 </div>
                             </div>
                             <!-- Debit -->
@@ -195,7 +195,7 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Credit</label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" v-model="editForm.credit">
+                                    <input type="number" class="form-control" v-model="editForm.credit">
                                 </div>
                             </div>
                             <!-- Debit -->
@@ -325,11 +325,11 @@ export default {
 
                         form.errors = [];
                         form.name = '';
-                        // form.email = '';
+                        form.email = '';
                         form.room = '';
                         form.welcome_message = '';
-                        form.credits = '';
-                        form.debits = '';
+                        form.credit = '';
+                        form.debit = '';
                         
                         $(modal).modal('hide');
                     }

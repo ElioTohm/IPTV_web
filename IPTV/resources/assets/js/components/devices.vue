@@ -18,7 +18,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th class="col-md-1">ID</th>
                             <th class="col-md-3">Room number</th>
                             <th class="col-md-3">Secret</th>
                             <th class="col-md-1"></th>
@@ -27,7 +26,6 @@
                     </thead>
                     <tbody>
                         <tr v-for="(device, index) in devices" :key="device.id">
-                            <td class="col-md-2">{{device.id}}</td>
                             <td class="col-md-2">{{device.room}}</td>
                             <td class="col-md-2">{{device.o_authclient.secret}}</td>
                             <!-- Edit Button --> 
