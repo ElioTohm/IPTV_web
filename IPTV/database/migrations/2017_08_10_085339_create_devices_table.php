@@ -13,15 +13,21 @@ class CreateDevicesTable extends Migration
      */
    public function up()
     {
+
+        Schema::table('oauth_clients', function (Blueprint $table) {
+            $table->integer('assigned_to')->default(0);
+        });
+
         Schema::create('devices', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->integer('id')->unsigned();
             $table->foreign('id')
-                    ->references('id')
-                    ->on('oauth_clients')
-                    ->onDelete('cascade');
+                ->references('id')
+                ->on('oauth_clients')
+                ->onDelete('cascade');
             $table->integer('room');
             $table->timestamps();
         });
+
     }
 
     /**

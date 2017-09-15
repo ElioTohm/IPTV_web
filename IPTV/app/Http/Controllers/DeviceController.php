@@ -23,12 +23,17 @@ class DeviceController extends Controller
     public function addDevice (DeviceRequest $request) 
     {
         $lastdevice = Device::all(['id'])->last();
-        $lasttoken = oAuthClient::all(['id'])->last();
-
-        if ($lastdevice['id'] < $lasttoken['id']){
+        $unsigned_oAtuh = oAuthClient::where('assigned_to', 0)->first();
+        
+        if ($unsigned_oAtuh != null){
             $device = new Device();
+            $device->id = $unsigned_oAtuh->id;
             $device->room = $request->input('room');
             $device->save();
+
+            $unsigned_oAtuh->assigned_to = 1;
+            $unsigned_oAtuh->save();
+
             return $device;
         } else {
             return response()->json([
@@ -52,6 +57,10 @@ class DeviceController extends Controller
     {
         $device = Device::find($id);
         $device->delete();
+
+        $oauthclient = oAuthClient::find($id);
+        $oauthclient->assigned_to = 0;
+        $oauthclient->save();
 
     }
 }

@@ -79,7 +79,7 @@
                                 <label class="col-md-3 control-label">Room</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-device-room" type="text" class="form-control" v-model="createForm.room">
+                                    <input id="create-device-room" type="text" class="form-control" @keyup.enter="store" v-model="createForm.room">
                                 </div>
                             </div>
                         </form>
@@ -128,7 +128,8 @@
                                 <label class="col-md-3 control-label">Room</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-device-room" type="text" class="form-control" v-model="editForm.room">
+                                    <input id="create-device-room" type="text" class="form-control" 
+                                                                                @keyup.enter="update" v-model="editForm.room">
                                 </div>
                             </div>
                         </form>

@@ -138,7 +138,7 @@
         </div>
 
          <!-- Edit Client Modal -->
-        <div class="modal fade" id="modal-edit-client" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modal-edit-hotelclient" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -297,7 +297,7 @@ export default {
             this.editForm.credit = client.credit;
             this.editForm.debit = client.debit;
 
-            $('#modal-edit-client').modal('show');
+            $('#modal-edit-hotelclient').modal('show');
         },
 
         /**
@@ -306,7 +306,7 @@ export default {
         update() {
             this.persistClient(
                 'put', '/client/' + this.editForm.id,
-                this.editForm, '#modal-edit-client'
+                this.editForm, '#modal-edit-hotelclient'
             );
         },
 

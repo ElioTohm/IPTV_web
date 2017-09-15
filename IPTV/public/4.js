@@ -446,7 +446,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             this.editForm.credit = client.credit;
             this.editForm.debit = client.debit;
 
-            $('#modal-edit-client').modal('show');
+            $('#modal-edit-hotelclient').modal('show');
         },
 
 
@@ -454,7 +454,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * Update the client being edited.
          */
         update: function update() {
-            this.persistClient('put', '/client/' + this.editForm.id, this.editForm, '#modal-edit-client');
+            this.persistClient('put', '/client/' + this.editForm.id, this.editForm, '#modal-edit-hotelclient');
         },
 
 
@@ -750,7 +750,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("\n                        Create\n                    ")])])])])]), _vm._v(" "), _c('div', {
     staticClass: "modal fade",
     attrs: {
-      "id": "modal-edit-client",
+      "id": "modal-edit-hotelclient",
       "tabindex": "-1",
       "role": "dialog"
     }
