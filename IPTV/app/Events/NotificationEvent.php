@@ -15,14 +15,17 @@ class NotificationEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     private $CLIENT_ID;
+
+    private $MESSAGE;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($clientid)
+    public function __construct($clientid, $message)
     {
         $this->CLIENT_ID = $clientid;
+        $this->MESSAGE = $message;
     }
 
     /**
@@ -37,6 +40,6 @@ class NotificationEvent implements ShouldBroadcast
     
     public function broadcastWith()
     {
-        return ['Message' => 'Welcome'];
+        return ['Message' => $this->MESSAGE];
     }
 }
