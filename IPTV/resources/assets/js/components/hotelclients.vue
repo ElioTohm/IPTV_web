@@ -22,6 +22,7 @@
                             <th>Welcome message</th>
                             <th>Credit</th>
                             <th>Debit</th>
+                            <th>Notify</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -34,6 +35,12 @@
                             <td>{{client.welcome_message}}</td>
                             <td>{{client.credit}}</td>
                             <td>{{client.debit}}</td>
+                            <!-- Notification button -->
+                            <td>
+                                <a class="action-link" @click="notificationwindows(client)">
+                                    Notify
+                                </a>
+                            </td>
                             <!-- Edit Button --> 
                             <td  class="col-md-1">
                                 <a class="action-link" @click="edit(client)">
@@ -219,6 +226,45 @@
                 </div>
             </div>
         </div>
+
+        <!-- Notification prompt to send to specific client -->
+        <div class="modal fade" id="modal-notify-hotelclient" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button " class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                        <h4 class="modal-title">
+                            Notify
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <!-- Message sent form -->
+                        <form class="form-horizontal" role="form">
+                            <!-- Message -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Message</label>
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control" v-model="notification.message">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Modal Actions -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                        <button type="button" class="btn btn-primary" @click="sendnotification">
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </template>
 <script>
@@ -226,6 +272,11 @@ export default {
     data () {
         return {
             clients: [],
+
+            notification: {
+                id: 0,
+                message: ''
+            },
 
             createForm: {
                     errors: [],
@@ -258,6 +309,19 @@ export default {
         this.getClient();
     },
     methods: {
+        notificationwindows(client) {
+            this.notification.id = client.id
+            $('#modal-notify-hotelclient').modal('show');
+        },
+        sendnotification() {
+            axios.get('/clientnotification/'+this.notification.id+'/'+encodeURIComponent(this.notification.message))
+                .then(response => {
+                        console.log(response)
+                })
+                .catch(error => {
+                    console.log(error.response.data)
+                });
+        },
         getClient () {
             axios.get('/client')
                 .then(response => {

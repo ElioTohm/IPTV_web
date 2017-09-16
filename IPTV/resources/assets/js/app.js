@@ -23,7 +23,6 @@ Vue.use(VueRouter)
 const channels = (resolve) => require(['./components/channels.vue'], resolve)
 const clients = (resolve) => require(['./components/passport/Clients.vue'], resolve)
 const authorizedclients = (resolve) => require(['./components/passport/AuthorizedClients.vue'], resolve)
-const personalaccesstokens = (resolve) => require(['./components/passport/PersonalAccessTokens.vue'], resolve)
 const hotelclients = (resolve) => require(['./components/hotelclients.vue'], resolve)
 const devices = (resolve) => require(['./components/devices.vue'], resolve)
 
@@ -37,14 +36,13 @@ new Vue({
   components : {
     clients,
     authorizedclients,
-    personalaccesstokens,
     channels,
     hotelclients,
     devices,
   },
 
   data : {
-
+    clients:'test'
   }
  
 }).$mount('#app')
