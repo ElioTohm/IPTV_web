@@ -33,8 +33,8 @@ class Device extends Model
     /**
      * Get the device associated with the oauth.
      */
-     public function oAuthclient()
+     public function Authclient()
      {
-         return $this->hasOne('App\oAuthClient', 'id');
+         return $this->hasOne('App\oAuthClient', 'id')->select('id','secret');
      }
 }

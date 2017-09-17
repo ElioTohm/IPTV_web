@@ -27,7 +27,7 @@
                     <tbody>
                         <tr v-for="(device, index) in devices" :key="device.id">
                             <td class="col-md-2">{{device.room}}</td>
-                            <td class="col-md-2">{{device.o_authclient.secret}}</td>
+                            <td class="col-md-2">{{device.authclient.secret}}</td>
                             <!-- Edit Button --> 
                             <td  class="col-md-1">
                                 <a class="action-link" @click="edit(device)">

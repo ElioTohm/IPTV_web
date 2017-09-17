@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 */
 Route::get('/registerDevice/{id}/{sentsecret}', 'ApiController@register');
 
+Route::get('/test', 'DeviceController@getDevices');
+
 Route::group(['middleware' => ['auth_client']], function()
 {
 
