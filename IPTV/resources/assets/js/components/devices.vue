@@ -73,16 +73,16 @@
                         </div>
 
                         <!-- Create Device Form -->
-                        <form class="form-horizontal" role="form">
+                        <div class="form-horizontal">
                             <!-- room -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Room</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-device-room" type="text" class="form-control" @keyup.enter="store" v-model="createForm.room">
+                                    <input id="create-device-room" type="number" class="form-control" @keyup.enter="store" v-model="createForm.room">
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Modal Actions -->
@@ -122,17 +122,17 @@
                         </div>
 
                         <!-- Edit Device Form -->
-                        <form class="form-horizontal" role="form">
+                        <div class="form-horizontal">
                                 <!-- room -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Room</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-device-room" type="text" class="form-control" 
+                                    <input id="create-device-room" type="number" class="form-control" 
                                                                                 @keyup.enter="update" v-model="editForm.room">
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Modal Actions -->

@@ -84,7 +84,7 @@
                         </div>
 
                         <!-- Create Channel Form -->
-                        <form class="form-horizontal" role="form">
+                        <div class="form-horizontal">
                             <!-- number -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Number</label>
@@ -131,7 +131,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Modal Actions -->
@@ -171,7 +171,7 @@
                         </div>
 
                         <!-- Edit Channel Form -->
-                        <form class="form-horizontal" role="form">
+                        <div class="form-horizontal">
                             <!-- number -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Number</label>
@@ -218,7 +218,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Modal Actions -->
