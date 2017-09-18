@@ -30,7 +30,7 @@ class ChannelController extends Controller
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
         $channel->stream = $request->input('stream');
-        Image::make($request->get('thumbnail'))->save(public_path('images/').$request->input('name') . '.png');
+        Image::make($request->get('thumbnail'))->encode('png', 50)->save(public_path('images/').$request->input('name') . '.png');
         $channel->thumbnail = $request->input('name') . '.png';
         $channel->save();
         $channel->genres()->sync($request->input('genres'));
