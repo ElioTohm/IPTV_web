@@ -20,7 +20,10 @@ class ApiController extends Controller
      * with the first 4 character sent
      * The function will make an auth request to passport or return 401 respectively 
      */
-    public function register($id, $sentsecret) {
+    public function register(Request $request) {
+        // take request param
+        $id = $request->query('id');
+        $sentsecret = $request->query('secret');
 
         $oauthclient = oAuthClient::where('id', $id)
                                     ->where('revoked', 0)
