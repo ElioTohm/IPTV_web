@@ -28,7 +28,7 @@ class ChannelRequest extends FormRequest
             'number' => 'required',
             'name' => 'required|max:25',
             'stream' => 'required',
-            'thumbnail' => 'required|url',
+            // 'thumbnail' => 'required|url',
         ];
     }
 
@@ -39,7 +39,7 @@ class ChannelRequest extends FormRequest
             'name.required' => 'name is required',
             'stream.required'  => 'stream is required',
             'stream.url' => 'stream url is incorrect',
-            'thumbnail.url' => 'thumbnail url is not correct'
+            // 'thumbnail.url' => 'thumbnail url is not correct'
         ];
     }
 }

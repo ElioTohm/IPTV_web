@@ -117,7 +117,7 @@
                                 <label class="col-md-3 control-label">Thumbnail</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-channel-name" type="text" class="form-control" v-model="createForm.thumbnail">
+                                    <input id="create-channel-name" type="file" class="form-control" v-on:change="onFileChange">
                                 </div>
                             </div>
 
@@ -298,7 +298,20 @@
         },
 
         methods: {
-
+            createImage(file) {
+                let reader = new FileReader();
+                let vm = this;
+                reader.onload = (e) => {
+                    vm.createForm.thumbnail = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            },
+            onFileChange(e) {
+                let files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    console.log('wrg length');
+                this.createImage(files[0]);
+            },
             /**
              * Get all of the OAuth channels for the user.
              */
@@ -314,6 +327,7 @@
              * Show the form for adding new channel.
              */
             showAddChannelForm() {
+                this.createForm.number = this.channels[this.channels.length - 1].number + 1
                 $('#modal-add-channel').modal('show');
             },
 
@@ -372,6 +386,7 @@
                         $(modal).modal('hide');
                     })
                     .catch(error => {
+                        console.log(error.response.data)
                         if (typeof error.response.data === 'object') {
                             form.errors = _.flatten(_.toArray(error.response.data));
                         } else {

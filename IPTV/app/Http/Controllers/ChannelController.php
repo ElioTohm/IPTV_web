@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Channel;
 use App\Genre;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Requests\ChannelRequest;
 
 class ChannelController extends Controller
@@ -29,9 +30,9 @@ class ChannelController extends Controller
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
         $channel->stream = $request->input('stream');
-        $channel->thumbnail = $request->input('thumbnail');
+        Image::make($request->get('thumbnail'))->save(public_path('images/').$request->input('name') . '.png');
+        $channel->thumbnail = $request->input('name') . '.png';
         $channel->save();
-
         $channel->genres()->sync($request->input('genres'));
 
         return $channel;
