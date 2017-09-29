@@ -12,7 +12,20 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/registerDevice', 'ApiController@register');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth_client']], function()
+{
+
+    // testing route
+    Route::get('/user', function (Request $request) {
+        return 'tse';
+    });
+
+    // get channel
+    Route::get('/channel' , 'ApiController@getChannel');
+
+    // get client info
+    Route::get('/clientInfo' , 'ApiController@getClientInfo');
+
 });

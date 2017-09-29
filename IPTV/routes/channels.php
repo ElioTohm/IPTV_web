@@ -1,5 +1,7 @@
 <?php
 
+use App\Order;
+
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -11,6 +13,11 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
+Broadcast::channel('Notification_To_.{id}', function () {
+    return true;
+});
+
+Broadcast::channel('ClientSettings', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+

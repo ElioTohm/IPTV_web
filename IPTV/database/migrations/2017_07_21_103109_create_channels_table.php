@@ -15,10 +15,34 @@ class CreateChannelsTable extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('number')->unique();
             $table->string('name');
-            $table->string('description');
+            $table->string('stream')->unique();
+            $table->string('thumbnail');
             $table->timestamps();
         });
+
+        Schema::create('genres', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        Schema::create('channel_genre', function (Blueprint $table) {
+            $table->integer('channel')->unsigned();
+            $table->integer('genre')->unsigned();
+            $table->primary(['channel', 'genre']);
+            $table->foreign('channel')
+                  ->references('id')->on('channels')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            $table->foreign('genre')
+                  ->references('id')->on('genres')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            $table->timestamps();
+        });
+
     }
 
     /**
@@ -28,6 +52,8 @@ class CreateChannelsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('channel_genre');
         Schema::dropIfExists('channels');
+        Schema::dropIfExists('genres');
     }
 }
