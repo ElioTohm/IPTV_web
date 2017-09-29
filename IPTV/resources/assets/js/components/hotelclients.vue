@@ -309,7 +309,7 @@ export default {
     },
     methods: {
         notificationwindows(client) {
-            this.notification.id = client.id
+            this.notification.id = client.room
             $('#modal-notify-hotelclient').modal('show');
         },
         sendnotification() {

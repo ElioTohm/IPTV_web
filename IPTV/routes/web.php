@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\NotificationEvent;
 use App\Events\ClientSettingsEvent;
 
 /*
@@ -58,17 +57,6 @@ Route::middleware(['auth'])->group(function () {
     * Push notifcation routes
     */
     // notification route
-    Route::get('/clientnotification/{id}/{message}', function ($id, $message) {
-        // if id 0 broadcast
-        event(new NotificationEvent($id, $message));
-    });
-
-    // notify client settigns update route
-    Route::get('/clientsettings/{id}', function ($id) {
-        if ($id == 0) {
-            // if id 0 broadcast
-            event(new ClientSettingsEvent());
-        }
-    });
+    Route::get('/clientnotification/{id}/{message}', 'ClientController@sendNotification');
 
 });

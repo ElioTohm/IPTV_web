@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Client;
 use App\oAuthClient;
 use App\Http\Requests\ClientRequest;
+use App\Events\NotificationEvent;
 
 class ClientController extends Controller
 {
@@ -56,5 +57,13 @@ class ClientController extends Controller
         $client = Client::find($id);
         $client->delete();
 
+    }
+
+    public function sendNotification ($id, $message) 
+    {
+        $client = Client::find($id);
+
+        
+        event(new NotificationEvent($client->room, $message));
     }
 }
