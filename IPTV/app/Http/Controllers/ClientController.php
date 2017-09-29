@@ -61,9 +61,6 @@ class ClientController extends Controller
 
     public function sendNotification ($id, $message) 
     {
-        $client = Client::find($id);
-
-        
-        event(new NotificationEvent($client->room, $message));
+        event(new NotificationEvent($id, $message));
     }
 }
