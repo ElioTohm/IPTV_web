@@ -24,11 +24,13 @@ class ApiController extends Controller
         // take request param
         $id = $request->query('id');
         $sentsecret = $request->query('secret');
-
-        $oauthclient = oAuthClient::where('id', $id)
+        
+        $device = Device::where('room', $id)->first();
+        $oauthclient = oAuthClient::where('id', $device->id)
                                     ->where('revoked', 0)
                                     ->first();
-        if ($oauthclient != null){
+        
+                                    if ($oauthclient != null){
             $secret = $oauthclient->secret;
             $result = substr($secret, 0, 4);
 
