@@ -23,11 +23,11 @@ class SearchController extends Controller
             
             //  use Devices model
             case 'Device':
-                return Device::search($reuqest->input('query'))->get();
+                return Device::search($request->input('query'))->get();
 
             //  use Clients model
             case 'Client':
-                return Client::search($reuqest->input('query'))->get();
+                return Client::search($request->input('query'))->get();
             
             default:
                 $model = [];

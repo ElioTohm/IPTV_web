@@ -7,8 +7,6 @@
                         Devices 
                     </span>
 
-                    <input v-model="search.query" placeholder="Search"/>           
-
                     <a class="action-link" @click="showAddDeviceForm">
                         Add New Device
                     </a>
@@ -163,12 +161,6 @@ export default {
                 errors: [],
                 room: '',
             },
-
-            search: {
-                errors: [],
-                model: 'Device',
-                query: ''
-            }
         }
     },
     mounted () {

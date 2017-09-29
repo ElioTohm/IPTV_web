@@ -7,6 +7,8 @@
                         Clients 
                     </span>
 
+                    <input type="text" placeholder="search" v-model="search.query">
+
                     <a class="action-link" @click="showAddClientForm">
                         Add New Client
                     </a>
@@ -307,6 +309,22 @@ export default {
     mounted () {
         this.getClient();
     },
+    watch: {
+            'search.query': function(){
+                if (this.search.query != '') {
+                    axios.get('/search', {params : this.search})
+                        .then(response => {
+                            this.clients = response.data;
+                        })
+                        .catch(error => {
+                            console.log(error.response.data)
+                        });
+                } else {
+                    this.getChannel();
+                }
+                
+            }
+        },
     methods: {
         notificationwindows(client) {
             this.notification.id = client.room
