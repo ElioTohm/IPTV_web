@@ -67,7 +67,7 @@ class ClientController extends Controller
         $image = $request->input('image');
         $type = $request->input('type');
         
-        event(new NotificationEvent($id, ($type == '') ? 'Notification' : $type,
+        event(new NotificationEvent($id, ($type == '') ? 0 : $type,
                                         ($message == '') ? 'Welcome' : $message, 
                                         ($image == '') ? $default_welcome_image : $image));
     }
