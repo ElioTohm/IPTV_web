@@ -46,10 +46,9 @@ class NotificationEvent implements ShouldBroadcast
     
     public function broadcastWith()
     {
-        return response()->json([
-                    'type' => $this->TYPE,
+        return ['type' => $this->TYPE,
                     'message' => $this->MESSAGE,        
                     'image' => $this->IMAGE,
-                ]);
+                ];
     }
 }
