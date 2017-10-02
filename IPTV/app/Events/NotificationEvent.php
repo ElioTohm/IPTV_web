@@ -17,15 +17,21 @@ class NotificationEvent implements ShouldBroadcast
     private $CLIENT_ID;
 
     private $MESSAGE;
+
+    private $TYPE;
+
+    private $IMAGE;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($clientid, $message)
+    public function __construct($clientid, $type, $message, $image)
     {
         $this->CLIENT_ID = $clientid;
         $this->MESSAGE = $message;
+        $this->TYPE = $type;
+        $this->IMAGE = $image;
     }
 
     /**
@@ -40,6 +46,10 @@ class NotificationEvent implements ShouldBroadcast
     
     public function broadcastWith()
     {
-        return ['Message' => $this->MESSAGE];
+        return response()->json([
+                    'type' => $this->TYPE,
+                    'message' => $this->MESSAGE,        
+                    'image' => $this->IMAGE,
+                ]);
     }
 }

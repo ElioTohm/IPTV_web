@@ -57,6 +57,6 @@ Route::middleware(['auth'])->group(function () {
     * Push notifcation routes
     */
     // notification route
-    Route::get('/clientnotification/{id}/{message}', 'ClientController@sendNotification');
+    Route::get('/clientnotification/{id}', 'ClientController@sendNotification');
 
 });

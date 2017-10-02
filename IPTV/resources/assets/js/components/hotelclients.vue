@@ -331,7 +331,11 @@ export default {
             $('#modal-notify-hotelclient').modal('show');
         },
         sendnotification() {
-            axios.get('/clientnotification/'+this.notification.id+'/'+encodeURIComponent(this.notification.message))
+            axios.get('/clientnotification/'+this.notification.id,{
+                    params:{
+                        message: encodeURIComponent(this.notification.message)
+                    }
+                 })
                 .then(response => {
                         console.log(response)
                 })

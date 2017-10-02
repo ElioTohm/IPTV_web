@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientRequest extends FormRequest
+class ClientNotificationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,14 @@ class ClientRequest extends FormRequest
     public function rules()
     {
         return [
-             'name'  => 'required',
-             'email' => 'required',
-             'room' => 'required',
-             'credit' => 'required',
+            'message'  => 'required',
         ];
     }
- 
+
     public function messages()
     {
         return [
-             'name.required' => 'Name is required',
-             'email.required' => 'Email is required',
-             'room.required' => 'Room is required',
-             'credit.required' => 'Credit is required',
+            'message.required' => 'Cannot send notification without a message',
         ];
     }
 }
