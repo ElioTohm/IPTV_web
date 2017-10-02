@@ -62,12 +62,13 @@ class ClientController extends Controller
 
     public function sendNotification ($id, ClientNotificationRequest $request) 
     {
+        $default_welcome_image = 'http://images.kuoni.co.uk/73/dubai-37075265-1494255242-ImageGalleryLightboxLarge.jpg';
         $message = $request->input('message');
         $image = $request->input('image');
         $type = $request->input('type');
         
         event(new NotificationEvent($id, ($type == '') ? 'Notification' : $type,
                                         ($message == '') ? 'Welcome' : $message, 
-                                        ($image == '') ? 'Welcome' : $image));
+                                        ($image == '') ? $default_welcome_image : $image));
     }
 }
