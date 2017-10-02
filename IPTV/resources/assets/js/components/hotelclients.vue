@@ -333,7 +333,7 @@ export default {
         sendnotification() {
             axios.get('/clientnotification/'+this.notification.id,{
                     params:{
-                        message: encodeURIComponent(this.notification.message)
+                        message: this.notification.message
                     }
                  })
                 .then(response => {
