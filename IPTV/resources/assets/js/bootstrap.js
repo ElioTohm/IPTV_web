@@ -47,15 +47,5 @@ import Echo from "laravel-echo"
 
 window.Echo = new Echo({
     broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
+    host: window.location.hostname + ':6001',
 });
-
-window.Echo.channel('Notification_To_1')
-    .listen('NotificationEvent', (e) => {
-        console.log(e);
-    });
-    
-window.Echo.channel('ClientSettings')
-    .listen('ClientSettingsEvent', (e) => {
-        console.log(e);
-    });

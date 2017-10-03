@@ -3,18 +3,21 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>
-                        Clients 
-                    </span>
-
+                    <h3>
+                        Clients
+                    </h3>
+                    
                     <input type="text" placeholder="search" v-model="search.query">
-
+                    
+                    <h5>Online: {{monitor.count}}</h5>
+                    
                     <a class="action-link" @click="showAddClientForm">
                         Add New Client
                     </a>
                 </div>  
             </div>
             <div class="panel-body">
+                
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -273,7 +276,9 @@ export default {
     data () {
         return {
             clients: [],
-
+            monitor:{
+                count: 0
+            },
             notification: {
                 id: 0,
                 message: ''
@@ -307,6 +312,16 @@ export default {
         }
     },
     mounted () {
+        window.Echo.join('Online')
+            .here((users) => {
+                this.monitor.count = users.length;
+            })
+            .joining((user) => {
+                this.monitor.count = this.monitor.count + 1;
+            })
+            .leaving((user) => {
+                this.monitor.count = this.monitor.count - 1 ;
+            });
         this.getClient();
     },
     watch: {

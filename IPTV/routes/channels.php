@@ -13,11 +13,10 @@ use App\Order;
 |
 */
 
-Broadcast::channel('Notification_To_.{id}', function () {
+Broadcast::channel('Notification_To_.{id}', function ($user) {
     return true;
 });
 
-Broadcast::channel('ClientSettings', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('Online', function ($user) {
+    return ['id' => $user->id, 'name' => $user->name];
 });
-

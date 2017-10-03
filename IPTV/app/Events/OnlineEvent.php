@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ClientSettingsEvent implements ShouldBroadcast
+class OnlineEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -31,11 +31,6 @@ class ClientSettingsEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('ClientSettings');
-    }
-
-    public function broadcastWith()
-    {
-        return ['id' => '1'];
+        return new PrivateChannel('channel-name');
     }
 }

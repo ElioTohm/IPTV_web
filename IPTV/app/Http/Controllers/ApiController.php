@@ -29,24 +29,28 @@ class ApiController extends Controller
         $oauthclient = oAuthClient::where('id', $device->id)
                                     ->where('revoked', 0)
                                     ->first();
-        
-                                    if ($oauthclient != null){
+
+        if ($oauthclient != null){
             $secret = $oauthclient->secret;
             $result = substr($secret, 0, 4);
 
             if (strcmp($result, $sentsecret) == 0 ){
-
                 $user = User::find(1);
-                $token = $user->createToken($oauthclient->name);
 
+                $token = $user->createToken($oauthclient->name);
+                
                 return response()->json([
+                    'id' => $device->id,
                     'token_type' => 'Bearer',
                     'expires_in' => $token->token->expires_at,
                     'access_token' => $token->accessToken
                 ]);
             }
         }
-        return 401;
+
+        return response()->json([
+                    'error' => 401,
+                ]);
 
         
     }
