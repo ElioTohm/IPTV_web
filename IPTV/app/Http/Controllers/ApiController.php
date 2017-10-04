@@ -67,8 +67,18 @@ class ApiController extends Controller
     {
         $device = Device::where('id', $request->input('id'))->first(['room']);
 
-        $client = Client::where('room', $device->room)->first(["id","name","email","room","welcome_message","credit","debit"]);
+        $client = Client::where('room', $device->room)->first(["id", "name", "email", "room", "welcome_message", "welcome_image", "credit", "debit"]);
         
-        return $client;
+        // return $client;
+        return response()->json([
+            "id" => $client->id, 
+            "name" => $client->name, 
+            "email" => $client->email, 
+            "room" => $client->room, 
+            "welcome_message" => $client->welcome_message, 
+            "welcome_image" => env('APP_URL', 'localhost') . "/images/" . $client->welcome_image, 
+            "credit" => $client->credit, 
+            "debit" => $client->debit
+        ]);
     }
 }

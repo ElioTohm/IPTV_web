@@ -204,7 +204,7 @@
                                 <label class="col-md-3 control-label">Thumbnail</label>
 
                                 <div class="col-md-7">
-                                    <input id="create-channel-name" type="text" class="form-control" v-model="editForm.thumbnail">
+                                    <input id="create-channel-name" type="file" class="form-control" v-on:change="onFileChange">
                                 </div>
                             </div>
 
@@ -245,6 +245,8 @@
                 channels: [],
                 
                 genres:[],
+
+                thumbnail:'',
 
                 createForm: {
                     errors: [],
@@ -301,8 +303,11 @@
             createImage(file) {
                 let reader = new FileReader();
                 let vm = this;
+                vm.editForm.thumbnail = '';
                 reader.onload = (e) => {
                     vm.createForm.thumbnail = e.target.result;
+                    vm.editForm.thumbnail = e.target.result;
+                     
                 };
                 reader.readAsDataURL(file);
             },
@@ -382,7 +387,7 @@
                         form.genre = '';
                         form.number = '';
 
-
+                        console.log(response);
                         $(modal).modal('hide');
                     })
                     .catch(error => {

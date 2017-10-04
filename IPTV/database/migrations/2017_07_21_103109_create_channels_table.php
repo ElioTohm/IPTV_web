@@ -18,7 +18,7 @@ class CreateChannelsTable extends Migration
             $table->integer('number')->unique();
             $table->string('name');
             $table->string('stream')->unique();
-            $table->string('thumbnail');
+            $table->string('thumbnail')->default("DefaultThumbnail.png");;
             $table->timestamps();
         });
 

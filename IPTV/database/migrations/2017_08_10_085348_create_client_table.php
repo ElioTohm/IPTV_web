@@ -18,8 +18,8 @@ class CreateClientTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->integer('room');
-            $table->string('welcome_message')->nullable();
-            $table->string('welcome_image')->nullable();
+            $table->string('welcome_message')->default('Welcome from XMS pro');
+            $table->string('welcome_image')->default('Defaultimage.png');
             $table->bigInteger('credit');
             $table->bigInteger('debit')->default(0);
             $table->timestamps();

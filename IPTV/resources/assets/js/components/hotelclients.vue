@@ -25,6 +25,7 @@
                             <th>Email</th>
                             <th>Room</th>
                             <th>Welcome message</th>
+                            <th>Welcome image</th>
                             <th>Credit</th>
                             <th>Debit</th>
                             <th>Notify</th>
@@ -38,6 +39,7 @@
                             <td>{{client.email}}</td>
                             <td>{{client.room}}</td>
                             <td>{{client.welcome_message}}</td>
+                            <td>{{client.welcome_image}}</td>
                             <td>{{client.credit}}</td>
                             <td>{{client.debit}}</td>
                             <!-- Notification button -->
@@ -91,7 +93,7 @@
                         </div>
 
                         <!-- Create Client Form -->
-                        <form class="form-horizontal" role="form">
+                        <div class="form-horizontal" role="form">
                             <!-- Name -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Name</label>
@@ -120,6 +122,13 @@
                                     <input type="text" class="form-control" v-model="createForm.welcome_message">
                                 </div>
                             </div>
+                            <!-- Welcome image -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Welcome image</label>
+                                <div class="col-md-7">
+                                    <input type="file" class="form-control" v-on:change="onFileChange">
+                                </div>
+                            </div>
                             <!-- Credit -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Credit</label>
@@ -134,7 +143,7 @@
                                     <input type="text" class="form-control" v-model="createForm.debit">
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Modal Actions -->
@@ -174,7 +183,7 @@
                         </div>
 
                         <!-- Edit Client Form -->
-                        <form class="form-horizontal" role="form">
+                        <div class="form-horizontal" role="form">
                             <!-- Name -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Name</label>
@@ -203,6 +212,13 @@
                                     <input type="text" class="form-control" v-model="editForm.welcome_message">
                                 </div>
                             </div>
+                            <!-- Welcome image -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Welcome image</label>
+                                <div class="col-md-7">
+                                    <input type="file" class="form-control" v-on:change="onFileChange">
+                                </div>
+                            </div>
                             <!-- Credit -->
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Credit</label>
@@ -217,7 +233,7 @@
                                     <input type="text" class="form-control" v-model="editForm.debit">
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Modal Actions -->
@@ -290,6 +306,7 @@ export default {
                     email : '',
                     room : '',
                     welcome_message : '',
+                    welcome_image: '',
                     credit : 0,
                     debit : 0, 
                 },
@@ -300,6 +317,7 @@ export default {
                 email : '',
                 room : '',
                 welcome_message : '',
+                welcome_image: '',
                 credit : 0,
                 debit : 0,
             },
@@ -341,10 +359,37 @@ export default {
             }
         },
     methods: {
+        /* 
+         * assign the image to a model
+         */
+        createImage(file) {
+            let reader = new FileReader();
+            let vm = this;
+            vm.editForm.welcome_image = '';
+            reader.onload = (e) => {
+                vm.createForm.welcome_image = e.target.result;
+                vm.editForm.welcome_image = e.target.result;
+                    
+            };
+            reader.readAsDataURL(file);
+        },
+
+        /*
+         * create the file 
+         */
+        onFileChange(e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                console.log('wrg length');
+            this.createImage(files[0]);
+        },
+        
         notificationwindows(client) {
             this.notification.id = client.room
             $('#modal-notify-hotelclient').modal('show');
         },
+        
+        // send notification to client
         sendnotification() {
             axios.get('/clientnotification/'+this.notification.id,{
                     params:{
@@ -358,6 +403,8 @@ export default {
                     console.log(error.response.data)
                 });
         },
+
+        // return all clients
         getClient () {
             axios.get('/client')
                 .then(response => {
@@ -418,6 +465,7 @@ export default {
 
             axios[method](uri, form)
                 .then(response => {
+                    console.log(response);
                     if (typeof response.data.error != "undefined") {
                         form.errors = [response.data.error];
                     } else {

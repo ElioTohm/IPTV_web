@@ -30,8 +30,7 @@ class ChannelController extends Controller
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
         $channel->stream = $request->input('stream');
-        Image::make($request->get('thumbnail'))->encode('png', 50)->save(public_path('images/').$request->input('name') . '.png');
-        $channel->thumbnail = $request->input('name') . '.png';
+        $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), TRUE);
         $channel->save();
         $channel->genres()->sync($request->input('genres'));
 
@@ -45,10 +44,8 @@ class ChannelController extends Controller
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
         $channel->stream = $request->input('stream');
-        $channel->thumbnail = $request->input('thumbnail');
-
+        $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), FALSE);
         $channel->save();
-
         $channel->genres()->sync($request->input('genres'));
     }
 
@@ -56,6 +53,18 @@ class ChannelController extends Controller
     {
         $channel = Channel::find($id);
         $channel->delete();
+    }
 
+    private function checkThumbnail ($channel, $image, $name, $addchannel) {
+        if (!is_string($image)) {
+            Image::make($image)->encode('png', 50)->save(public_path('images/') . $name . '.png');
+            $channel->thumbnail = $name . '.png';
+        } else {
+            if ($addchannel) {
+                $channel->thumbnail = 'DefaultThumbnail.png';
+            } else {
+                $channel->thumbnail = $name . '.png';
+            }
+        }
     }
 }
