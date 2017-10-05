@@ -59,7 +59,18 @@ class ApiController extends Controller
     public function getChannel (Request $request) 
     {
         $channels = Channel::with('genres')->get(['id', 'number', 'name', 'stream', 'thumbnail']);
-        return $channels;
+        $result = [];
+        foreach ($channels as $key => $channel) {
+            array_push($result, [
+                'id' => $channel->id, 
+                'number' => $channel->number, 
+                'name' => $channel->name, 
+                'stream' => $channel->stream, 
+                'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . urlencode($channel->thumbnail),
+                'genres' => $channel->genres
+            ]);
+        }
+        return $result;
     }
 
     // Get Client Info
@@ -76,7 +87,7 @@ class ApiController extends Controller
             "email" => $client->email, 
             "room" => $client->room, 
             "welcome_message" => $client->welcome_message, 
-            "welcome_image" => env('APP_URL', 'localhost') . "/images/" . $client->welcome_image, 
+            "welcome_image" => env('APP_URL', 'localhost') . "/images/device/welcome/" . urlencode($client->welcome_image), 
             "credit" => $client->credit, 
             "debit" => $client->debit
         ]);

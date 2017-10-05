@@ -441,6 +441,7 @@ export default {
             this.editForm.email = client.email
             this.editForm.room = client.room;
             this.editForm.welcome_message = client.welcome_message;
+            this.editForm.welcome_image = client.welcome_image;
             this.editForm.credit = client.credit;
             this.editForm.debit = client.debit;
 
@@ -476,6 +477,7 @@ export default {
                         form.email = '';
                         form.room = '';
                         form.welcome_message = '';
+                        form.welcome_image = '';
                         form.credit = '';
                         form.debit = '';
                         

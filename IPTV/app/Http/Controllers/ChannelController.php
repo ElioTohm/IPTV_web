@@ -56,15 +56,9 @@ class ChannelController extends Controller
     }
 
     private function checkThumbnail ($channel, $image, $name, $addchannel) {
-        if (!is_string($image)) {
-            Image::make($image)->encode('png', 50)->save(public_path('images/') . $name . '.png');
+        if (substr( $image, 0, 10 ) === "data:image") {
+            Image::make($image)->encode('png', 50)->save(public_path('images/device/channels') . $name . '.png');
             $channel->thumbnail = $name . '.png';
-        } else {
-            if ($addchannel) {
-                $channel->thumbnail = 'DefaultThumbnail.png';
-            } else {
-                $channel->thumbnail = $name . '.png';
-            }
         }
     }
 }
