@@ -8,9 +8,7 @@
                     </h3>
                     
                     <input type="text" placeholder="search" v-model="search.query">
-                    
-                    <h5>Online: {{monitor.count}}</h5>
-                    
+                                        
                     <a class="action-link" @click="showAddClientForm">
                         Add New Client
                     </a>
@@ -330,16 +328,6 @@ export default {
         }
     },
     mounted () {
-        window.Echo.join('Online')
-            .here((users) => {
-                this.monitor.count = users.length;
-            })
-            .joining((user) => {
-                this.monitor.count = this.monitor.count + 1;
-            })
-            .leaving((user) => {
-                this.monitor.count = this.monitor.count - 1 ;
-            });
         this.getClient();
     },
     watch: {
