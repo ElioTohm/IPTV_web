@@ -83,7 +83,7 @@ class ClientController extends Controller
     private function checkWeclomeImage ($client, $image, $room, $addclient) {
         if (substr( $image, 0, 10 ) === "data:image") {
             // apply filter
-            Image::make($image)->encode('png', 50)->save(public_path('images/device/welcome') . $room . '.png');
+            Image::make($image)->encode('png', 50)->save(public_path('images/device/welcome/') . $room . '.png');
             $client->welcome_image = 'Welcome_' . $room . '.png';
         }
     }
