@@ -66,7 +66,7 @@ class ApiController extends Controller
                 'number' => $channel->number, 
                 'name' => $channel->name, 
                 'stream' => $channel->stream, 
-                'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . urlencode($channel->thumbnail),
+                'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . rawurldecode($channel->thumbnail),
                 'genres' => $channel->genres
             ]);
         }
@@ -87,7 +87,7 @@ class ApiController extends Controller
             "email" => $client->email, 
             "room" => $client->room, 
             "welcome_message" => $client->welcome_message, 
-            "welcome_image" => env('APP_URL', 'localhost') . "/images/device/welcome/" . urlencode($client->welcome_image), 
+            "welcome_image" => env('APP_URL', 'localhost') . "/images/device/welcome/" . rawurldecode($client->welcome_image), 
             "credit" => $client->credit, 
             "debit" => $client->debit
         ]);
