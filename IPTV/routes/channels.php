@@ -18,5 +18,5 @@ Broadcast::channel('Notification_To_.{id}', function ($user) {
 });
 
 Broadcast::channel('Online', function ($user) {
-    return ['id' => $user->id, 'name' => $user->name];
+    return ['user' => $user];
 });

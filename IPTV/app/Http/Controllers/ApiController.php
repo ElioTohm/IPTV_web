@@ -36,14 +36,28 @@ class ApiController extends Controller
 
             if (strcmp($result, $sentsecret) == 0 ){
                 $user = User::find(1);
-
-                $token = $user->createToken($oauthclient->name);
                 
+                // $token = $user->createToken($oauthclient->name);
+                $guzzle = new \GuzzleHttp\Client;
+                
+                $authrequest = $guzzle->post('http://192.168.0.78/oauth/token', [
+                    'form_params' => [
+                        'grant_type' => 'password',
+                        'client_id' => $id,
+                        'client_secret' => $oauthclient->secret,
+                        'username' => 'admin@admin.com',
+                        'password' => '123123',
+                        'scope' => '',
+                    ],
+                ]);
+                
+                $response = json_decode((string) $authrequest->getBody(), true);
                 return response()->json([
                     'id' => $device->id,
-                    'token_type' => 'Bearer',
-                    'expires_in' => $token->token->expires_at,
-                    'access_token' => $token->accessToken
+                    'token_type' => $response['token_type'],
+                    'expires_in' => $response['expires_in'],
+                    'access_token' => $response['access_token'],
+                    'refresh_token' => $response['refresh_token']
                 ]);
             }
         }
