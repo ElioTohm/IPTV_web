@@ -3,21 +3,21 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3>
+                    <!-- Title -->
+                    <span>
                         Clients
-                    </h3>
-                    
-                    <input type="text" placeholder="search" v-model="search.query">
-                    
-                    <h5>Online: {{monitor.count}}</h5>
-                    
+                    </span>
+                    <!-- Search input -->
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="search" v-model="search.query">
+                    </div>
+                    <!-- Header add new client action -->
                     <a class="action-link" @click="showAddClientForm">
                         Add New Client
                     </a>
                 </div>  
             </div>
-            <div class="panel-body">
-                
+            <div class="panel-body">       
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -63,10 +63,11 @@
                             </td>
                         </tr>
                     </tbody>
+                    <pagination :data="pagedata" v-on:pagination-change-page="getClient"></pagination>
                 </table>
             </div>
         </div>
-
+    
         <!-- Create Client Modal -->
         <div class="modal fade" id="modal-add-client" tabindex="-1" role="dialog">
             <div class="modal-dialog">
@@ -288,222 +289,220 @@
     </div>
 </template>
 <script>
-export default {
-    data () {
-        return {
-            clients: [],
-            monitor:{
-                count: 0
-            },
-            notification: {
-                id: 0,
-                message: ''
-            },
+    import pagination from 'laravel-vue-pagination';
+    export default {
+        components: {
+            'pagination': pagination
+        },
+        data () {
+            return {
+                pagedata:{},
+                clients: [],
+                monitor:{
+                    count: 0
+                },
+                notification: {
+                    id: 0,
+                    message: ''
+                },
 
-            createForm: {
+                createForm: {
+                        errors: [],
+                        name: '',
+                        email : '',
+                        room : '',
+                        welcome_message : '',
+                        welcome_image: '',
+                        credit : 0,
+                        debit : 0, 
+                    },
+
+                editForm: {
                     errors: [],
-                    name: '',
+                    name : '',
                     email : '',
                     room : '',
                     welcome_message : '',
                     welcome_image: '',
                     credit : 0,
-                    debit : 0, 
+                    debit : 0,
                 },
 
-            editForm: {
-                errors: [],
-                name : '',
-                email : '',
-                room : '',
-                welcome_message : '',
-                welcome_image: '',
-                credit : 0,
-                debit : 0,
+                search: {
+                    errors: [],
+                    model: 'Client',
+                    query: ''
+                }
+            }
+        },
+        mounted () {
+            this.getClient();
+        },
+        watch: {
+                'search.query': function(){
+                    if (this.search.query != '') {
+                        axios.get('/search', {params : this.search})
+                            .then(response => {
+                                this.clients = response.data;
+                            })
+                            .catch(error => {
+                                console.log(error.response.data)
+                            });
+                    } else {
+                        this.getClient();
+                    }
+                    
+                }
+            },
+        methods: {
+            /* 
+            * assign the image to a model
+            */
+            createImage(file) {
+                let reader = new FileReader();
+                let vm = this;
+                vm.editForm.welcome_image = '';
+                reader.onload = (e) => {
+                    vm.createForm.welcome_image = e.target.result;
+                    vm.editForm.welcome_image = e.target.result;
+                        
+                };
+                reader.readAsDataURL(file);
             },
 
-            search: {
-                errors: [],
-                model: 'Client',
-                query: ''
-            }
-        }
-    },
-    mounted () {
-        window.Echo.join('Online')
-            .here((users) => {
-                this.monitor.count = users.length;
-            })
-            .joining((user) => {
-                this.monitor.count = this.monitor.count + 1;
-            })
-            .leaving((user) => {
-                this.monitor.count = this.monitor.count - 1 ;
-            });
-        this.getClient();
-    },
-    watch: {
-            'search.query': function(){
-                if (this.search.query != '') {
-                    axios.get('/search', {params : this.search})
-                        .then(response => {
-                            this.clients = response.data;
-                        })
-                        .catch(error => {
-                            console.log(error.response.data)
-                        });
-                } else {
-                    this.getChannel();
-                }
-                
-            }
-        },
-    methods: {
-        /* 
-         * assign the image to a model
-         */
-        createImage(file) {
-            let reader = new FileReader();
-            let vm = this;
-            vm.editForm.welcome_image = '';
-            reader.onload = (e) => {
-                vm.createForm.welcome_image = e.target.result;
-                vm.editForm.welcome_image = e.target.result;
-                    
-            };
-            reader.readAsDataURL(file);
-        },
-
-        /*
-         * create the file 
-         */
-        onFileChange(e) {
-            let files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-                console.log('wrg length');
-            this.createImage(files[0]);
-        },
-        
-        notificationwindows(client) {
-            this.notification.id = client.room
-            $('#modal-notify-hotelclient').modal('show');
-        },
-        
-        // send notification to client
-        sendnotification() {
-            axios.get('/clientnotification/'+this.notification.id,{
-                    params:{
-                        message: this.notification.message
-                    }
-                 })
-                .then(response => {
-                        console.log(response)
-                })
-                .catch(error => {
-                    console.log(error.response.data)
-                });
-        },
-
-        // return all clients
-        getClient () {
-            axios.get('/client')
-                .then(response => {
-                        this.clients = response.data.clients;
-                })
-                .catch(error => {
-                    console.log(error.response.data)
-                });
-        },
-     
-        /**
-         * Show the form for adding new client.
-         */
-        showAddClientForm() {
-            $('#modal-add-client').modal('show');
-        },
-
-        /**
-         * Create a new OAuth client for the user.
-         */
-        store() {
-            this.persistClient(
-                'post', '/client',
-                this.createForm, '#modal-create-client'
-            );
-        },
-
-        /**
-         * Edit the given client.
-         */
-        edit(client) {
-            this.editForm.id = client.id;
-            this.editForm.name = client.name;
-            this.editForm.email = client.email
-            this.editForm.room = client.room;
-            this.editForm.welcome_message = client.welcome_message;
-            this.editForm.welcome_image = client.welcome_image;
-            this.editForm.credit = client.credit;
-            this.editForm.debit = client.debit;
-
-            $('#modal-edit-hotelclient').modal('show');
-        },
-
-        /**
-         * Update the client being edited.
-         */
-        update() {
-            this.persistClient(
-                'put', '/client/' + this.editForm.id,
-                this.editForm, '#modal-edit-hotelclient'
-            );
-        },
-
-        /**
-         * Persist the client to storage using the given form.
-         */
-        persistClient(method, uri, form, modal) {
-            form.errors = [];
-
-            axios[method](uri, form)
-                .then(response => {
-                    console.log(response);
-                    if (typeof response.data.error != "undefined") {
-                        form.errors = [response.data.error];
-                    } else {
-                        this.getClient();
-
-                        form.errors = [];
-                        form.name = '';
-                        form.email = '';
-                        form.room = '';
-                        form.welcome_message = '';
-                        form.welcome_image = '';
-                        form.credit = '';
-                        form.debit = '';
-                        
-                        $(modal).modal('hide');
-                    }
-                    
-                })
-                .catch(error => {
-                    if (typeof error.response.data === 'object') {
-                        form.errors = _.flatten(_.toArray(error.response.data));
-                    } else {
-                        form.errors = ['Something went wrong. Please try again.'];
-                    }
-                    console.log(error.response.data)
-                });
-        },
-
-        /**
-         * Destroy the given client.
-         */
-        destroy(client) {
-            axios.delete('/client/' + client.id)
+            /*
+            * create the file 
+            */
+            onFileChange(e) {
+                let files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                this.createImage(files[0]);
+            },
+            
+            notificationwindows(client) {
+                this.notification.id = client.room
+                $('#modal-notify-hotelclient').modal('show');
+            },
+            
+            // send notification to client
+            sendnotification() {
+                axios.get('/clientnotification/'+this.notification.id,{
+                        params:{
+                            message: this.notification.message
+                        }
+                    })
                     .then(response => {
-                        this.getClient();
+                            console.log(response)
+                    })
+                    .catch(error => {
+                        console.log(error.response.data)
                     });
-        },
+            },
+
+            // return all clients
+            getClient (page) {
+                if (typeof page === 'undefined') {
+                    page = 1;
+                }
+                axios.get('/client?page=' + page)
+                    .then(response => {
+                        this.pagedata = response.data;
+                        this.clients = this.pagedata.data;
+                    })
+                    .catch(error => {
+                        console.log(error.response.data)
+                    });
+            },
+        
+            /**
+             * Show the form for adding new client.
+             */
+            showAddClientForm() {
+                $('#modal-add-client').modal('show');
+            },
+
+            /**
+             * Create a new OAuth client for the user.
+             */
+            store() {
+                this.persistClient(
+                    'post', '/client',
+                    this.createForm, '#modal-create-client'
+                );
+            },
+
+            /**
+             * Edit the given client.
+             */
+            edit(client) {
+                this.editForm.id = client.id;
+                this.editForm.name = client.name;
+                this.editForm.email = client.email
+                this.editForm.room = client.room;
+                this.editForm.welcome_message = client.welcome_message;
+                this.editForm.welcome_image = client.welcome_image;
+                this.editForm.credit = client.credit;
+                this.editForm.debit = client.debit;
+
+                $('#modal-edit-hotelclient').modal('show');
+            },
+
+            /**
+             * Update the client being edited.
+             */
+            update() {
+                this.persistClient(
+                    'put', '/client/' + this.editForm.id,
+                    this.editForm, '#modal-edit-hotelclient'
+                );
+            },
+
+            /**
+             * Persist the client to storage using the given form.
+             */
+            persistClient(method, uri, form, modal) {
+                form.errors = [];
+
+                axios[method](uri, form)
+                    .then(response => {
+                        if (typeof response.data.error != "undefined") {
+                            form.errors = [response.data.error];
+                        } else {
+                            this.getClient();
+
+                            form.errors = [];
+                            form.name = '';
+                            form.email = '';
+                            form.room = '';
+                            form.welcome_message = '';
+                            form.welcome_image = '';
+                            form.credit = '';
+                            form.debit = '';
+                            
+                            $(modal).modal('hide');
+                        }
+                        
+                    })
+                    .catch(error => {
+                        if (typeof error.response.data === 'object') {
+                            form.errors = _.flatten(_.toArray(error.response.data));
+                        } else {
+                            form.errors = ['Something went wrong. Please try again.'];
+                        }
+                        console.log(error.response.data)
+                    });
+            },
+
+            /**
+             * Destroy the given client.
+             */
+            destroy(client) {
+                axios.delete('/client/' + client.id)
+                        .then(response => {
+                            this.getClient();
+                        });
+            },
+            
+        }
     }
-}
 </script>

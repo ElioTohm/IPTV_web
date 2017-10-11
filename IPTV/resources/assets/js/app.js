@@ -21,28 +21,26 @@ Vue.use(VueRouter)
 
 // lazy load components
 const channels = (resolve) => require(['./components/channels.vue'], resolve)
-const clients = (resolve) => require(['./components/passport/Clients.vue'], resolve)
-const authorizedclients = (resolve) => require(['./components/passport/AuthorizedClients.vue'], resolve)
+const passportclients = (resolve) => require(['./components/passport/Clients.vue'], resolve)
 const hotelclients = (resolve) => require(['./components/hotelclients.vue'], resolve)
 const devices = (resolve) => require(['./components/devices.vue'], resolve)
+const monitor = (resolve) => require(['./components/monitor.vue'], resolve) 
+const pagination = (resolve) => require(['laravel-vue-pagination'], resolve) 
+// Vue.component('pagination', require('laravel-vue-pagination'));
 
 // Create and mount root instance.
 // Make sure to inject the router.
 // Route components will be rendered inside <router-view>.
 new Vue({
-
   router,
-
   components : {
-    clients,
-    authorizedclients,
+    passportclients,
+    monitor,
     channels,
     hotelclients,
     devices,
   },
-
   data : {
     clients:'test'
   }
- 
 }).$mount('#app')

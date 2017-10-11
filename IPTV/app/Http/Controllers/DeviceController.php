@@ -12,13 +12,11 @@ class DeviceController extends Controller
     public function getDevices () 
     {
         // fetch all devices with id and room columns
-        $devices = Device::with('Authclient')->orderBy('room')->get(['id', 'room']);
+        $devices = Device::with('Authclient')->orderBy('room')->select(['id', 'room'])->paginate(env('ITEM_PER_PAGE'));
         foreach ($devices as $device) {
             $device->authclient->secret = substr($device->authclient->secret,0, 4);
         }
-        return response()->json([
-                'devices' => $devices,
-            ]);
+        return $devices;
     }
 
     
@@ -27,7 +25,7 @@ class DeviceController extends Controller
         $lastdevice = Device::all(['id'])->last();
         $unsigned_oAtuh = oAuthClient::where('assigned_to', 0)->first();
         
-        if ($unsigned_oAtuh != null){
+        if ($unsigned_oAtuh != null) {
             $device = new Device();
             $device->id = $unsigned_oAtuh->id;
             $device->room = $request->input('room');

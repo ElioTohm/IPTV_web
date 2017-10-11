@@ -5,14 +5,14 @@
     <div class="row">
         
         @if (Auth::user()->role == 1)
-            <clients></clients>
-            <authorizedclients></authorizedclients>    
+            <passportclients></passportclients>    
         @endif
         <div>
             <Channels></Channels>
         </div>
-        <div>
-            <devices></devices>
+        <div class="row">
+            <devices class="col-md-6"></devices>
+            <monitor class="col-md-6"></monitor>
         </div>
         <div>
             <hotelclients></hotelclients>

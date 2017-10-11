@@ -41,6 +41,7 @@
                             </td>
                         </tr>
                     </tbody>
+                    <pagination :data="pagedata" v-on:pagination-change-page="getDevice"></pagination>
                 </table>
             </div>
         </div>
@@ -147,9 +148,14 @@
     </div>
 </template>
 <script>
-export default {
+import pagination from 'laravel-vue-pagination';
+    export default {
+        components: {
+            'pagination': pagination
+        },
     data () {
         return {
+            pagedata:{},
             devices: [],
 
             createForm: {
@@ -167,11 +173,11 @@ export default {
         this.getDevice();
     },
     methods: {
-        getDevice () {
-            axios.get('/device')
+        getDevice (page) {
+            axios.get('/device?page=' + page)
                 .then(response => {
-                        this.devices = response.data.devices;
-                        this.token = response.data.token;
+                        this.pagedata = response.data;
+                        this.devices = this.pagedata.data;
                 })
                 .catch(error => {
                     console.log(error.response.data)

@@ -35,7 +35,12 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    
+                    <ul class="nav navbar-nav navbar-left">
+                        @if (Auth::user()->role == 1)
+                            <li><a href="#">Admin</a></li>
+                        @endif
+                        <li><a href="#">Home</a></li>
+                    </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->

@@ -3,13 +3,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <!-- Title -->
                     <span>
                         Channels 
                     </span>
-
-                    <input v-model="search.query" placeholder="Search"/>
-                    
-
+                    <!-- search input -->
+                    <div class="form-group">
+                        <input class="form-control" v-model="search.query" placeholder="Search"/>
+                    </div>
+                    <!-- Header action add new item -->
                     <a class="action-link" @click="showAddChannelForm">
                         Add New Channel
                     </a>
@@ -54,6 +56,7 @@
                             </td>
                         </tr>
                     </tbody>
+                    <pagination :data="pagedata" v-on:pagination-change-page="getChannel"></pagination>
                 </table>
             </div>
         </div>
@@ -236,12 +239,17 @@
 </template>
 
 <script>
+    import pagination from 'laravel-vue-pagination';
     export default {
+        components: {
+            'pagination': pagination
+        },
         /*
          * The component's data.
          */
         data() {
             return {
+                pagedata:{},
                 channels: [],
                 
                 genres:[],
@@ -320,10 +328,14 @@
             /**
              * Get all of the OAuth channels for the user.
              */
-            getChannel() {
-                axios.get('/channel')
+            getChannel(page) {
+                if (typeof page === 'undefined') {
+                    page = 1;
+                }
+                axios.get('/channel?page=' + page)
                         .then(response => {
-                            this.channels = response.data.channels;
+                            this.pagedata = response.data.channels
+                            this.channels = this.pagedata.data;
                             this.genres = response.data.genres;
                         });
             },

@@ -15,11 +15,8 @@ class ClientController extends Controller
     public function getClients () 
     {
         // fetch all clients with id
-        $clients = Client::get();
-
-        return response()->json([
-            'clients' => $clients,
-        ]);
+        $clients = Client::paginate(env('ITEM_PER_PAGE'));
+        return $clients;
     }
 
     

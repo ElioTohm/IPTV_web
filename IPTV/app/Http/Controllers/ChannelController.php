@@ -15,7 +15,7 @@ class ChannelController extends Controller
      */
     public function getChannels () 
     {
-        $channels = Channel::with('genres')->get(['id', 'number', 'name', 'stream', 'thumbnail']);
+        $channels = Channel::with('genres')->select(['id', 'number', 'name', 'stream', 'thumbnail'])->paginate(env('ITEM_PER_PAGE'));
         $genres = Genre::get(['id', 'name']);
 
         return response()->json([
