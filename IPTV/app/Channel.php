@@ -34,4 +34,9 @@ class Channel extends Model
     {
         return $this->belongsToMany('App\Genre', 'channel_genre', 'channel', 'genre');
     }
+
+    public function streamtype ()
+    {
+        return $this->belongsTo('App\StreamType', 'stream_type');
+    }
 }

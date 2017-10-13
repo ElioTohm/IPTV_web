@@ -72,7 +72,7 @@ class ApiController extends Controller
     // Get Channels
     public function getChannel (Request $request) 
     {
-        $channels = Channel::with('genres')->get(['id', 'number', 'name', 'stream', 'thumbnail']);
+        $channels = Channel::with('genres')->get(['id', 'number', 'name', 'stream', 'stream_type', 'thumbnail']);
         $result = [];
         foreach ($channels as $key => $channel) {
             array_push($result, [
@@ -80,6 +80,7 @@ class ApiController extends Controller
                 'number' => $channel->number, 
                 'name' => $channel->name, 
                 'stream' => $channel->stream, 
+                'stream_type' => $channel->stream_type,
                 'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . urlencode($channel->thumbnail),
                 'genres' => $channel->genres
             ]);

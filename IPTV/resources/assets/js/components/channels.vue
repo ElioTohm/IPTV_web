@@ -24,6 +24,7 @@
                             <th class="col-md-1">number</th>
                             <th class="col-md-3">name</th>
                             <th class="col-md-2">stream</th>
+                            <th class="col-md-2">stream type</th>
                             <th class="col-md-2">thumbnail</th>
                             <th class="col-md-2">genre</th>
                             <th class="col-md-1"></th>
@@ -35,6 +36,7 @@
                             <td class="col-md-2">{{channel.number}}</td>
                             <td class="col-md-2">{{channel.name}}</td>
                             <td class="col-md-3">{{channel.stream}}</td>
+                            <td class="col-md-3">{{channel.streamtype.name}}</td>
                             <td class="col-md-3">{{channel.thumbnail}}</td>
                             <td class="col-md-2">
                                 <p v-for="genre in channel.genres" :key="genre.id">
@@ -134,6 +136,16 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- Stream Type -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Stream Type</label>
+
+                                <div class="col-md-7">
+                                    <select class="form-control" v-model="createForm.stream_type" single>
+                                        <option v-for="stream_type in stream_types" :key="stream_type.id" v-bind:value="stream_type.id">{{stream_type.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -221,6 +233,16 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- Stream Type -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Stream Type</label>
+
+                                <div class="col-md-7">
+                                    <select class="form-control" v-model="editForm.stream_type" single>
+                                        <option v-for="stream_type in stream_types" :key="stream_type.id" v-bind:value="stream_type.id">{{stream_type.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -254,6 +276,8 @@
                 
                 genres:[],
 
+                stream_types:[],
+
                 thumbnail:'',
 
                 createForm: {
@@ -261,6 +285,7 @@
                     number: 0,
                     name: '',
                     stream: '',
+                    stream_type: 0,
                     thumbnail: '',
                     genres : []
                 },
@@ -270,6 +295,7 @@
                     number: 0,
                     name: '',
                     stream: '',
+                    stream_type: 0,
                     thumbnail: '',
                     genres : []
                 },
@@ -336,6 +362,7 @@
                         .then(response => {
                             this.pagedata = response.data.channels
                             this.channels = this.pagedata.data;
+                            this.stream_types = response.data.stream_types;
                             this.genres = response.data.genres;
                         });
             },
@@ -345,6 +372,7 @@
              */
             showAddChannelForm() {
                 this.createForm.number = this.channels[this.channels.length - 1].number + 1
+                this.createForm.stream_type = 1;
                 $('#modal-add-channel').modal('show');
             },
 
@@ -368,6 +396,7 @@
                 this.editForm.thumbnail = channel.thumbnail;
                 this.editForm.genre = channel.genre;
                 this.editForm.number = channel.number;
+                this.editForm.stream_type = channel.streamtype.id
 
                 $('#modal-edit-channel').modal('show');
             },
@@ -399,7 +428,6 @@
                         form.genre = '';
                         form.number = '';
 
-                        console.log(response);
                         $(modal).modal('hide');
                     })
                     .catch(error => {

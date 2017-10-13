@@ -13,11 +13,20 @@ class CreateChannelsTable extends Migration
      */
     public function up()
     {
+        Schema::create('stream_types', function (Blueprint $table){
+            $table->increments('id')->unsigned();
+            $table->string('name');
+            $table->timestamps();
+        });
+
         Schema::create('channels', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('number')->unique();
             $table->string('name');
             $table->string('stream')->unique();
+            $table->integer('stream_type')->unsigned();
+            $table->foreign('stream_type')
+                    ->references('id')->on('stream_types');
             $table->string('thumbnail')->default("DefaultThumbnail.png");;
             $table->timestamps();
         });
@@ -55,5 +64,6 @@ class CreateChannelsTable extends Migration
         Schema::dropIfExists('channel_genre');
         Schema::dropIfExists('channels');
         Schema::dropIfExists('genres');
+        Schema::dropIfExists('stream_types');
     }
 }
