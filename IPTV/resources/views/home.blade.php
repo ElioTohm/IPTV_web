@@ -3,10 +3,6 @@
 @section('content')
 <div class="container">
     <div class="row">
-        
-        @if (Auth::user()->role == 1)
-            <passportclients></passportclients>    
-        @endif
         <div>
             <Channels></Channels>
         </div>

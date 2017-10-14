@@ -38,9 +38,9 @@
                     <ul class="nav navbar-nav navbar-left">
                         @if (!Auth::guest())
                             @if (Auth::user()->role == 1)
-                                <li><a href="#">Admin</a></li>
+                                <li><a href="/admin">Admin</a></li>
                             @endif
-                            <li><a href="#">Home</a></li>
+                            <li><a href="/home">Home</a></li>
                         @endif
                     </ul>
                     <!-- Right Side Of Navbar -->
