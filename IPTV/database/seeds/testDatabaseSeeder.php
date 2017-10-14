@@ -45,6 +45,10 @@ class testDatabaseSeeder extends Seeder
                 'name' => 'HLS'],
             ['id'=> 3,
                 'name' => 'DASH'],
+            ['id'=> 4,
+                'name' => 'SS'],
+            ['id'=> 5,
+                'name' => 'MISC'],
         ]);
         
         DB::table('channels')->insert([
