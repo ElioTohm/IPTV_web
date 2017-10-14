@@ -23,6 +23,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', 'AdminController@index')
+            ->middleware('check_admin');
     /* 
      * Channels controller and view
      */
