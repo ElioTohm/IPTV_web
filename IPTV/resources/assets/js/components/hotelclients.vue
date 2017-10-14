@@ -17,54 +17,50 @@
                     </a>
                 </div>  
             </div>
-            <div class="panel-body">       
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Room</th>
-                            <th>Welcome message</th>
-                            <th>Welcome image</th>
-                            <th>Credit</th>
-                            <th>Debit</th>
-                            <th>Notify</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="client in clients" :key="client.id">
-                            <td>{{client.name}}</td>
-                            <td>{{client.email}}</td>
-                            <td>{{client.room}}</td>
-                            <td>{{client.welcome_message}}</td>
-                            <td>{{client.welcome_image}}</td>
-                            <td>{{client.credit}}</td>
-                            <td>{{client.debit}}</td>
-                            <!-- Notification button -->
-                            <td>
-                                <a class="action-link" @click="notificationwindows(client)">
-                                    Notify
-                                </a>
-                            </td>
-                            <!-- Edit Button --> 
-                            <td  class="col-md-1">
-                                <a class="action-link" @click="edit(client)">
-                                    Edit
-                                </a>
-                            </td>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-2">Name</th>
+                                <th class="col-xs-1">Email</th>
+                                <th class="col-xs-1">Room</th>
+                                <th class="col-xs-1">Welcome message</th>
+                                <th class="col-xs-1">Welcome image</th>
+                                <th class="col-xs-2">Credit</th>
+                                <th class="col-xs-1">Debit</th>
+                                <th class="col-xs-1">Notify</th>
+                                <th class="col-xs-1"></th>
+                                <th class="col-xs-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="client in clients" :key="client.id">
+                                <td class="col-xs-2">{{client.name}}</td>
+                                <td class="col-xs-1">{{client.email}}</td>
+                                <td class="col-xs-1">{{client.room}}</td>
+                                <td class="col-xs-1">{{client.welcome_message}}</td>
+                                <td class="col-xs-1">{{client.welcome_image}}</td>
+                                <td class="col-xs-2">{{client.credit}}</td>
+                                <td class="col-xs-1">{{client.debit}}</td>
+                                <!-- Notification button -->
+                                <td class="col-xs-1">
+                                    <a class="action-link" @click="notificationwindows(client)">Notify</a>
+                                </td class="col-xs-1">
+                                <!-- Edit Button --> 
+                                <td   class="col-xs-1">
+                                    <a class="action-link" @click="edit(client)">Edit</a>
+                                </td>
 
-                            <!-- Delete Button -->
-                            <td  class="col-md-1">
-                                <a class="action-link text-danger" @click="destroy(client)">
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <pagination :data="pagedata" v-on:pagination-change-page="getClient"></pagination>
-                </table>
+                                <!-- Delete Button -->
+                                <td   class="col-xs-1">
+                                    <a class="action-link text-danger" @click="destroy(client)">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <pagination :data="pagedata" v-on:pagination-change-page="getClient"></pagination>
+                    </table>
+                </div>
             </div>
         </div>
     
@@ -87,7 +83,7 @@
                             <p><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
                             <ul>
-                                <li v-for="error in createForm.errors">
+                                <li v-for="error in createForm.errors" :key="error">
                                     {{ error }}
                                 </li>
                             </ul>
@@ -177,7 +173,7 @@
                             <p><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
                             <ul>
-                                <li v-for="error in editForm.errors">
+                                <li v-for="error in editForm.errors" :key="error">
                                     {{ error }}
                                 </li>
                             </ul>

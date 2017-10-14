@@ -21,7 +21,6 @@ Vue.use(VueRouter)
 
 // lazy load components
 const channels = (resolve) => require(['./components/channels.vue'], resolve)
-const passportclients = (resolve) => require(['./components/passport/Clients.vue'], resolve)
 const hotelclients = (resolve) => require(['./components/hotelclients.vue'], resolve)
 const devices = (resolve) => require(['./components/devices.vue'], resolve)
 const monitor = (resolve) => require(['./components/monitor.vue'], resolve) 
@@ -34,7 +33,6 @@ const pagination = (resolve) => require(['laravel-vue-pagination'], resolve)
 new Vue({
   router,
   components : {
-    passportclients,
     monitor,
     channels,
     hotelclients,

@@ -18,48 +18,50 @@
                 </div>  
             </div>
             <div class="panel-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th class="col-md-1">number</th>
-                            <th class="col-md-3">name</th>
-                            <th class="col-md-2">stream</th>
-                            <th class="col-md-2">stream type</th>
-                            <th class="col-md-2">thumbnail</th>
-                            <th class="col-md-2">genre</th>
-                            <th class="col-md-1"></th>
-                            <th class="col-md-1"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="channel in channels" :key="channel.id">
-                            <td class="col-md-2">{{channel.number}}</td>
-                            <td class="col-md-2">{{channel.name}}</td>
-                            <td class="col-md-3">{{channel.stream}}</td>
-                            <td class="col-md-3">{{channel.streamtype.name}}</td>
-                            <td class="col-md-3">{{channel.thumbnail}}</td>
-                            <td class="col-md-2">
-                                <p v-for="genre in channel.genres" :key="genre.id">
-                                    {{ genre.name }}
-                                </p>
-                            </td>
-                            <!-- Edit Button -->
-                            <td  class="col-md-1">
-                                <a class="action-link" @click="edit(channel)">
-                                    Edit
-                                </a>
-                            </td>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-xs-1">number</th>
+                                <th class="col-xs-2">name</th>
+                                <th class="col-xs-2">stream</th>
+                                <th class="col-xs-1">stream type</th>
+                                <th class="col-xs-2">thumbnail</th>
+                                <th class="col-xs-2">genre</th>
+                                <th class="col-xs-1"></th>
+                                <th class="col-xs-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="channel in channels" :key="channel.id">
+                                <td class="col-xs-1">{{channel.number}}</td>
+                                <td class="col-xs-2">{{channel.name}}</td>
+                                <td class="col-xs-2">{{channel.stream}}</td>
+                                <td class="col-xs-1">{{channel.streamtype.name}}</td>
+                                <td class="col-xs-2">{{channel.thumbnail}}</td>
+                                <td class="col-xs-2">
+                                    <p v-for="genre in channel.genres" :key="genre.id">
+                                        {{ genre.name }}
+                                    </p>
+                                </td>
+                                <!-- Edit Button -->
+                                <td  class="col-xs-1">
+                                    <a class="action-link" @click="edit(channel)">
+                                        Edit
+                                    </a>
+                                </td>
 
-                            <!-- Delete Button -->
-                            <td  class="col-md-1">
-                                <a class="action-link text-danger" @click="destroy(channel)">
-                                    Delete
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <pagination :data="pagedata" v-on:pagination-change-page="getChannel"></pagination>
-                </table>
+                                <!-- Delete Button -->
+                                <td  class="col-xs-1">
+                                    <a class="action-link text-danger" @click="destroy(channel)">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <pagination :data="pagedata" v-on:pagination-change-page="getChannel"></pagination>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -82,7 +84,7 @@
                             <p><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
                             <ul>
-                                <li v-for="error in createForm.errors">
+                                <li v-for="error in createForm.errors" :key="error">
                                     {{ error }}
                                 </li>
                             </ul>
@@ -179,7 +181,7 @@
                             <p><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
                             <ul>
-                                <li v-for="error in editForm.errors">
+                                <li v-for="error in editForm.errors" :key="error">
                                     {{ error }}
                                 </li>
                             </ul>
