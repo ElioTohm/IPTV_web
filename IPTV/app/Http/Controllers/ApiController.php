@@ -9,6 +9,7 @@ use App\Client;
 use App\Device;
 use App\User;
 use App\oAuthClient;
+use App\AppSettings;
 use GuzzleHttp\Client as GuzzleClient;
 
 class ApiController extends Controller
@@ -20,7 +21,8 @@ class ApiController extends Controller
      * with the first 4 character sent
      * The function will make an auth request to passport or return 401 respectively 
      */
-    public function register(Request $request) {
+    public function register(Request $request) 
+    {
         // take request param
         $id = $request->query('id');
         $sentsecret = $request->query('secret');
@@ -30,11 +32,11 @@ class ApiController extends Controller
                                     ->where('revoked', 0)
                                     ->first();
 
-        if ($oauthclient != null){
+        if ($oauthclient != null) {
             $secret = $oauthclient->secret;
             $result = substr($secret, 0, 4);
 
-            if (strcmp($result, $sentsecret) == 0 ){
+            if (strcmp($result, $sentsecret) == 0 ) {
                 $user = User::find(1);
                 
                 // $token = $user->createToken($oauthclient->name);
@@ -106,5 +108,17 @@ class ApiController extends Controller
             "credit" => $client->credit, 
             "debit" => $client->debit
         ]);
+    }
+
+    // check for launcher app update
+    public function launcherUpdateCheck (Request $request)
+    {
+        $enduserapp = AppSettings::where('app', 'launcher')->first();
+
+        if ($request->get('version') < $enduserapp->version) {
+            return response()->download(storage_path('app/private/' . $enduserapp->apk_path));
+        } else {
+            return NULL;
+        }
     }
 }

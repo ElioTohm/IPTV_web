@@ -25,10 +25,15 @@ class AdminController extends Controller
     // update enduserapp info
     public function updateLauncherApp (Request $request) 
     {
-        $path = $request->file('apk')->storeAs('public', 'xmslauncher.apk');
+        $path = $request->file('apk')->storeAs('apk', 'xmslauncher.apk', 'private');
+        
+        $enduserapp = AppSettings::where('app', 'launcher')->first();
+        $enduserapp->version = $request->get('version') ;
+        $enduserapp->apk_path = $path;
+        $enduserapp->save();
         
         return response()->json([
-            'response'=> $request->get('version')
+            'response'=> 200
         ]);
     }
 

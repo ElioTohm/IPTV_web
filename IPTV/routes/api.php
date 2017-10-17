@@ -14,8 +14,13 @@ use Illuminate\Http\Request;
 */
 Route::get('/registerDevice', 'ApiController@register');
 
+Route::get('/launcherUpdate', 'ApiController@launcherUpdateCheck');
+
 Route::group(['middleware' => 'auth:api'], function()
 {
+    // check for update
+    
+
     // get channel
     Route::get('/channel' , 'ApiController@getChannel');
 

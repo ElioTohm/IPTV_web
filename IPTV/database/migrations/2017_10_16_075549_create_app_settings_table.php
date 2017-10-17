@@ -14,8 +14,11 @@ class CreateAppSettingsTable extends Migration
     public function up()
     {
         Schema::create('app_settings', function (Blueprint $table){
+            $table->increments('id');
             $table->string('app');
             $table->double('version');
+            $table->string('apk_path')->nullable();
+            $table->timestamps();
         });
     }
 
