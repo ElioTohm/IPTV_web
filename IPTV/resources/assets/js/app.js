@@ -24,8 +24,8 @@ const channels = (resolve) => require(['./components/channels.vue'], resolve)
 const hotelclients = (resolve) => require(['./components/hotelclients.vue'], resolve)
 const devices = (resolve) => require(['./components/devices.vue'], resolve)
 const monitor = (resolve) => require(['./components/monitor.vue'], resolve) 
-const pagination = (resolve) => require(['laravel-vue-pagination'], resolve) 
-// Vue.component('pagination', require('laravel-vue-pagination'));
+const pagination = (resolve) => require(['laravel-vue-pagination'], resolve)
+const androidapp = (resolve) => require(['./components/androidapp.vue'], resolve)
 
 // Create and mount root instance.
 // Make sure to inject the router.
@@ -37,6 +37,7 @@ new Vue({
     channels,
     hotelclients,
     devices,
+    androidapp,
   },
   data : {
     clients:'test'

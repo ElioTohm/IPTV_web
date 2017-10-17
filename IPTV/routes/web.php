@@ -21,11 +21,18 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 Route::middleware(['auth'])->group(function () {
+    /**
+     * admin route to set app settings 
+     */
     Route::get('/admin', 'AdminController@index')
             ->middleware('check_admin');
-    /* 
+    Route::get('/admin/launcherapp', 'AdminController@getLauncherApp')
+            ->middleware('check_admin');
+    Route::post('/admin/launcherapp', 'AdminController@updateLauncherApp')
+            ->middleware('check_admin');
+
+    /**
      * Channels controller and view
      */
     Route::get('/channel', 'ChannelController@getChannels');

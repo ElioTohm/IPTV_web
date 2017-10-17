@@ -11,6 +11,10 @@ class testDatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('app_settings')->insert([
+            ['app' => 'launcher',
+                'version' => 0.6],
+        ]);
 
         DB::table('roles')->insert([
             ['name' => 'SuperAdmin'],

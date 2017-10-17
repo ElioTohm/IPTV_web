@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        welcome admin
+        <androidapp></androidapp>
     </div>
 </div>
 
