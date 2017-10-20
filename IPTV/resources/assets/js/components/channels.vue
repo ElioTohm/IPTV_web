@@ -326,7 +326,8 @@
                 if (this.search.query != '') {
                     axios.get('/search', {params : this.search})
                         .then(response => {
-                            this.channels = response.data;
+                            this.pagedata = response.data
+                            this.channels = this.pagedata.data;
                         });
                 } else {
                     this.getChannel();

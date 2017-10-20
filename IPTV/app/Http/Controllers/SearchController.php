@@ -19,7 +19,9 @@ class SearchController extends Controller
         switch ($request->input('model')) {
             // use Client model
             case 'Channel':
-                return Channel::search($request->input('query'))->get();
+                $channel = Channel::search($request->input('query'))->paginate(25);
+                $channel->load('genres', 'streamtype');
+                return $channel;
             
             //  use Devices model
             case 'Device':

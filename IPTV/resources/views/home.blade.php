@@ -6,9 +6,8 @@
         <div>
             <Channels></Channels>
         </div>
-        <div class="row">
-            <devices class="col-md-6"></devices>
-            <monitor class="col-md-6"></monitor>
+        <div>
+            <devices></devices>
         </div>
         <div>
             <hotelclients></hotelclients>
