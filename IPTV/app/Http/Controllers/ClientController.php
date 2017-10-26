@@ -75,6 +75,9 @@ class ClientController extends Controller
         event(new NotificationEvent($id, ($type == '') ? 0 : $type,
                                         ($message == '') ? 'Welcome' : $message, 
                                         ($image == '') ? $default_welcome_image : $image));
+        return response()->json([
+            'sent' => 1
+        ]); 
     }
 
     private function checkWeclomeImage ($client, $image, $room, $addclient) {
