@@ -13,7 +13,7 @@ use App\Order;
 |
 */
 
-Broadcast::channel('Notification_To_.{id}', function ($user) {
+Broadcast::channel('Notification_To_{id}', function ($user) {
     return true;
 });
 

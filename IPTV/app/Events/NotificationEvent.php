@@ -41,7 +41,7 @@ class NotificationEvent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new channel('Notification_To_' . $this->CLIENT_ID);
+        return new PrivateChannel('Notification_To_' . $this->CLIENT_ID);
     }
     
     public function broadcastWith()
