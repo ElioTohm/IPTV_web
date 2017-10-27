@@ -1,7 +1,7 @@
 <?php
 
-use App\Events\ClientSettingsEvent;
-
+use App\Notifications\DeviceNotification;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,4 +68,8 @@ Route::middleware(['auth'])->group(function () {
     // notification route
     Route::get('/clientnotification/{id}', 'ClientController@sendNotification');
 
+    Route::get('test', function () {
+        $user = User::find(1);
+        $user->notify(new DeviceNotification());
+    });
 });
