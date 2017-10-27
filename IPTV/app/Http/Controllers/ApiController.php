@@ -42,7 +42,7 @@ class ApiController extends Controller
                 // $token = $user->createToken($oauthclient->name);
                 $guzzle = new \GuzzleHttp\Client;
                 
-                $authrequest = $guzzle->post('http://192.168.0.78/oauth/token', [
+                $authrequest = $guzzle->post(env('APP_URL') . '/oauth/token', [
                     'form_params' => [
                         'grant_type' => 'password',
                         'client_id' => $id,
