@@ -46,7 +46,8 @@ class NotificationEvent implements ShouldBroadcastNow
     
     public function broadcastWith()
     {
-        return ['type' => $this->TYPE,
+        return [
+                    'type' => $this->TYPE,
                     'message' => $this->MESSAGE,        
                     'image' => $this->IMAGE,
                 ];

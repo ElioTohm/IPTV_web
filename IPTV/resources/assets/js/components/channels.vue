@@ -133,9 +133,11 @@
                                 <label class="col-md-3 control-label">Genre</label>
 
                                 <div class="col-md-7">
-                                    <select class="form-control" v-model="createForm.genres" multiple>
-                                        <option v-for="genre in genres" :key="genre.id" v-bind:value="genre.id">{{genre.name}}</option>
-                                    </select>
+                                     <multiselect v-model="createForm.genres" :options="genres" :custom-label="nameWithLang" 
+                                                placeholder="Select genres" label="name" track-by="name" 
+                                                :multiple="true" :hide-selected="true" :close-on-select="false">
+                                        <span class="custom__tag"><span>{{ genres.name }}</span><span class="custom__remove" >❌</span></span>
+                                    </multiselect>
                                 </div>
                             </div>
                             <!-- Stream Type -->
@@ -230,9 +232,14 @@
                                 <label class="col-md-3 control-label">Genre</label>
 
                                 <div class="col-md-7">
-                                     <select class="form-control" v-model="editForm.genres" multiple>
+                                     <!-- <select class="form-control" v-model="editForm.genres" multiple>
                                         <option v-for="genre in genres" :key="genre.id" v-bind:value="genre.id">{{genre.name}}</option>
-                                    </select>
+                                    </select> -->
+                                    <multiselect v-model="editForm.genres" :options="genres" :custom-label="nameWithLang" 
+                                                placeholder="Select genres" label="name" track-by="name" 
+                                                :multiple="true" :hide-selected="true" :close-on-select="false">
+                                        <span class="custom__tag"><span>{{ genres.name }}</span><span class="custom__remove" >❌</span></span>
+                                    </multiselect>
                                 </div>
                             </div>
                             <!-- Stream Type -->
@@ -264,9 +271,12 @@
 
 <script>
     import pagination from 'laravel-vue-pagination';
+    import multiselect from 'vue-multiselect';
+
     export default {
         components: {
-            'pagination': pagination
+            'pagination': pagination,
+            'multiselect': multiselect
         },
         /*
          * The component's data.
@@ -274,8 +284,9 @@
         data() {
             return {
                 pagedata:{},
+
                 channels: [],
-                
+
                 genres:[],
 
                 stream_types:[],
@@ -337,6 +348,9 @@
         },
 
         methods: {
+            nameWithLang ({ id, name }) {
+                return `${name}`
+            },
             createImage(file) {
                 let reader = new FileReader();
                 let vm = this;
@@ -362,12 +376,12 @@
                     page = 1;
                 }
                 axios.get('/channel?page=' + page)
-                        .then(response => {
-                            this.pagedata = response.data.channels
-                            this.channels = this.pagedata.data;
-                            this.stream_types = response.data.stream_types;
-                            this.genres = response.data.genres;
-                        });
+                    .then(response => {
+                        this.pagedata = response.data.channels
+                        this.channels = this.pagedata.data;
+                        this.stream_types = response.data.stream_types;
+                        this.genres = response.data.genres;
+                    });
             },
 
             /**
@@ -383,6 +397,7 @@
              * Create a new OAuth channel for the user.
              */
             store() {
+                this.createForm.genres = _.map(this.createForm.genres, _.property('id'))
                 this.persistChannel(
                     'post', '/channel',
                     this.createForm, '#modal-create-channel'
@@ -397,7 +412,7 @@
                 this.editForm.name = channel.name;
                 this.editForm.stream = channel.stream;
                 this.editForm.thumbnail = channel.thumbnail;
-                this.editForm.genre = channel.genre;
+                this.editForm.genres = channel.genres;
                 this.editForm.number = channel.number;
                 this.editForm.stream_type = channel.streamtype.id
 
@@ -408,6 +423,7 @@
              * Update the channel being edited.
              */
             update() {
+                this.editForm.genres = _.map(this.editForm.genres, _.property('id'))
                 this.persistChannel(
                     'put', '/channel/' + this.editForm.id,
                     this.editForm, '#modal-edit-channel'
@@ -432,6 +448,7 @@
                         form.number = '';
 
                         $(modal).modal('hide');
+                        console.log(response);
                     })
                     .catch(error => {
                         console.log(error.response.data)
@@ -455,3 +472,4 @@
         }
     }
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
