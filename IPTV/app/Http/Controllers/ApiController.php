@@ -81,8 +81,10 @@ class ApiController extends Controller
                 'id' => $channel->id, 
                 'number' => $channel->number, 
                 'name' => $channel->name, 
-                'stream' => $channel->stream, 
-                'stream_type' => $channel->stream_type,
+                'stream' => [
+                    'vid_stream' => $channel->stream,
+                    'type' => $channel->stream_type,
+                ],
                 'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . urlencode($channel->thumbnail),
                 'genres' => $channel->genres
             ]);
