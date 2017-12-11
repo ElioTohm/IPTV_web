@@ -23,11 +23,11 @@ class CreateMovieTable extends Migration
         });
 
         Schema::create('movies_genre', function (Blueprint $table) {
-            $table->integer('channel')->unsigned();
+            $table->integer('movie')->unsigned();
             $table->integer('genre')->unsigned();
-            $table->primary(['channel', 'genre']);
-            $table->foreign('channel')
-                  ->references('id')->on('channels')
+            $table->primary(['movie', 'genre']);
+            $table->foreign('movie')
+                  ->references('id')->on('movies')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->foreign('genre')

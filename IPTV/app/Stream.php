@@ -18,4 +18,8 @@ class Stream extends Model
     public function channel () {
     	return $this->belongsTo('App\Channel', 'stream', 'id');
     }
+
+    public function movies () {
+        return $this->belongsTo('App\Moview', 'stream', 'id');
+    }
 }

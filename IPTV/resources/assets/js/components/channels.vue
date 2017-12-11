@@ -368,6 +368,7 @@
                     console.log('wrg length');
                 this.createImage(files[0]);
             },
+            
             /**
              * Get all of the OAuth channels for the user.
              */

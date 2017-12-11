@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div>
-            vod
+            <movies></movies>
         </div>
     </div>
 </div>

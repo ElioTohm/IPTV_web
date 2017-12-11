@@ -27,6 +27,7 @@ const hotelclients = (resolve) => require(['./components/hotelclients.vue'], res
 const devices = (resolve) => require(['./components/devices.vue'], resolve)
 const monitor = (resolve) => require(['./components/monitor.vue'], resolve) 
 const androidapp = (resolve) => require(['./components/androidapp.vue'], resolve)
+const movies = (resolve)  => require(['./components/movies.vue'], resolve)
 
 // Create and mount root instance.
 // Make sure to inject the router.
@@ -39,8 +40,6 @@ new Vue({
     hotelclients,
     devices,
     androidapp,
-  },
-  data : {
-    clients:'test'
+    movies,
   }
 }).$mount('#app')
