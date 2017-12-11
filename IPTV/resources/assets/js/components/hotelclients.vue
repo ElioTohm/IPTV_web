@@ -493,10 +493,26 @@
              * Destroy the given client.
              */
             destroy(client) {
-                axios.delete('/client/' + client.id)
-                        .then(response => {
-                            this.getClient();
-                        });
+                this.$toasted.error("Remove "+client.name+"?", { 
+                    theme: "primary", 
+                    position: "top-center", 
+                    action : [{
+                                text : 'Delete',
+                                onClick : (e, toastObject) => {
+                                    toastObject.goAway(0);
+                                    axios.delete('/client/' + client.id)
+                                            .then(response => {
+                                                this.getClient();
+                                            });
+                                }
+                            },
+                            {
+                                text : 'Cancel',
+                                onClick : (e, toastObject) => {
+                                    toastObject.goAway(0);
+                                }
+                            }],
+                });
             },
             
         }

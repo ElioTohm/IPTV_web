@@ -464,10 +464,27 @@
              * Destroy the given client.
              */
             destroy(channel) {
-                axios.delete('/channel/' + channel.id)
-                        .then(response => {
-                            this.getChannel();
-                        });
+
+                this.$toasted.error("Delete " + channel.name + "?", { 
+                    theme: "primary", 
+                    position: "top-center", 
+                    action : [{
+                                text : 'Delete',
+                                onClick : (e, toastObject) => {
+                                    toastObject.goAway(0);
+                                    axios.delete('/channel/' + channel.id)
+                                    .then(response => {
+                                        this.getChannel();
+                                    });
+                                }
+                            },
+                            {
+                                text : 'Cancel',
+                                onClick : (e, toastObject) => {
+                                    toastObject.goAway(0);
+                                }
+                            }],
+                });
             },
         }
     }

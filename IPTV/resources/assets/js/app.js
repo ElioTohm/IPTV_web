@@ -16,7 +16,9 @@ window.Vue = require('vue');
  */
 import VueRouter  from 'vue-router'
 import router     from './router'
+import Toasted from 'vue-toasted';
 
+Vue.use(Toasted)
 Vue.use(VueRouter)
 
 // lazy load components
