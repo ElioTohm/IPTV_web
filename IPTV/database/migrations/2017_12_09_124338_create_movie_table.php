@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateChannelsTable extends Migration
+class CreateMovieTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,16 @@ class CreateChannelsTable extends Migration
      */
     public function up()
     {
-
-        Schema::create('channels', function (Blueprint $table) {
+        // movies table
+        Schema::create('movies', function (Blueprint $table){
             $table->increments('id');
-            $table->integer('number')->unique();
-            $table->string('name');
-            $table->integer('stream')->unsigned()->nullable();
-            $table->foreign('stream')->references('id')->on('streams');
-            $table->string('thumbnail')->default("DefaultThumbnail.png");
+            $table->string('title');
+            $table->string('stream')->unique();
+            $table->string('poster')->default("DefaultThumbnail.png");;
             $table->timestamps();
         });
 
-        Schema::create('genres', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->timestamps();
-        });
-
-        Schema::create('channel_genre', function (Blueprint $table) {
+        Schema::create('movies_genre', function (Blueprint $table) {
             $table->integer('channel')->unsigned();
             $table->integer('genre')->unsigned();
             $table->primary(['channel', 'genre']);
@@ -45,6 +37,7 @@ class CreateChannelsTable extends Migration
             $table->timestamps();
         });
 
+
     }
 
     /**
@@ -54,8 +47,8 @@ class CreateChannelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('channel_genre');
-        Schema::dropIfExists('channels');
-        Schema::dropIfExists('genres');
+        //
+        Schema::dropIfExists('movies_genre');
+        Schema::dropIfExists('movies');
     }
 }

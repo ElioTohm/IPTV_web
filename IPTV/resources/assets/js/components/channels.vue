@@ -36,8 +36,8 @@
                             <tr v-for="channel in channels" :key="channel.id">
                                 <td class="col-xs-1">{{channel.number}}</td>
                                 <td class="col-xs-2">{{channel.name}}</td>
-                                <td class="col-xs-2">{{channel.stream}}</td>
-                                <td class="col-xs-1">{{channel.streamtype.name}}</td>
+                                <td class="col-xs-2">{{channel.stream.vid_stream}}</td>
+                                <td class="col-xs-1">{{channel.stream.type.name}}</td>
                                 <td class="col-xs-2">{{channel.thumbnail}}</td>
                                 <td class="col-xs-2">
                                     <p v-for="genre in channel.genres" :key="genre.id">
@@ -410,11 +410,11 @@
             edit(channel) {
                 this.editForm.id = channel.id;
                 this.editForm.name = channel.name;
-                this.editForm.stream = channel.stream;
+                this.editForm.stream = channel.stream.vid_stream;
                 this.editForm.thumbnail = channel.thumbnail;
                 this.editForm.genres = channel.genres;
                 this.editForm.number = channel.number;
-                this.editForm.stream_type = channel.streamtype.id
+                this.editForm.stream_type = channel.stream.type.id
 
                 $('#modal-edit-channel').modal('show');
             },

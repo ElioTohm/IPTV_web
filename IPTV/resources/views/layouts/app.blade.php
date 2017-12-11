@@ -40,7 +40,8 @@
                             @if (Auth::user()->role == 1)
                                 <li><a href="/admin">Admin</a></li>
                             @endif
-                            <li><a href="/home">Home</a></li>
+                            <li><a href="/dvb">DVB</a></li>
+                            <li><a href="/vod">VOD</a></li>
                         @endif
                     </ul>
                     <!-- Right Side Of Navbar -->

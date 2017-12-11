@@ -19,9 +19,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dvb', 'HomeController@index')->name('dvb');
+    
     /**
      * admin route to set app settings 
      */
@@ -56,6 +57,10 @@ Route::middleware(['auth'])->group(function () {
      Route::put('/client/{id}', 'ClientController@updateClient');
      Route::delete('/client/{id}', 'ClientController@deleteClient');
 
+    /**
+     * VOD route 
+     */
+    Route::get('/vod','VodController@index');
 
     /**
      * Search route
