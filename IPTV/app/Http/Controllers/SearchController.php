@@ -20,7 +20,7 @@ class SearchController extends Controller
             // use Client model
             case 'Channel':
                 $channel = Channel::search($request->input('query'))->paginate(25);
-                $channel->load('genres', 'streamtype');
+                $channel->load('genres', 'stream.type');
                 return $channel;
             
             //  use Devices model
