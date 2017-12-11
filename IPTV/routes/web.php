@@ -61,7 +61,7 @@ Route::middleware(['auth'])->group(function () {
      * VOD route 
      */
     Route::get('/vod','VodController@index');
-
+    Route::get('/movies', 'VodController@getMovies');
     /**
      * Search route
      */

@@ -15,10 +15,10 @@ class VodController extends Controller
     	return view('vod');
     }
 
-    // insert Movies () 
-    public function addMovie (MovieRequest $request) 
+    // get Movies  
+    public function getMovies (MovieRequest $request) 
     {
-
-    }
+    	return Movie::paginate(15);
+    }	
     
 }
