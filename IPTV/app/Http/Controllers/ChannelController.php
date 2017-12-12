@@ -38,7 +38,6 @@ class ChannelController extends Controller
         $stream = new Stream();
         $stream->vid_stream = $request->input('stream');
         $stream->type = $request->input('stream_type');
-        $stream->save();
         
         // create channel object
         $channel = new Channel();
@@ -47,7 +46,8 @@ class ChannelController extends Controller
         $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), TRUE);
         $channel->save();
         $channel->genres()->sync($request->input('genres'));
-        $channel->stream()->associate($stream);
+        $stream->channel = $channel->id;
+        $stream->save();
         return $channel;
     }
 

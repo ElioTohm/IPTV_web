@@ -16,10 +16,10 @@ class Stream extends Model
     }
 
     public function channel () {
-    	return $this->belongsTo('App\Channel', 'stream', 'id');
+    	return $this->hasOne('App\Channel', 'id', 'channel');
     }
 
     public function movies () {
-        return $this->belongsTo('App\Moview', 'stream', 'id');
+        return $this->hasOne('App\Movie', 'id', 'movie');
     }
 }

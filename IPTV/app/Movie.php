@@ -37,6 +37,6 @@ class Movie extends Model
 
     public function stream () 
     {
-        return $this->hasOne('App\Stream', 'id');
+        return $this->hasOne('App\Stream', 'movie');
     }
 }
