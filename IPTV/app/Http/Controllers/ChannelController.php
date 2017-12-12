@@ -17,10 +17,10 @@ class ChannelController extends Controller
      */
     public function getChannels () 
     {
+        // $channels = Stream::where('channel', '>', 0)->with('channel.genres')->paginate(env('ITEM_PER_PAGE'));
         $channels = Channel::with('genres', 'stream.type')
-                            ->select(['id', 'number', 'name', 'thumbnail'])
                             ->paginate(env('ITEM_PER_PAGE'));
-        
+
         $genres = Genre::get(['id', 'name']);
 
         $stream_types = StreamType::get(['id','name']);
@@ -38,6 +38,7 @@ class ChannelController extends Controller
         $stream = new Stream();
         $stream->vid_stream = $request->input('stream');
         $stream->type = $request->input('stream_type');
+        $stream->save();
         
         // create channel object
         $channel = new Channel();
@@ -46,7 +47,7 @@ class ChannelController extends Controller
         $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), TRUE);
         $channel->save();
         $channel->genres()->sync($request->input('genres'));
-        $channel->stream()->save($stream);
+        $channel->stream()->associate($stream);
         return $channel;
     }
 

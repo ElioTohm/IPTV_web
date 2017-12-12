@@ -20,9 +20,13 @@ class CreateStreamsTable extends Migration
         });
 
         Schema::create('streams', function (Blueprint $table){
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('vid_stream');
             $table->string('sub_stream')->nullable();
+            $table->integer('channel')->unsigned()->nullable();
+            $table->foreign('channel')->references('id')->on('channels');
+            $table->integer('movie')->unsigned()->nullable();
+            $table->foreign('movie')->references('id')->on('movies');
             $table->integer('type')->unsigned();
             $table->foreign('type')->references('id')->on('streams_types'); 
             $table->timestamps();

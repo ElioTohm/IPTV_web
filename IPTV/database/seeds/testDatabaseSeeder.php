@@ -54,46 +54,62 @@ class testDatabaseSeeder extends Seeder
             ['id'=> 5,
                 'name' => 'MISC'],
         ]);
+        
+        DB::table('movies')->insert([
+            'title' => '300',
+            'poster' => 'http://shareeftube.net/videoimages/tt1253863.png',
+        ]);
+
+        DB::table('channels')->insert([
+            ['name' => 'LBCI',
+                'number' => 1,
+                'id' => 1],
+            ['name' => 'MTV',
+                'number' => 2,
+                'id' => 2],
+            ['name' => 'El Jadid',
+                'number' => 3,
+                'id' => 3],
+            ['name' => 'OTV',
+                'number' => 4,
+                'id' => 4],
+            ['name' => 'LBCI HLS',
+                'number' => 5,
+                'id' => 5]
+        ]);
+
+        DB::table('streams')->insert([
+                'vid_stream' => 'http://shareeftube.net/videos/movies/1/300IIriseofempire.mp4',
+                'type' => 5,
+                'movie' => 1
+        ]);
 
         DB::table('streams')->insert([
             [
                 'vid_stream' => 'udp://@224.1.3.32:1234',
-                'type' => 1
+                'type' => 1,
+                'channel' => 1
             ],
             [
                 'vid_stream' => 'udp://@224.1.1.28:1234',
-                'type' => 1
+                'type' => 1,
+                'channel' => 2
             ],
             [
                 'vid_stream' => 'udp://@224.1.1.27:1234',
-                'type' => 1
+                'type' => 1,
+                'channel' => 3
             ],
             [
                 'vid_stream' => 'udp://@224.1.1.26:1234',
-                'type' => 1
+                'type' => 1,
+                'channel' => 4
             ],
             [
                 'vid_stream' => 'http://192.168.0.102:8080/LBCI/index.m3u8',
-                'type' => 2
+                'type' => 2,
+                'channel' => 5
             ]
-        ]);
-        
-        DB::table('channels')->insert([
-            ['name' => 'LBCI',
-                'number' => 1,
-                'stream' => 1],
-            ['name' => 'MTV',
-                'number' => 2,
-                'stream' => 2],
-            ['name' => 'El Jadid',
-                'number' => 3,
-                'stream' => 3],
-            ['name' => 'OTV',
-                'number' => 4,
-                'stream' => 4],
-            ['name' => 'LBCI HLS',
-                'number' => 5,
-                'stream' => 5]//'stream_type' => 2
         ]);
 
         DB::table('clients')->insert([

@@ -32,11 +32,11 @@ class Channel extends Model
 
     public function genres () 
     {
-        return $this->belongsToMany('App\Genre', 'channel_genre', 'genre', 'channel');
+        return $this->belongsToMany('App\Genre', 'channel_genre', 'channel', 'genre');
     }
 
     public function stream ()
     {
-        return $this->hasOne('App\Stream', 'id', 'stream');
+        return $this->BelongsTo('App\Stream', 'id');
     }
 }

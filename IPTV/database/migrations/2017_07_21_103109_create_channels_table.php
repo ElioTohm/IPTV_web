@@ -15,11 +15,9 @@ class CreateChannelsTable extends Migration
     {
 
         Schema::create('channels', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->unsigned();
             $table->integer('number')->unique();
             $table->string('name');
-            $table->integer('stream')->unsigned()->nullable();
-            $table->foreign('stream')->references('id')->on('streams');
             $table->string('thumbnail')->default("DefaultThumbnail.png");
             $table->timestamps();
         });

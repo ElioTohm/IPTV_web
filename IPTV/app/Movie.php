@@ -32,11 +32,11 @@ class Movie extends Model
 
     public function genres () 
     {
-        return $this->belongsToMany('App\Genre', 'movies_genre', 'genre', 'movie');
+        return $this->belongsToMany('App\Genre', 'movies_genre', 'movie', 'genre');
     }
 
     public function stream () 
     {
-        return $this->hasOne('App\Stream', 'id', 'stream');
+        return $this->hasOne('App\Stream', 'id');
     }
 }
