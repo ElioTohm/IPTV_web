@@ -1,7 +1,7 @@
   <template>
     <div class="custom-actions">
-      <button class="btn btn-sm" @click="itemAction('edit-item', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
-      <button class="btn btn-sm" @click="itemAction('delete-item', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
+      <button class="btn btn-sm" @click="itemAction('edit', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
+      <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
     </div>
   </template>
 
@@ -18,7 +18,31 @@
     },
     methods: {
       itemAction (action, data, index) {
-        console.log('custom-actions: ' + action, data.name, index)
+        console.log('custom-actions: ' + action, data.id, index)
+        if (action == 'delete') {
+          this.$toasted.error("Delete " + data.title + " ?", { 
+            theme: "primary", 
+            position: "top-center", 
+            action : [
+              {
+                text : 'Delete',
+                onClick : (e, toastObject) => {
+                    toastObject.goAway(0);
+                    axios.delete('/movie/' + data.id)
+                    .then(response => {
+                      this.$parent.reload();
+                    });
+                }
+              },
+              {
+                text : 'Cancel',
+                onClick : (e, toastObject) => {
+                    toastObject.goAway(0);
+                }
+              }
+            ],
+          });  
+        }
       }
     }
   }

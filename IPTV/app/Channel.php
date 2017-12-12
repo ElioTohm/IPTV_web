@@ -37,6 +37,6 @@ class Channel extends Model
 
     public function stream ()
     {
-        return $this->BelongsTo('App\Stream', 'id');
+        return $this->hasOne('App\Stream', 'channel');
     }
 }

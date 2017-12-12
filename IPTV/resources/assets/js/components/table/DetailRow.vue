@@ -1,24 +1,25 @@
 <template>
   <div @click="onClick">
-    <div class="inline field">
-      <label>Name: </label>
-      <span>{{rowData.name}}</span>
+    <div class="pull-right">
+      <img :src="rowData.poster">
     </div>
     <div class="inline field">
-      <label>Email: </label>
-      <span>{{rowData.email}}</span>
+      <label>Title: </label>
+      <span>{{rowData.title}}</span>
     </div>
     <div class="inline field">
-      <label>Nickname: </label>
-      <span>{{rowData.nickname}}</span>
+      <label>Created at: </label>
+      <span>{{rowData.created_at}}</span>
     </div>
     <div class="inline field">
-      <label>Birthdate: </label>
-      <span>{{rowData.birthdate}}</span>
+      <label>Updated at: </label>
+      <span>{{rowData.updated_at}}</span>
     </div>
     <div class="inline field">
-      <label>Gender: </label>
-      <span>{{rowData.gender}}</span>
+      <label>genres: </label>
+      <span v-for="genre in rowData.genres" :key="genre.id">
+        {{ genre.name }}
+      </span>
     </div>
   </div>
 </template>
