@@ -68,21 +68,36 @@ export default {
           dataClass: "text-right"
         },
         {
-          name: "title"
+          name: "title",
+          sortField: "title"
         },
         {
           name: "stream.vid_stream",
           title: "Steam"
         },
         {
+          name: "stream.type.name",
+          title: "Steam Type",
+        },
+        {
+          name: "genres",
+          title: "Genres",
+          sortField: "genres"
+        },
+        {
           name: "poster"
+        },
+        {
+          name: "created_at",
+          title: "Created at",
+          sortField: 'created_at' 
         },
         {
           name: "__component:custom-actions",
           title: "Actions",
           titleClass: "text-center",
           dataClass: "text-center"
-        }
+        },
       ],
       css: {
         table: {
@@ -131,20 +146,15 @@ export default {
           });
         });
     },
-    allcap(value) {
-      return value.toUpperCase();
-    },
-    genderLabel(value) {
-      return value === "M"
-        ? '<span class="label label-success"><i class="glyphicon glyphicon-star"></i> Male</span>'
-        : '<span class="label label-danger"><i class="glyphicon glyphicon-heart"></i> Female</span>';
-    },
-    formatNumber(value) {
-      return accounting.formatNumber(value, 2);
-    },
-    formatDate(value, fmt = "D MMM YYYY") {
-      return value == null ? "" : moment(value, "YYYY-MM-DD").format(fmt);
-    },
+    // allcap(value) {
+    //   return value.toUpperCase();
+    // },
+    // formatNumber(value) {
+    //   return accounting.formatNumber(value, 2);
+    // },
+    // formatDate(value, fmt = "D MMM YYYY") {
+    //   return value == null ? "" : moment(value, "YYYY-MM-DD").format(fmt);
+    // },
     onPaginationData(paginationData) {
       this.$refs.pagination.setPaginationData(paginationData);
       this.$refs.paginationInfo.setPaginationData(paginationData);

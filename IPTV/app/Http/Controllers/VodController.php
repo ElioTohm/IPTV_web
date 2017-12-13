@@ -43,7 +43,7 @@ class VodController extends Controller
             });
         }
 
-        $pagination = $query->with('stream')->paginate(env('ITEM_PER_PAGE'));
+        $pagination = $query->with('stream.type')->paginate(env('ITEM_PER_PAGE'));
         $pagination->appends([
             'sort' => $request->sort,
             'filter' => $request->filter,
@@ -59,16 +59,18 @@ class VodController extends Controller
     {
         $stream = new Stream();
         $stream->vid_stream = $request->input('stream');
-        $stream->type = $request->input('stream_type');
-    
+        $stream->type = $request->input('stream_type.id');
+        
         // create movie object
         $movie = new Movie();
-        $movie->title = $request->input('title');
         $movie->poster = $request->input('poster');
-        $movie->genres()->sync($request->input('genres'));
+        $movie->title = $request->input('title');
+        // $this->checkThumbnail($movie, $request->get('thumbnail'), $request->input('name'), TRUE);
         $movie->save();
+        $movie->genres()->sync($request->input('genres'));
         $stream->movie = $movie->id;
         $stream->save();
+        return $movie;
     }
     
     public function deleteMovie ($id) 
@@ -79,16 +81,30 @@ class VodController extends Controller
 
     public function updateMovie($id, MovieRequest $request) 
     {
+        // create stream object
         $movie = Movie::find($id);
         //update stream table
         $stream = $movie->stream()->first();
         $stream->vid_stream = $request->input('stream');
-        $stream->type = $request->input('stream_type');
+        $stream->type = $request->input('stream_type.id');
         $stream->save();
         // update movie table
         $movie->title = $request->input('title');
         $movie->poster = $request->input('poster');
+        // $this->checkThumbnail($movie, $request->get('thumbnail'), $request->input('name'), FALSE);
         $movie->genres()->sync($request->input('genres'));
         $movie->save();
+    }
+
+    public function getGenresNStreamTypes () 
+    {
+        $genres = Genre::get(['id', 'name']);
+
+        $stream_types = StreamType::get(['id','name']);
+        
+        return response()->json([
+            'genres' => $genres,
+            'stream_types' => $stream_types,
+        ]);
     }
 }

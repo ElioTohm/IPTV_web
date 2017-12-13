@@ -22,7 +22,7 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dvb', 'HomeController@index')->name('dvb');
-    
+    Route::get('/genreSTypes', 'VodController@getGenresNStreamTypes');
     /**
      * admin route to set app settings 
      */

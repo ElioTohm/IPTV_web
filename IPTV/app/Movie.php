@@ -11,7 +11,7 @@ class Movie extends Model
 
     public $asYouType = true;
     
-     /**
+    /**
      * The table associated with the model.
      *
      * @var string
