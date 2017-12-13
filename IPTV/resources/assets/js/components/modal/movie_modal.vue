@@ -41,7 +41,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" @click="persistChannel('post', '/movie', createForm)">{{button.text}}</button>
+        <button class="btn btn-primary" @click="addItem('post', '/movie', createForm)">{{button.text}}</button>
       </div>
 </modal>
 </template>
@@ -77,28 +77,8 @@ export default {
     beforeOpen (event) {
       this.button.text = event.params.button.text
     },
-    /**  
-     * Persist the channel to storage using the given form.
-     */
-    persistChannel(method, uri, form) {
-        form.errors = [];
-        axios[method](uri, form)
-          .then(response => {
-              form.errors = [];
-              form.title = '';
-              form.stream = '';
-              form.stream_type = 1;
-              form.thumbnail = '';
-              form.poster = '';
-              form.number = '';
-              this.$parent.$options.methods.resetFilter()
-          })
-          .catch(error => {
-              console.log(error);
-              this.$toasted.error("error creating ",{
-                  duration:1000
-              });
-          });
+    addItem (method, uri, form) {
+        this.$parent.persistItem(method, uri, form)
     },
   }
 }

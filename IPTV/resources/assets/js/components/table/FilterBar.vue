@@ -35,6 +35,22 @@ import MovieModal from '../modal/movie_modal.vue'
         this.filterText = ''
         this.$events.fire('filter-reset')
       },
+      /**  
+      * Persist the channel to storage using the given form.
+      */
+      persistItem(method, uri, form) {
+        form.errors = [];
+        axios[method](uri, form)
+          .then(response => {
+              this.$parent.$refs.vuetable.reload()
+          })
+          .catch(error => {
+            console.log(error);
+            this.$toasted.error("error creating ",{
+                duration:1000
+            });
+          });
+      },
     }
   }
 </script>
