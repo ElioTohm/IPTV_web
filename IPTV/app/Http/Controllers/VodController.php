@@ -76,4 +76,19 @@ class VodController extends Controller
         $movie = Movie::find($id);
         $movie->delete();
     }
+
+    public function updateMovie($id, MovieRequest $request) 
+    {
+        $movie = Movie::find($id);
+        //update stream table
+        $stream = $movie->stream()->first();
+        $stream->vid_stream = $request->input('stream');
+        $stream->type = $request->input('stream_type');
+        $stream->save();
+        // update movie table
+        $movie->title = $request->input('title');
+        $movie->poster = $request->input('poster');
+        $movie->genres()->sync($request->input('genres'));
+        $movie->save();
+    }
 }

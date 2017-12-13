@@ -29,6 +29,7 @@
         </div> 
       </div>
     </div>
+    <movie-modal/>
   </div>
 </template>
 
@@ -43,6 +44,7 @@ import VueEvents from "vue-events";
 import CustomActions from "./table/CustomActions";
 import DetailRow from "./table/DetailRow";
 import FilterBar from "./table/FilterBar";
+import MovieModal from './modal/movie_modal.vue'
 
 Vue.use(VueEvents);
 Vue.component("custom-actions", CustomActions);
@@ -53,7 +55,8 @@ export default {
   components: {
     Vuetable,
     VuetablePagination,
-    VuetablePaginationInfo
+    VuetablePaginationInfo,
+    MovieModal
   },
   data() {
     return {
@@ -112,6 +115,22 @@ export default {
     };
   },
   methods: {
+    /**  
+    * Persist the item to storage using the given form.
+    */
+    persistItem(method, uri, form) {
+      form.errors = [];
+      axios[method](uri, form)
+        .then(response => {
+            this.$refs.vuetable.reload()
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.error("error creating ",{
+              duration:1000
+          });
+        });
+    },
     allcap(value) {
       return value.toUpperCase();
     },

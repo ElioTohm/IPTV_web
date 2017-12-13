@@ -42,6 +42,14 @@
               }
             ],
           });  
+        }else{
+          console.log(data.stream.type)
+          this.$parent.$modal.show('movie', {button: {text :'Edit', editForm:{
+                  id: data.id,
+                  title: data.title,
+                  stream: data.stream,
+                  poster: data.poster,
+                }}})
         }
       }
     }

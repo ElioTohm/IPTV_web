@@ -63,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/vod','VodController@index');
     Route::get('/movies', 'VodController@getMovies');
     Route::post('/movie', 'VodController@addMovie');
+    Route::put('/movie/{id}', 'VodController@updateMovie');
     Route::delete('/movie/{id}', 'VodController@deleteMovie');
     
     /**
