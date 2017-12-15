@@ -1,11 +1,11 @@
 <template>
   <div @click="onClick">
     <div class="pull-right">
-      <img :src="rowData.poster">
+      <img :src="rowData.thumbnaiil">
     </div>
     <div class="inline field">
       <label>Title: </label>
-      <span>{{rowData.title}}</span>
+      <span>{{rowData.name}}</span>
     </div>
     <div class="inline field">
       <label>Stream Type: </label>

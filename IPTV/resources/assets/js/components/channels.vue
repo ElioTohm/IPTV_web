@@ -1,493 +1,203 @@
 <template>
-    <div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <!-- Title -->
-                    <span>
-                        Channels 
-                    </span>
-                    <!-- search input -->
-                    <div class="form-group">
-                        <input class="form-control" v-model="search.query" placeholder="Search"/>
-                    </div>
-                    <!-- Header action add new item -->
-                    <a class="action-link" @click="showAddChannelForm">
-                        Add New Channel
-                    </a>
-                </div>  
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th class="col-xs-1">number</th>
-                                <th class="col-xs-2">name</th>
-                                <th class="col-xs-2">stream</th>
-                                <th class="col-xs-1">stream type</th>
-                                <th class="col-xs-2">thumbnail</th>
-                                <th class="col-xs-2">genre</th>
-                                <th class="col-xs-1"></th>
-                                <th class="col-xs-1"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="channel in channels" :key="channel.id">
-                                <td class="col-xs-1">{{channel.number}}</td>
-                                <td class="col-xs-2">{{channel.name}}</td>
-                                <td class="col-xs-2">{{channel.stream.vid_stream}}</td>
-                                <td class="col-xs-1">{{channel.stream.type.name}}</td>
-                                <td class="col-xs-2">{{channel.thumbnail}}</td>
-                                <td class="col-xs-2">
-                                    <p v-for="genre in channel.genres" :key="genre.id">
-                                        {{ genre.name }}
-                                    </p>
-                                </td>
-                                <!-- Edit Button -->
-                                <td  class="col-xs-1">
-                                    <a class="action-link" @click="edit(channel)">
-                                        Edit
-                                    </a>
-                                </td>
-
-                                <!-- Delete Button -->
-                                <td  class="col-xs-1">
-                                    <a class="action-link text-danger" @click="destroy(channel)">
-                                        Delete
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <pagination :data="pagedata" v-on:pagination-change-page="getChannel"></pagination>
-                    </table>
-                </div>
-            </div>
+  <div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h2>Channels</h2>
+      </div>
+      <div class="panel-body">
+        <filter-bar></filter-bar>
+        <vuetable ref="vuetable"
+          api-url="/channel"
+          :fields="fields"
+          pagination-path=""
+          :css="css.table"
+          :sort-order="sortOrder"
+          :multi-sort="true"
+          detail-row-component="my-detail-row"
+          :append-params="moreParams"
+          @vuetable:cell-clicked="onCellClicked"
+          @vuetable:pagination-data="onPaginationData"></vuetable>
+        <div class="vuetable-pagination">
+          <vuetable-pagination-info ref="paginationInfo"
+            info-class="pagination-info"></vuetable-pagination-info>
+          <vuetable-pagination ref="pagination"
+            :css="css.pagination"
+            @vuetable-pagination:change-page="onChangePage"></vuetable-pagination>
         </div>
-
-        <!-- Create Channel Modal -->
-        <div class="modal fade" id="modal-add-channel" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button " class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-                        <h4 class="modal-title">
-                            Add New Channel
-                        </h4>
-                    </div>
-
-                    <div class="modal-body">
-                        
-                        <!-- Form Errors -->
-                        <div class="alert alert-danger" v-if="createForm.errors.length > 0">
-                            <p><strong>Whoops!</strong> Something went wrong!</p>
-                            <br>
-                            <ul>
-                                <li v-for="error in createForm.errors" :key="error">
-                                    {{ error }}
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Create Channel Form -->
-                        <div class="form-horizontal">
-                            <!-- number -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Number</label>
-
-                                <div class="col-md-7">
-                                    <input id="create-channel-name" type="text" class="form-control" v-model="createForm.number">
-                                </div>
-                            </div>
-
-                            <!-- name -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Name</label>
-
-                                <div class="col-md-7">
-                                    <input id="create-channel-name" type="text" class="form-control" v-model="createForm.name">
-                                </div>
-                            </div>
-
-                            <!-- stream  -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Stream</label>
-
-                                <div class="col-md-7">
-                                    <input id="create-channel-name" type="text" class="form-control" v-model="createForm.stream">
-                                </div>
-                            </div>
-
-                            <!-- thumbnail  -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Thumbnail</label>
-
-                                <div class="col-md-7">
-                                    <input id="create-channel-name" type="file" class="form-control" v-on:change="onFileChange">
-                                </div>
-                            </div>
-
-                            <!-- genre -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Genre</label>
-
-                                <div class="col-md-7">
-                                     <multiselect v-model="createForm.genres" :options="genres" :custom-label="nameWithLang" 
-                                                placeholder="Select genres" label="name" track-by="name" 
-                                                :multiple="true" :hide-selected="true" :close-on-select="false">
-                                        <span class="custom__tag"><span>{{ genres.name }}</span><span class="custom__remove" >❌</span></span>
-                                    </multiselect>
-                                </div>
-                            </div>
-                            <!-- Stream Type -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Stream Type</label>
-
-                                <div class="col-md-7">
-                                    <select class="form-control" v-model="createForm.stream_type" single>
-                                        <option v-for="stream_type in stream_types" :key="stream_type.id" v-bind:value="stream_type.id">{{stream_type.name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal Actions -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                        <button type="button" class="btn btn-primary" @click="store">
-                            Create
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-         <!-- Edit Channel Modal -->
-        <div class="modal fade" id="modal-edit-channel" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button " class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-                        <h4 class="modal-title">
-                            Edit Channel
-                        </h4>
-                    </div>
-
-                    <div class="modal-body">
-                        <!-- Form Errors -->
-                        <div class="alert alert-danger" v-if="editForm.errors.length > 0">
-                            <p><strong>Whoops!</strong> Something went wrong!</p>
-                            <br>
-                            <ul>
-                                <li v-for="error in editForm.errors" :key="error">
-                                    {{ error }}
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Edit Channel Form -->
-                        <div class="form-horizontal">
-                            <!-- number -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Number</label>
-
-                                <div class="col-md-7">
-                                    <input id="create-channel-name" type="text" class="form-control" v-model="editForm.number">
-                                </div>
-                            </div>
-
-                            <!-- name -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Name</label>
-
-                                <div class="col-md-7">
-                                    <input id="create-channel-name" type="text" class="form-control" v-model="editForm.name">
-                                </div>
-                            </div>
-
-                            <!-- stream  -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Stream</label>
-
-                                <div class="col-md-7">
-                                    <input id="create-channel-name" type="text" class="form-control" v-model="editForm.stream">
-                                </div>
-                            </div>
-
-                            <!-- thumbnail  -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Thumbnail</label>
-
-                                <div class="col-md-7">
-                                    <input id="create-channel-name" type="file" class="form-control" v-on:change="onFileChange">
-                                </div>
-                            </div>
-
-                            <!-- genre -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Genre</label>
-
-                                <div class="col-md-7">
-                                     <!-- <select class="form-control" v-model="editForm.genres" multiple>
-                                        <option v-for="genre in genres" :key="genre.id" v-bind:value="genre.id">{{genre.name}}</option>
-                                    </select> -->
-                                    <multiselect v-model="editForm.genres" :options="genres" :custom-label="nameWithLang" 
-                                                placeholder="Select genres" label="name" track-by="name" 
-                                                :multiple="true" :hide-selected="true" :close-on-select="false">
-                                        <span class="custom__tag"><span>{{ genres.name }}</span><span class="custom__remove" >❌</span></span>
-                                    </multiselect>
-                                </div>
-                            </div>
-                            <!-- Stream Type -->
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Stream Type</label>
-
-                                <div class="col-md-7">
-                                    <select class="form-control" v-model="editForm.stream_type" single>
-                                        <option v-for="stream_type in stream_types" :key="stream_type.id" v-bind:value="stream_type.id">{{stream_type.name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal Actions -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                        <button type="button" class="btn btn-primary" @click="update">
-                            Save Changes
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <channel-modal/>
+  </div>
 </template>
 
 <script>
-    import pagination from 'laravel-vue-pagination';
-    import multiselect from 'vue-multiselect';
+import accounting from "accounting";
+import moment from "moment";
+import Vuetable from "vuetable-2/src/components/Vuetable";
+import VuetablePagination from "vuetable-2/src/components/VuetablePagination";
+import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
+import Vue from "vue";
+import VueEvents from "vue-events";
+import CustomActions from "./table/ChannelActions";
+import DetailRow from "./table/ChannelDetail";
+import FilterBar from "./table/FilterBar";
+import ChannelModal from './modal/channel_modal.vue'
 
-    export default {
-        components: {
-            'pagination': pagination,
-            'multiselect': multiselect
+Vue.use(VueEvents);
+Vue.component("custom-actions", CustomActions);
+Vue.component("my-detail-row", DetailRow);
+Vue.component("filter-bar", FilterBar);
+
+export default {
+  components: {
+    Vuetable,
+    VuetablePagination,
+    VuetablePaginationInfo,
+    ChannelModal
+  },
+  data() {
+    return {
+      fields: [
+        {
+          name: "number",
+          sortField: "number"
         },
-        /*
-         * The component's data.
-         */
-        data() {
-            return {
-                pagedata:{},
-
-                channels: [],
-
-                genres:[],
-
-                stream_types:[],
-
-                thumbnail:'',
-
-                createForm: {
-                    errors: [],
-                    number: 0,
-                    name: '',
-                    stream: '',
-                    stream_type: 0,
-                    thumbnail: '',
-                    genres : []
-                },
-
-                editForm: {
-                    errors: [],
-                    number: 0,
-                    name: '',
-                    stream: '',
-                    stream_type: 0,
-                    thumbnail: '',
-                    genres : []
-                },
-
-                search: {
-                    errors: [],
-                    model: 'Channel',
-                    query: ''
-                }
-            
-            };
+        {
+          name: "name",
+          sortField: "name"
         },
-
-        /**
-         * Prepare the component (Vue 2.x).
-         */
-        mounted() {
-            this.getChannel();
+        {
+          name: "stream.vid_stream",
+          title: "Steam"
         },
-
-        /**
-         * Watcher for search data 
-         */
-        watch: {
-            'search.query': function(){
-                if (this.search.query != '') {
-                    axios.get('/search', {params : this.search})
-                        .then(response => {
-                            this.pagedata = response.data
-                            this.channels = this.pagedata.data;
-                        });
-                } else {
-                    this.getChannel();
-                }
-                
-            }
+        {
+          name: "stream.type.name",
+          title: "Steam Type",
         },
-
-        methods: {
-            nameWithLang ({ id, name }) {
-                return `${name}`
-            },
-            createImage(file) {
-                let reader = new FileReader();
-                let vm = this;
-                vm.editForm.thumbnail = '';
-                reader.onload = (e) => {
-                    vm.createForm.thumbnail = e.target.result;
-                    vm.editForm.thumbnail = e.target.result;
-                     
-                };
-                reader.readAsDataURL(file);
-            },
-            onFileChange(e) {
-                let files = e.target.files || e.dataTransfer.files;
-                if (!files.length)
-                    console.log('wrg length');
-                this.createImage(files[0]);
-            },
-            
-            /**
-             * Get all of the OAuth channels for the user.
-             */
-            getChannel(page) {
-                if (typeof page === 'undefined') {
-                    page = 1;
-                }
-                axios.get('/channel?page=' + page)
-                    .then(response => {
-                        this.pagedata = response.data.channels
-                        this.channels = this.pagedata.data;
-                        this.stream_types = response.data.stream_types;
-                        this.genres = response.data.genres;
-                    });
-            },
-
-            /**
-             * Show the form for adding new channel.
-             */
-            showAddChannelForm() {
-                this.createForm.number = this.channels[this.channels.length - 1].number + 1
-                this.createForm.stream_type = 1;
-                $('#modal-add-channel').modal('show');
-            },
-
-            /**
-             * Create a new OAuth channel for the user.
-             */
-            store() {
-                this.createForm.genres = _.map(this.createForm.genres, _.property('id'))
-                this.persistChannel(
-                    'post', '/channel',
-                    this.createForm, '#modal-create-channel'
-                );
-            },
-
-            /**
-             * Edit the given channel.
-             */
-            edit(channel) {
-                this.editForm.id = channel.id;
-                this.editForm.name = channel.name;
-                this.editForm.stream = channel.stream.vid_stream;
-                this.editForm.thumbnail = channel.thumbnail;
-                this.editForm.genres = channel.genres;
-                this.editForm.number = channel.number;
-                this.editForm.stream_type = channel.stream.type.id
-
-                $('#modal-edit-channel').modal('show');
-            },
-
-            /**
-             * Update the channel being edited.
-             */
-            update() {
-                this.editForm.genres = _.map(this.editForm.genres, _.property('id'))
-                this.persistChannel(
-                    'put', '/channel/' + this.editForm.id,
-                    this.editForm, '#modal-edit-channel'
-                );
-            },
-
-             /**
-             * Persist the channel to storage using the given form.
-             */
-            persistChannel(method, uri, form, modal) {
-                form.errors = [];
-
-                axios[method](uri, form)
-                    .then(response => {
-                        this.getChannel();
-
-                        form.errors = [];
-                        form.name = '';
-                        form.stream = '';
-                        form.thumbnail = '';
-                        form.genre = '';
-                        form.number = '';
-
-                        $(modal).modal('hide');
-                        console.log(response);
-                    })
-                    .catch(error => {
-                        console.log(error.response.data)
-                        if (typeof error.response.data === 'object') {
-                            form.errors = _.flatten(_.toArray(error.response.data));
-                        } else {
-                            form.errors = ['Something went wrong. Please try again.'];
-                        }
-                    });
-            },
-
-            /**
-             * Destroy the given client.
-             */
-            destroy(channel) {
-
-                this.$toasted.error("Delete " + channel.name + "?", { 
-                    theme: "primary", 
-                    position: "top-center", 
-                    action : [{
-                            text : 'Delete',
-                            onClick : (e, toastObject) => {
-                                toastObject.goAway(0);
-                                axios.delete('/channel/' + channel.id)
-                                .then(response => {
-                                    this.getChannel();
-                                });
-                            }
-                        },
-                        {
-                            text : 'Cancel',
-                            onClick : (e, toastObject) => {
-                                toastObject.goAway(0);
-                            }
-                        }],
-                });
-            },
+        {
+          name: "created_at",
+          title: "Created at",
+          sortField: 'created_at' 
+        },
+        {
+          name: "__component:custom-actions",
+          title: "Actions",
+          titleClass: "text-center",
+          dataClass: "text-center"
+        },
+      ],
+      css: {
+        table: {
+          tableClass: "table table-bordered table-striped table-hover",
+          ascendingIcon: "glyphicon glyphicon-chevron-up",
+          descendingIcon: "glyphicon glyphicon-chevron-down"
+        },
+        pagination: {
+          wrapperClass: "pagination",
+          activeClass: "active",
+          disabledClass: "disabled",
+          pageClass: "page",
+          linkClass: "link",
+          icons: {
+            first: "",
+            prev: "",
+            next: "",
+            last: ""
+          }
+        },
+        icons: {
+          first: "glyphicon glyphicon-step-backward",
+          prev: "glyphicon glyphicon-chevron-left",
+          next: "glyphicon glyphicon-chevron-right",
+          last: "glyphicon glyphicon-step-forward"
         }
+      },
+      sortOrder: [{ field: "number", direction: "asc" }],
+      moreParams: {}
+    };
+  },
+  methods: {
+    /**  
+    * Persist the item to storage using the given form.
+    */
+    persistItem(method, uri, form) {
+      form.errors = [];
+      axios[method](uri, form)
+        .then(response => {
+            this.$refs.vuetable.reload()
+        })
+        .catch(error => {
+          console.log(error);
+          this.$toasted.error("error creating ",{
+              duration:1000
+          });
+        });
+    },
+    onPaginationData(paginationData) {
+      this.$refs.pagination.setPaginationData(paginationData);
+      this.$refs.paginationInfo.setPaginationData(paginationData);
+    },
+    onChangePage(page) {
+      this.$refs.vuetable.changePage(page);
+    },
+    onCellClicked(data, field, event) {
+      console.log("cellClicked: ", field.name);
+      this.$refs.vuetable.toggleDetailRow(data.id);
     }
+  },
+  events: {
+    "filter-set"(filterText) {
+      this.$toasted.info("Searching ...", {
+        theme: "primary",
+        position: "bottom-center",
+        duration: 1000
+      });
+      this.moreParams = {
+        filter: filterText
+      };
+      Vue.nextTick(() => this.$refs.vuetable.refresh());
+    },
+    "filter-reset"() {
+      this.moreParams = {};
+      Vue.nextTick(() => this.$refs.vuetable.refresh());
+    }
+  }
+};
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style>
+.pagination {
+  margin: 0;
+  float: right;
+}
+.pagination a.page {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-right: 2px;
+}
+.pagination a.page.active {
+  color: white;
+  background-color: #337ab7;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-right: 2px;
+}
+.pagination a.btn-nav {
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin-right: 2px;
+}
+.pagination a.btn-nav.disabled {
+  color: lightgray;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 5px 7px;
+  margin-right: 2px;
+  cursor: not-allowed;
+}
+.pagination-info {
+  float: left;
+}
+</style>

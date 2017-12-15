@@ -62,12 +62,6 @@ export default {
     return {
       fields: [
         {
-          name: "__sequence",
-          title: "#",
-          titleClass: "text-right",
-          dataClass: "text-right"
-        },
-        {
           name: "title",
           sortField: "title"
         },
@@ -78,14 +72,6 @@ export default {
         {
           name: "stream.type.name",
           title: "Steam Type",
-        },
-        {
-          name: "genres",
-          title: "Genres",
-          sortField: "genres"
-        },
-        {
-          name: "poster"
         },
         {
           name: "created_at",
@@ -146,15 +132,6 @@ export default {
           });
         });
     },
-    // allcap(value) {
-    //   return value.toUpperCase();
-    // },
-    // formatNumber(value) {
-    //   return accounting.formatNumber(value, 2);
-    // },
-    // formatDate(value, fmt = "D MMM YYYY") {
-    //   return value == null ? "" : moment(value, "YYYY-MM-DD").format(fmt);
-    // },
     onPaginationData(paginationData) {
       this.$refs.pagination.setPaginationData(paginationData);
       this.$refs.paginationInfo.setPaginationData(paginationData);

@@ -67,7 +67,11 @@ class VodController extends Controller
         $movie->title = $request->input('title');
         // $this->checkThumbnail($movie, $request->get('thumbnail'), $request->input('name'), TRUE);
         $movie->save();
-        $movie->genres()->sync($request->input('genres'));
+        $genres = array();
+        foreach ($request->input('genres') as $value) {
+            array_push($genres, $value['id']);
+        }
+        $movie->genres()->sync($genres);
         $stream->movie = $movie->id;
         $stream->save();
         return $movie;
@@ -92,7 +96,11 @@ class VodController extends Controller
         $movie->title = $request->input('title');
         $movie->poster = $request->input('poster');
         // $this->checkThumbnail($movie, $request->get('thumbnail'), $request->input('name'), FALSE);
-        $movie->genres()->sync($request->input('genres'));
+         $genres = array();
+        foreach ($request->input('genres') as $value) {
+            array_push($genres, $value['id']);
+        }
+        $movie->genres()->sync($genres);
         $movie->save();
     }
 

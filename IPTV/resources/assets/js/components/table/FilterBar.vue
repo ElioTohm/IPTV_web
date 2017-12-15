@@ -31,6 +31,7 @@
       },
       showModal () {
         this.$parent.$refs.vuetable.$modal.show('movie', {button: {text :'Add'}})
+        this.$parent.$refs.vuetable.$modal.show('channel', {button: {text :'Add'}})
       }
     }
   }

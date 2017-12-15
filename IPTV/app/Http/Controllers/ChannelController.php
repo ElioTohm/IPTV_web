@@ -15,21 +15,39 @@ class ChannelController extends Controller
     /**
      * return all channels
      */
-    public function getChannels () 
+    public function getChannels (Request $request) 
     {
-        // $channels = Stream::where('channel', '>', 0)->with('channel.genres')->paginate(env('ITEM_PER_PAGE'));
-        $channels = Channel::with('genres', 'stream.type')
-                            ->paginate(env('ITEM_PER_PAGE'));
+        $query = Channel::with('genres');
 
-        $genres = Genre::get(['id', 'name']);
+        // handle sort option
+        if ($request->has('sort')) {
+            // handle multisort
+            $sorts = explode(',', $request->sort);
+            foreach ($sorts as $sort) {
+                list($sortCol, $sortDir) = explode('|', $sort);
+                $query = $query->orderBy($sortCol, $sortDir);
+            }
+        } else {
+            $query = $query->orderBy('number', 'asc');
+        }
 
-        $stream_types = StreamType::get(['id','name']);
-        
-        return response()->json([
-            'genres' => $genres,
-            'channels' => $channels,
-            'stream_types' => $stream_types,
+        if ($request->exists('filter')) {
+            $query->where(function($q) use($request) {
+                $value = "%{$request->filter}%";
+                $q->where('name', 'like', $value);
+            });
+        }
+
+        $pagination = $query->with('stream.type')->paginate(env('ITEM_PER_PAGE'));
+        $pagination->appends([
+            'sort' => $request->sort,
+            'filter' => $request->filter,
+            'per_page' => $request->per_page
         ]);
+
+        return response()->json(
+                $pagination
+        );
     }
 
     public function addChannel (ChannelRequest $request) 
@@ -37,7 +55,7 @@ class ChannelController extends Controller
         // create stream object
         $stream = new Stream();
         $stream->vid_stream = $request->input('stream');
-        $stream->type = $request->input('stream_type');
+        $stream->type = $request->input('stream_type.id');
         
         // create channel object
         $channel = new Channel();
@@ -45,7 +63,11 @@ class ChannelController extends Controller
         $channel->name = $request->input('name');
         $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), TRUE);
         $channel->save();
-        $channel->genres()->sync($request->input('genres'));
+        $genres = array();
+        foreach ($request->input('genres') as $value) {
+            array_push($genres, $value['id']);
+        }
+        $channel->genres()->sync($genres);
         $stream->channel = $channel->id;
         $stream->save();
         return $channel;
@@ -54,16 +76,21 @@ class ChannelController extends Controller
     public function updateChannel ($id, ChannelRequest $request) 
     {
         $channel = Channel::find($id);
+
         //update stream table
         $stream = $channel->stream()->first();
         $stream->vid_stream = $request->input('stream');
-        $stream->type = $request->input('stream_type');
+        $stream->type = $request->input('stream_type.id');
         $stream->save();
         // update channel table
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
-        $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), FALSE);
-        $channel->genres()->sync($request->input('genres'));
+        // $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), FALSE);
+        $genres = array();
+        foreach ($request->input('genres') as $value) {
+            array_push($genres, $value['id']);
+        }
+        $channel->genres()->sync($genres);
         $channel->save();
         
     }

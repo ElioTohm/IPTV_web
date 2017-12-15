@@ -1,39 +1,58 @@
 <template>
-<modal name="movie" class="modal-content" transition="pop-out" @before-open="beforeOpen" :adaptive="true" :scrollable="true" height="auto">
+<modal name="channel" class="modal-content" transition="pop-out" @before-open="beforeOpen" :adaptive="true" :scrollable="true" height="auto">
     <div class="modal-header">{{button.text}} {{item}}</div>
     <div class="modal-body">
         <form>
             <div class="form-horizontal">
-                <!-- title -->
+                <!-- number -->
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Title</label>
+                    <label class="col-md-3 control-label">Number</label>
 
                     <div class="col-md-7">
-                        <input type="text" class="form-control" v-model="form.title">
+                        <input id="create-channel-name" type="text" class="form-control" v-model="form.number">
                     </div>
                 </div>
 
-                <!-- stream -->
+                <!-- name -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Name</label>
+
+                    <div class="col-md-7">
+                        <input id="create-channel-name" type="text" class="form-control" v-model="form.name">
+                    </div>
+                </div>
+
+                <!-- stream  -->
                 <div class="form-group">
                     <label class="col-md-3 control-label">Stream</label>
+
                     <div class="col-md-7">
-                        <input type="text" class="form-control" v-model="form.stream">
-                    </div>
-                </div>
-                
-                <!-- genres -->
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Genre</label>
-                     <div class="col-md-7">
-                            <multiselect v-model="form.genres" :options="genres" :custom-label="nameWithLang" 
-                                    placeholder="Select genres" label="name" track-by="name" 
-                                    :multiple="true" :hide-selected="true" :close-on-select="false">
-                                <span class="custom__tag"><span>{{ genres.name }}</span><span class="custom__remove" >❌</span></span>
-                            </multiselect>
+                        <input id="create-channel-name" type="text" class="form-control" v-model="form.stream">
                     </div>
                 </div>
 
-                <!-- stream type -->
+                <!-- thumbnail  -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Thumbnail</label>
+
+                    <div class="col-md-7">
+                        <!-- <input id="create-channel-name" type="file" class="form-control" v-on:change="onFileChange"> -->
+                    </div>
+                </div>
+
+                <!-- genre -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Genre</label>
+
+                    <div class="col-md-7">
+                        <multiselect v-model="form.genres" :options="genres" :custom-label="nameWithLang" 
+                                    placeholder="Select genres" label="name" track-by="name" 
+                                    :multiple="true" :hide-selected="true" :close-on-select="false">
+                            <span class="custom__tag"><span>{{ genres.name }}</span><span class="custom__remove" >❌</span></span>
+                        </multiselect>
+                    </div>
+                </div>
+                <!-- Stream Type -->
                 <div class="form-group">
                     <label class="col-md-3 control-label">Stream Type</label>
                     <div class="col-md-7">
@@ -44,15 +63,6 @@
                         </multiselect>
                     </div>
                 </div>
-
-                <!-- poster -->
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Poster</label>
-                    <div class="col-md-7">
-                        <input type="text" class="form-control" v-model="form.poster">
-                    </div>
-                </div>
-
             </div>
         </form>
     </div>
@@ -65,7 +75,7 @@
 import multiselect from 'vue-multiselect';
 
 export default {
-    name: 'MovieModal',
+    name: 'ChannelModal',
     components: {
         'multiselect': multiselect
     },
@@ -79,12 +89,13 @@ export default {
             stream_types:[],
             genres:[],
             form: {
+                id: 0,
                 errors: [],
-                id: '',
-                title: '',
+                number: 0,
+                name: '',
                 stream: '',
                 stream_type: 0,
-                poster: '',
+                thumbnail: '',
                 genres : []
             },
         }
@@ -108,21 +119,24 @@ export default {
             this.item = event.name
             if (this.button.text == "Add"){
                 this.action = "post"
-                this.form.title = ''
-                this.form.poster = ''
+                this.form.number = ''
+                this.form.name = ''
+                this.form.thumbnail = ''
                 this.form.stream = ''
                 this.form.id = ''
                 this.form.stream_type = ''
                 this.form.genres = ''
             }else {
                 this.action = "put"
-                this.form.title = event.params.button.editForm.title
-                this.form.poster = event.params.button.editForm.poster
+                this.form.number = event.params.button.editForm.number
+                this.form.name = event.params.button.editForm.name
+                this.form.thumbnail = event.params.button.editForm.thumbnail
                 this.form.stream = event.params.button.editForm.stream.vid_stream
                 this.form.genres = event.params.button.editForm.genres
                 this.form.stream_type = event.params.button.editForm.stream.type
                 this.form.id = event.params.button.editForm.id
             }
+        axios.get();
     },
     addItem () {
         this.$parent.persistItem(this.action, '/' + this.item  + '/' + this.form.id, this.form)

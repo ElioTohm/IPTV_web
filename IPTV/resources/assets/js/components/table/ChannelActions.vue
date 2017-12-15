@@ -28,7 +28,7 @@
                 text : 'Delete',
                 onClick : (e, toastObject) => {
                     toastObject.goAway(0);
-                    axios.delete('/movie/' + data.id)
+                    axios.delete('/channel/' + data.id)
                     .then(response => {
                       this.$parent.reload();
                     });
@@ -43,12 +43,13 @@
             ],
           });  
         }else{
-          this.$parent.$modal.show('movie', {button: {text :'Edit', editForm:{
+          this.$parent.$modal.show('channel', {button: {text :'Edit', editForm:{
                   id: data.id,
-                  title: data.title,
+                  number: data.number,
+                  name: data.name,
                   stream: data.stream,
                   genres: data.genres,
-                  poster: data.poster,
+                  poster: data.thumbnail,
                 }}})
         }
       }
