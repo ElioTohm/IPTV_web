@@ -22,28 +22,26 @@ class VodController extends Controller
     // get Movies  
     public function getMovies (Request $request) 
     {
-        $query = Movie::with('genres');
-
-        // handle sort option
-        if ($request->has('sort')) {
-            // handle multisort
-            $sorts = explode(',', $request->sort);
-            foreach ($sorts as $sort) {
-                list($sortCol, $sortDir) = explode('|', $sort);
-                $query = $query->orderBy($sortCol, $sortDir);
-            }
-        } else {
-            $query = $query->orderBy('id', 'asc');
-        }
-
         if ($request->exists('filter')) {
-            $query->where(function($q) use($request) {
-                $value = "%{$request->filter}%";
-                $q->where('title', 'like', $value);
-            });
+            $pagination = Movie::search($request->input('filter'))->paginate(env('ITEM_PER_PAGE'));
+            $pagination->load('genres', 'stream.type');
+            
+        } else {
+            $query = Movie::with('genres', 'stream.type');
+            // handle sort option
+            if ($request->has('sort')) {
+                // handle multisort
+                $sorts = explode(',', $request->sort);
+                foreach ($sorts as $sort) {
+                    list($sortCol, $sortDir) = explode('|', $sort);
+                    $query = $query->orderBy($sortCol, $sortDir);
+                }
+            } else {
+                $query = $query->orderBy('number', 'asc');
+            }
+            $pagination = $query->paginate(env('ITEM_PER_PAGE'));
         }
 
-        $pagination = $query->with('stream.type')->paginate(env('ITEM_PER_PAGE'));
         $pagination->appends([
             'sort' => $request->sort,
             'filter' => $request->filter,

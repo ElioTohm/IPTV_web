@@ -117,6 +117,12 @@ export default {
     };
   },
   methods: {
+    /**
+     * show modal depending on the object being manipulated
+     */
+    showRepectiveModal() {
+      this.$modal.show('channel', {button: {text :'Add'}})
+    },
     /**  
     * Persist the item to storage using the given form.
     */

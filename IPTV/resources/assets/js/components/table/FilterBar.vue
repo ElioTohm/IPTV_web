@@ -3,7 +3,7 @@
     <form class="form-inline">
       <div class="form-group">
         <label>Search for:</label>
-        <input type="text" v-model="filterText" class="form-control" @keyup.enter="doFilter" placeholder="title, stream">
+        <input type="text" v-model="filterText" class="form-control" @keyup.enter="doFilter" placeholder="title, name">
         <button class="btn btn-primary" @click.prevent="doFilter">Go</button>
         <button class="btn" @click.prevent="resetFilter">Reset</button>
       </div>
@@ -30,8 +30,7 @@
         this.$events.fire('filter-reset')
       },
       showModal () {
-        this.$parent.$refs.vuetable.$modal.show('movie', {button: {text :'Add'}})
-        this.$parent.$refs.vuetable.$modal.show('channel', {button: {text :'Add'}})
+        this.$parent.showRepectiveModal();
       }
     }
   }
