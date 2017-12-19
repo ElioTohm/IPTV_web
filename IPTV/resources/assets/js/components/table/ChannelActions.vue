@@ -20,7 +20,7 @@
       itemAction (action, data, index) {
         console.log(data)
         if (action == 'delete') {
-          this.$toasted.error("Delete " + data.title + " ?", { 
+          this.$toasted.show("Delete " + data.title + " ?", { 
             theme: "primary", 
             position: "top-center", 
             action : [

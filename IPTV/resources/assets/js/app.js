@@ -16,7 +16,7 @@ window.Vue = require('vue');
  */
 import VueRouter  from 'vue-router'
 import router     from './router'
-import Toasted from 'vue-toasted';
+import Toasted from 'vue-toasted'
 import VModal from 'vue-js-modal'
 
 Vue.use(VModal)

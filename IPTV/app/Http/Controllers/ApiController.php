@@ -123,4 +123,21 @@ class ApiController extends Controller
             return NULL;
         }
     }
+
+    // stream controller
+    public function streamFile ()
+    {
+        $fs = Storage::getDriver();
+        $stream = $fs->readStream($file->path);
+
+        return response()->stream(
+            function() use($stream) {
+                fpassthru($stream);
+            }, 
+            200,
+            [
+                'Content-Type' => $file->mime,
+                'Content-disposition' => 'attachment; filename="'.$file->original_name.'"',
+            ]);
+    }
 }

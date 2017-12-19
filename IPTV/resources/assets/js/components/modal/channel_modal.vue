@@ -36,7 +36,7 @@
                     <label class="col-md-3 control-label">Thumbnail</label>
 
                     <div class="col-md-7">
-                        <!-- <input id="create-channel-name" type="file" class="form-control" v-on:change="onFileChange"> -->
+                        <input class="form-control" type="file" v-on:change="onFileChange">
                     </div>
                 </div>
 
@@ -96,7 +96,8 @@ export default {
                 stream: '',
                 stream_type: 0,
                 thumbnail: '',
-                genres : []
+                genres : [],
+                image : '',
             },
         }
     },
@@ -114,18 +115,31 @@ export default {
         nameWithLang ({ id, name }) {
             return `${name}`
         },
+        createImage(file) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                    this.form.image = e.target.result;
+                };
+                reader.readAsDataURL(file);
+        },
+        onFileChange(e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                console.log('wrg length');
+            this.createImage(files[0]);
+        },
         beforeOpen (event) {
             this.button.text = event.params.button.text
             this.item = event.name
-            if (this.button.text == "Add"){
-                this.action = "post"
+            if (this.button.text == "Add") {
+                this.action = 'post'
                 this.form.number = ''
                 this.form.name = ''
                 this.form.thumbnail = ''
                 this.form.stream = ''
                 this.form.id = ''
                 this.form.stream_type = ''
-                this.form.genres = ''
+                this.form.genres = []
             }else {
                 this.action = "put"
                 this.form.number = event.params.button.editForm.number

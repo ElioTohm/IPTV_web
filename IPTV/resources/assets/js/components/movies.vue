@@ -60,6 +60,7 @@ export default {
   },
   data() {
     return {
+      error: {},
       fields: [
         {
           name: "title",
@@ -126,16 +127,28 @@ export default {
     * Persist the item to storage using the given form.
     */
     persistItem(method, uri, form) {
-      form.errors = [];
       axios[method](uri, form)
         .then(response => {
             this.$refs.vuetable.reload()
+            form.title = ''            
+            form.poster = ''
+            form.stream = ''
+            form.id = ''
+            form.stream_type = ''
+            form.errors = []
+            form.genres = []
         })
         .catch(error => {
-          console.log(error);
-          this.$toasted.error("error creating ",{
-              duration:1000
-          });
+          for (var property in error.response.data) {
+            this.$toasted.show(error.response.data[property][0],{
+                action : {
+                  text : 'Ok',
+                  onClick : (e, toastObject) => {
+                      toastObject.goAway(0);
+                  }
+                },
+            });
+          }
         });
     },
     onPaginationData(paginationData) {

@@ -4,6 +4,7 @@ namespace App;
 
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Movie extends Model
 {
@@ -38,5 +39,10 @@ class Movie extends Model
     public function stream () 
     {
         return $this->hasOne('App\Stream', 'movie');
+    }
+
+    public function getPosterAttribute($value)
+    {
+        return $url = Storage::disk('public')->url('/movies/images/' . $value);
     }
 }

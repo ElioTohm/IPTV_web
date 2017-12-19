@@ -9,6 +9,7 @@ use App\StreamType;
 use App\Stream;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Requests\ChannelRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ChannelController extends Controller
 {
@@ -59,7 +60,7 @@ class ChannelController extends Controller
         $channel = new Channel();
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
-        $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), TRUE);
+        $this->checkThumbnail($channel, $request->get('image'), $request->input('name'), TRUE);
         $channel->save();
         $genres = array();
         foreach ($request->input('genres') as $value) {
@@ -83,7 +84,7 @@ class ChannelController extends Controller
         // update channel table
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
-        // $this->checkThumbnail($channel, $request->get('thumbnail'), $request->input('name'), FALSE);
+        $this->checkThumbnail($channel, $request->get('image'), $request->input('name'), FALSE);
         $genres = array();
         foreach ($request->input('genres') as $value) {
             array_push($genres, $value['id']);
@@ -99,10 +100,12 @@ class ChannelController extends Controller
         $channel->delete();
     }
 
-    private function checkThumbnail ($channel, $image, $name, $addchannel) {
+    private function checkThumbnail ($channel, $image, $addchannel) {
         if (substr( $image, 0, 10 ) === "data:image") {
-            Image::make($image)->encode('png', 50)->save(public_path('images/device/channels') . $name . '.png');
-            $channel->thumbnail = $name . '.png';
+            $imagename = $channel->name . '_' . $channel->id .'.png';
+            $imagefileencoded = Image::make($image)->encode('png', 50);
+            Storage::disk('public')->put('/channels/images/' . $imagename, $imagefileencoded);
+            $channel->thumbnail = $imagename;
         }
     }
 }

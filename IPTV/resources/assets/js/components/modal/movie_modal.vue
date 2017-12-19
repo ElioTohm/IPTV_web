@@ -49,7 +49,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Poster</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" v-model="form.poster">
+                        <input class="form-control" type="file" v-on:change="onFileChange">
                     </div>
                 </div>
 
@@ -85,7 +85,8 @@ export default {
                 stream: '',
                 stream_type: 0,
                 poster: '',
-                genres : []
+                genres : [],
+                image : '',
             },
         }
     },
@@ -103,6 +104,19 @@ export default {
         nameWithLang ({ id, name }) {
             return `${name}`
         },
+        createImage(file) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                    this.form.image = e.target.result;
+                };
+                reader.readAsDataURL(file);
+        },
+        onFileChange(e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length)
+                console.log('wrg length');
+            this.createImage(files[0]);
+        },
         beforeOpen (event) {
             this.button.text = event.params.button.text
             this.item = event.name
@@ -113,7 +127,8 @@ export default {
                 this.form.stream = ''
                 this.form.id = ''
                 this.form.stream_type = ''
-                this.form.genres = ''
+                this.form.errors = []
+                this.form.genres = []
             }else {
                 this.action = "put"
                 this.form.title = event.params.button.editForm.title

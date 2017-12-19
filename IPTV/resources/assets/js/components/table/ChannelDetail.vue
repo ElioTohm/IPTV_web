@@ -1,7 +1,7 @@
 <template>
   <div @click="onClick">
     <div class="pull-right">
-      <img :src="rowData.thumbnaiil">
+      <img :src="rowData.thumbnail" >
     </div>
     <div class="inline field">
       <label>Title: </label>

@@ -131,6 +131,13 @@ export default {
       axios[method](uri, form)
         .then(response => {
             this.$refs.vuetable.reload()
+            form.number = ''
+            form.name = ''
+            form.thumbnail = ''
+            form.stream = ''
+            form.id = ''
+            form.stream_type = ''
+            form.genres = []
         })
         .catch(error => {
           console.log(error);

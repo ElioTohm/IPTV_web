@@ -4,6 +4,7 @@ namespace App;
 
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Channel extends Model
 {
@@ -38,5 +39,10 @@ class Channel extends Model
     public function stream ()
     {
         return $this->hasOne('App\Stream', 'channel');
+    }
+
+    public function getThumbnailAttribute($value)
+    {
+        return $url = Storage::disk('public')->url('/channels/images/' . $value);
     }
 }

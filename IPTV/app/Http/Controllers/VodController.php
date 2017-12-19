@@ -9,7 +9,7 @@ use App\StreamType;
 use App\Stream;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Movie;
-
+use Illuminate\Support\Facades\Storage;
 
 class VodController extends Controller
 {
@@ -61,9 +61,8 @@ class VodController extends Controller
         
         // create movie object
         $movie = new Movie();
-        $movie->poster = $request->input('poster');
         $movie->title = $request->input('title');
-        // $this->checkThumbnail($movie, $request->get('thumbnail'), $request->input('name'), TRUE);
+        $this->checkThumbnail($movie, $request->get('image'), TRUE);
         $movie->save();
         $genres = array();
         foreach ($request->input('genres') as $value) {
@@ -92,12 +91,11 @@ class VodController extends Controller
         $stream->save();
         // update movie table
         $movie->title = $request->input('title');
-        $movie->poster = $request->input('poster');
-        // $this->checkThumbnail($movie, $request->get('thumbnail'), $request->input('name'), FALSE);
-         $genres = array();
+        $genres = array();
         foreach ($request->input('genres') as $value) {
             array_push($genres, $value['id']);
         }
+        $this->checkThumbnail($movie, $request->get('image'), TRUE);
         $movie->genres()->sync($genres);
         $movie->save();
     }
@@ -112,5 +110,14 @@ class VodController extends Controller
             'genres' => $genres,
             'stream_types' => $stream_types,
         ]);
+    }
+
+    private function checkThumbnail ($movie, $image, $addmovie) {
+        if (substr( $image, 0, 10 ) === "data:image") {
+            $imagename = $movie->title . '_'. $movie->id .'.png';
+            $imagefileencoded = Image::make($image)->encode('png', 50);
+            Storage::disk('public')->put('/movies/images/' . $imagename, $imagefileencoded);
+            $movie->poster = $imagename;
+        }
     }
 }

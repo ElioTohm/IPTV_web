@@ -20,7 +20,7 @@
       itemAction (action, data, index) {
         console.log(data)
         if (action == 'delete') {
-          this.$toasted.error("Delete " + data.title + " ?", { 
+          this.$toasted.show("Delete " + data.title + " ?", { 
             theme: "primary", 
             position: "top-center", 
             action : [
@@ -43,13 +43,20 @@
             ],
           });  
         }else{
-          this.$parent.$modal.show('movie', {button: {text :'Edit', editForm:{
+          this.$parent.$modal.show(
+            'movie', 
+            {button: 
+              {text :'Edit', 
+                editForm:{
                   id: data.id,
                   title: data.title,
                   stream: data.stream,
                   genres: data.genres,
                   poster: data.poster,
-                }}})
+                }
+              }
+            }
+          )
         }
       }
     }
