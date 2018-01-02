@@ -38,10 +38,32 @@
                     <ul class="nav navbar-nav navbar-left">
                         @if (!Auth::guest())
                             @if (Auth::user()->role == 1)
-                                <li><a href="/admin">Admin</a></li>
+                                <li><router-link to="/adminindex">Admin</a></li>
                             @endif
-                            <li><a href="/dvb">DVB</a></li>
-                            <li><a href="/vod">VOD</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    DVB<span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <router-link to="/channelindex">Channels</router-link>
+                                        <router-link to="/deviceindex">Devices</router-link>
+                                        <router-link to="/hotelclientindex">Clients</router-link>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    VOD<span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <router-link to="/movieindex">Movies</router-link>
+                                    </li>
+                                </ul>
+                            </li>
                             
                         @endif
                     </ul>

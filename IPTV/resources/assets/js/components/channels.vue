@@ -5,7 +5,7 @@
         <h2>Channels</h2>
       </div>
       <div class="panel-body">
-        <filter-bar></filter-bar>
+        <channel-filter-bar></channel-filter-bar>
         <vuetable ref="vuetable"
           api-url="/channel"
           :fields="fields"
@@ -13,7 +13,7 @@
           :css="css.table"
           :sort-order="sortOrder"
           :multi-sort="true"
-          detail-row-component="my-detail-row"
+          detail-row-component="channel-detail-row"
           :append-params="moreParams"
           @vuetable:cell-clicked="onCellClicked"
           @vuetable:pagination-data="onPaginationData"></vuetable>
@@ -44,9 +44,9 @@ import FilterBar from "./table/FilterBar";
 import ChannelModal from './modal/channel_modal.vue'
 
 Vue.use(VueEvents);
-Vue.component("custom-actions", CustomActions);
-Vue.component("my-detail-row", DetailRow);
-Vue.component("filter-bar", FilterBar);
+Vue.component("channel-actions", CustomActions);
+Vue.component("channel-detail-row", DetailRow);
+Vue.component("channel-filter-bar", FilterBar);
 
 export default {
   components: {
@@ -80,7 +80,7 @@ export default {
           sortField: 'created_at' 
         },
         {
-          name: "__component:custom-actions",
+          name: "__component:channel-actions",
           title: "Actions",
           titleClass: "text-center",
           dataClass: "text-center"

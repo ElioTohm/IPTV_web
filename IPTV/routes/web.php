@@ -20,14 +20,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/{vue_capture?}', function () {
+        return response()->view('home');
+    })->where('vue_capture', '\w*index\b');
 
-    Route::get('/dvb', 'HomeController@index')->name('dvb');
+    Route::get('/home', 'HomeController@index');
     Route::get('/genreSTypes', 'VodController@getGenresNStreamTypes');
     /**
      * admin route to set app settings 
      */
-    Route::get('/admin', 'AdminController@index')
-            ->middleware('check_admin');
     Route::get('/admin/launcherapp', 'AdminController@getLauncherApp')
             ->middleware('check_admin');
     Route::post('/admin/launcherapp', 'AdminController@updateLauncherApp')
@@ -60,7 +61,6 @@ Route::middleware(['auth'])->group(function () {
     /**
      * VOD route 
      */
-    Route::get('/vod','VodController@index');
     Route::get('/movies', 'VodController@getMovies');
     Route::post('/movie', 'VodController@addMovie');
     Route::put('/movie/{id}', 'VodController@updateMovie');

@@ -18,9 +18,8 @@
     },
     methods: {
       itemAction (action, data, index) {
-        console.log(data)
         if (action == 'delete') {
-          this.$toasted.show("Delete " + data.title + " ?", { 
+          this.$toasted.show("Delete " + data.name + " ?", { 
             theme: "primary", 
             position: "top-center", 
             action : [
@@ -43,14 +42,19 @@
             ],
           });  
         }else{
-          this.$parent.$modal.show('channel', {button: {text :'Edit', editForm:{
+          this.$parent.$modal.show(
+            'channel', 
+            {button: 
+              {text :'Edit', 
+                editForm:{
                   id: data.id,
                   number: data.number,
                   name: data.name,
                   stream: data.stream,
                   genres: data.genres,
                   poster: data.thumbnail,
-                }}})
+                }
+              }})
         }
       }
     }

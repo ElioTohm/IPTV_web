@@ -23,25 +23,10 @@ Vue.use(VModal)
 Vue.use(Toasted)
 Vue.use(VueRouter)
 
-// lazy load components
-const channels = (resolve) => require(['./components/channels.vue'], resolve)
-const hotelclients = (resolve) => require(['./components/hotelclients.vue'], resolve)
-const devices = (resolve) => require(['./components/devices.vue'], resolve)
-const monitor = (resolve) => require(['./components/monitor.vue'], resolve) 
-const androidapp = (resolve) => require(['./components/androidapp.vue'], resolve)
-const movies = (resolve)  => require(['./components/movies.vue'], resolve)
 
 // Create and mount root instance.
 // Make sure to inject the router.
 // Route components will be rendered inside <router-view>.
 new Vue({
   router,
-  components : {
-    monitor,
-    channels,
-    hotelclients,
-    devices,
-    androidapp,
-    movies,
-  }
 }).$mount('#app')

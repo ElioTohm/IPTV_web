@@ -3,15 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div>
-            <Channels></Channels>
-        </div>
-        <div>
-            <devices></devices>
-        </div>
-        <div>
-            <hotelclients></hotelclients>
-        </div>
+        <router-view></router-view>
     </div>
 </div>
 @endsection

@@ -5,7 +5,7 @@
         <h2>Movies</h2>
       </div>
       <div class="panel-body">
-        <filter-bar></filter-bar>
+        <movie-filter-bar></movie-filter-bar>
         <vuetable ref="vuetable"
           api-url="/movies"
           :fields="fields"
@@ -13,7 +13,7 @@
           :css="css.table"
           :sort-order="sortOrder"
           :multi-sort="true"
-          detail-row-component="my-detail-row"
+          detail-row-component="movie-detail-row"
           :append-params="moreParams"
           @vuetable:cell-clicked="onCellClicked"
           @vuetable:pagination-data="onPaginationData"
@@ -47,9 +47,9 @@ import FilterBar from "./table/FilterBar";
 import MovieModal from './modal/movie_modal.vue'
 
 Vue.use(VueEvents);
-Vue.component("custom-actions", CustomActions);
-Vue.component("my-detail-row", DetailRow);
-Vue.component("filter-bar", FilterBar);
+Vue.component("movie-actions", CustomActions);
+Vue.component("movie-detail-row", DetailRow);
+Vue.component("movie-filter-bar", FilterBar);
 
 export default {
   components: {
@@ -80,7 +80,7 @@ export default {
           sortField: 'created_at' 
         },
         {
-          name: "__component:custom-actions",
+          name: "__component:movie-actions",
           title: "Actions",
           titleClass: "text-center",
           dataClass: "text-center"
