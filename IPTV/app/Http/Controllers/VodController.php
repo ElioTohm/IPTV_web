@@ -37,7 +37,7 @@ class VodController extends Controller
                     $query = $query->orderBy($sortCol, $sortDir);
                 }
             } else {
-                $query = $query->orderBy('number', 'asc');
+                $query = $query->orderBy('title', 'asc');
             }
             $pagination = $query->paginate(env('ITEM_PER_PAGE'));
         }

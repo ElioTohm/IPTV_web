@@ -74,22 +74,9 @@ class ApiController extends Controller
     // Get Channels
     public function getChannel (Request $request) 
     {
-        $channels = Channel::with('genres')->get(['id', 'number', 'name', 'stream', 'stream_type', 'thumbnail']);
-        $result = [];
-        foreach ($channels as $key => $channel) {
-            array_push($result, [
-                'id' => $channel->id, 
-                'number' => $channel->number, 
-                'name' => $channel->name, 
-                'stream' => [
-                    'vid_stream' => $channel->stream,
-                    'type' => $channel->stream_type,
-                ],
-                'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . urlencode($channel->thumbnail),
-                'genres' => $channel->genres
-            ]);
-        }
-        return $result;
+        $channels = Channel::with('genres', 'stream')->get();
+        //'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . urlencode($channel->thumbnail),
+        return $channels;
     }
 
     // Get Client Info
@@ -118,7 +105,9 @@ class ApiController extends Controller
         $enduserapp = AppSettings::where('app', 'launcher')->first();
 
         if ($request->get('version') < $enduserapp->version) {
-            return response()->download(storage_path('app/private/' . $enduserapp->apk_path));
+            return response()->download(storage_path('app/private/apk/' . $enduserapp->apk_path),
+                                        $enduserapp->apk_path, 
+                                        ['Content-Type' => 'application/octet-stream']);
         } else {
             return NULL;
         }
