@@ -53,6 +53,7 @@
                   stream: data.stream,
                   genres: data.genres,
                   poster: data.thumbnail,
+                  price: data.price
                 }
               }})
         }

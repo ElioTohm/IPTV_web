@@ -138,6 +138,7 @@ export default {
             form.id = ''
             form.stream_type = ''
             form.genres = []
+            form.price = 0
         })
         .catch(error => {
           console.log(error);

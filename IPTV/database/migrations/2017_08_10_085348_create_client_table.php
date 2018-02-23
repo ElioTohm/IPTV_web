@@ -18,10 +18,22 @@ class CreateClientTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->integer('room');
-            $table->string('welcome_message')->default('Welcome from XMS pro');
-            $table->string('welcome_image')->default('Defaultimage.png');
+            $table->string('welcome_message')->default(env('WELCOME_MESSAGE'));
+            $table->string('welcome_image')->default(env('WELCOME_IMAGE'));
             $table->bigInteger('credit');
             $table->bigInteger('debit')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('purchases', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('client_id');
+            $table->foreign('client_id')
+                  ->references('id')->on('clients')
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+            $table->integer('item_id');
+            $table->string('item_type');
             $table->timestamps();
         });
     }
@@ -34,5 +46,6 @@ class CreateClientTable extends Migration
     public function down()
     {
         Schema::dropIfExists('clients');
+        Schema::dropIfExists('purchases');
     }
 }

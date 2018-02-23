@@ -1,5 +1,8 @@
 <template>
-<modal name="channel" class="modal-content" transition="pop-out" @before-open="beforeOpen" :adaptive="true" :scrollable="true" height="auto">
+<modal name="channel" class="modal-content" @before-open="beforeOpen" transition="nice-modal-fade"
+        height="auto"
+        :adaptive="true"
+        :resizable="true">
     <div class="modal-header">{{button.text}} {{item}}</div>
     <div class="modal-body">
         <form>
@@ -63,11 +66,18 @@
                         </multiselect>
                     </div>
                 </div>
+                <!-- Price -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Stream Type</label>
+                    <div class="col-md-7">
+                        <input type="number" v-model="form.price">
+                    </div>
+                </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-    <button class="btn btn-primary" @click="addItem()">{{button.text}}</button>
+        <button class="btn btn-primary" @click="addItem()">{{button.text}}</button>
     </div>
 </modal>
 </template>
@@ -98,6 +108,7 @@ export default {
                 thumbnail: '',
                 genres : [],
                 image : '',
+                price : 0
             },
         }
     },
@@ -140,6 +151,7 @@ export default {
                 this.form.id = ''
                 this.form.stream_type = ''
                 this.form.genres = []
+                this.form.price = 0
             }else {
                 this.action = "put"
                 this.form.number = event.params.button.editForm.number
@@ -149,6 +161,7 @@ export default {
                 this.form.genres = event.params.button.editForm.genres
                 this.form.stream_type = event.params.button.editForm.stream.type
                 this.form.id = event.params.button.editForm.id
+                this.form.price = event.params.button.editForm.price
             }
         axios.get();
     },

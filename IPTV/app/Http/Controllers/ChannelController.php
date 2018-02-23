@@ -60,6 +60,7 @@ class ChannelController extends Controller
         $channel = new Channel();
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
+        $channel->price = $request->input('price');
         $this->checkThumbnail($channel, $request->get('image'), $request->input('name'), TRUE);
         $channel->save();
         $genres = array();
@@ -84,6 +85,7 @@ class ChannelController extends Controller
         // update channel table
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
+        $channel->price = $request->input('price');
         $this->checkThumbnail($channel, $request->get('image'), $request->input('name'), FALSE);
         $genres = array();
         foreach ($request->input('genres') as $value) {
