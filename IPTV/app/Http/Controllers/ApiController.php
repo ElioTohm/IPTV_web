@@ -72,7 +72,7 @@ class ApiController extends Controller
                     'error' => 401,
                 ]);
 
-        
+                
     }
 
     // Get Channels
@@ -117,7 +117,8 @@ class ApiController extends Controller
         }
     }
 
-    // stream controller
+    // unused
+    // stream controller 
     public function streamFile ()
     {
         $fs = Storage::getDriver();
