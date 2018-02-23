@@ -5,7 +5,7 @@
         <h2>Channels</h2>
       </div>
       <div class="panel-body">
-        <channel-filter-bar></channel-filter-bar>
+        <channel-filter-bar objectype="channel"></channel-filter-bar>
         <vuetable ref="vuetable"
           api-url="/channel"
           :fields="fields"
@@ -120,8 +120,8 @@ export default {
     /**
      * show modal depending on the object being manipulated
      */
-    showRepectiveModal() {
-      this.$modal.show('channel', {button: {text :'Add'}})
+     showRepectiveModal(modalname) {
+      this.$modal.show(modalname, {button: {text :'Add'}})
     },
     /**  
     * Persist the item to storage using the given form.

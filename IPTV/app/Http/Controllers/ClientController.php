@@ -12,11 +12,36 @@ use App\Events\NotificationEvent;
 
 class ClientController extends Controller
 {
-    public function getClients () 
+    public function getClients (Request $request) 
     {
-        // fetch all clients with id
-        $clients = Client::paginate(env('ITEM_PER_PAGE'));
-        return $clients;
+        if ($request->exists('filter')) {
+            $pagination = Client::search($request->input('filter'))->paginate(env('ITEM_PER_PAGE'));
+            
+        } else {
+            // $query = Client::get();
+            // handle sort option
+            if ($request->has('sort')) {
+                // handle multisort
+                $sorts = explode(',', $request->sort);
+                foreach ($sorts as $sort) {
+                    list($sortCol, $sortDir) = explode('|', $sort);
+                    $query = Client::orderBy($sortCol, $sortDir);
+                }
+            } else {
+                $query = Client::orderBy('name', 'asc');
+            }
+            $pagination = Client::paginate(env('ITEM_PER_PAGE'));
+        }
+
+        $pagination->appends([
+            'sort' => $request->sort,
+            'filter' => $request->filter,
+            'per_page' => $request->per_page
+        ]);
+
+        return response()->json(
+                $pagination
+        );
     }
 
     

@@ -4,30 +4,32 @@
       <img :src="rowData.thumbnail" >
     </div>
     <div class="inline field">
-      <label>Title: </label>
+      <label>Name: </label>
       <span>{{rowData.name}}</span>
     </div>
     <div class="inline field">
-      <label>Price: </label>
-      <span>{{rowData.price}} Units</span>
+      <label>Email: </label>
+      <span>{{rowData.email}}</span>
     </div>
     <div class="inline field">
-      <label>Stream Type: </label>
-      <span>{{rowData.stream.type.name}}</span>
+      <label>Welcome message: </label>
+      <span>{{rowData.welcome_message}}</span>
     </div>
     <div class="inline field">
-      <label>Created at: </label>
+      <label>Credits: </label>
+      <span>{{rowData.credit}} Units</span>
+    </div>
+    <div class="inline field">
+      <label>Debit: </label>
+      <span>{{rowData.debit}} Units</span>
+    </div>
+    <div class="inline field">
+      <label>Added Client at: </label>
       <span>{{rowData.created_at}}</span>
     </div>
     <div class="inline field">
-      <label>Updated at: </label>
+      <label>Info Updated at: </label>
       <span>{{rowData.updated_at}}</span>
-    </div>
-    <div class="inline field">
-      <label>genres: </label>
-      <span v-for="genre in rowData.genres" :key="genre.id">
-        {{ genre.name }}
-      </span>
     </div>
   </div>
 </template>
@@ -51,9 +53,3 @@ export default {
 }
 </script>
 
-<style>
-  img{
-    height: 200px;
-    width: 150px;
-  }
-</style>

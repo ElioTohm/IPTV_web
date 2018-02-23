@@ -21,6 +21,7 @@
         filterText: ''
       }
     },
+    props: ['objectype'],
     methods: {
       doFilter () {
         this.$events.fire('filter-set', this.filterText)
@@ -30,7 +31,7 @@
         this.$events.fire('filter-reset')
       },
       showModal () {
-        this.$parent.showRepectiveModal();
+        this.$parent.showRepectiveModal(this.objectype);
       }
     }
   }
