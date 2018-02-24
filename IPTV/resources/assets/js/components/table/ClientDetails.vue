@@ -31,6 +31,9 @@
       <label>Info Updated at: </label>
       <span>{{rowData.updated_at}}</span>
     </div>
+    <div>
+      {{rowData.purchases}}
+    </div>
   </div>
 </template>
 

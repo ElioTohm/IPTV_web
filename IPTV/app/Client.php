@@ -29,4 +29,9 @@ class Client extends Model
 
         return $array;
     }
+
+    public function purchases () 
+    {
+        return $this->hasMany('App\Purchase', 'client_id', 'id');
+    }
 }

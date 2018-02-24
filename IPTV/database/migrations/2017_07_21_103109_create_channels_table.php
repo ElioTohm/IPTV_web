@@ -18,7 +18,7 @@ class CreateChannelsTable extends Migration
             $table->increments('id')->unsigned();
             $table->integer('number')->unique();
             $table->string('name');
-            $table->string('thumbnail')->default(env("CHANNEL_THUMBNAIL"));
+            $table->string('thumbnail')->default('DefaultThumbnail.png');
             $table->integer('price')->default(0);
             $table->timestamps();
         });

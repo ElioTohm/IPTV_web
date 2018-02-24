@@ -45,4 +45,9 @@ class Channel extends Model
     {
         return $url = Storage::disk('public')->url('/channels/images/' . $value);
     }
+
+    public function purachse()
+    {
+        return $this->morphMany('App\Purchase', 'purchasable');
+    }
 }

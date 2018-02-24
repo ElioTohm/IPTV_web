@@ -45,4 +45,9 @@ class Movie extends Model
     {
         return $url = Storage::disk('public')->url('/movies/images/' . $value);
     }
+
+    public function purachse()
+    {
+        return $this->morphMany('App\Purchase', 'purchasable');
+    }
 }

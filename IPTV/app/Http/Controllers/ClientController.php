@@ -18,19 +18,19 @@ class ClientController extends Controller
             $pagination = Client::search($request->input('filter'))->paginate(env('ITEM_PER_PAGE'));
             
         } else {
-            // $query = Client::get();
+            $query = Client::with('purchases.purchasable');
             // handle sort option
             if ($request->has('sort')) {
                 // handle multisort
                 $sorts = explode(',', $request->sort);
                 foreach ($sorts as $sort) {
                     list($sortCol, $sortDir) = explode('|', $sort);
-                    $query = Client::orderBy($sortCol, $sortDir);
+                    $query = $query->orderBy($sortCol, $sortDir);
                 }
             } else {
-                $query = Client::orderBy('name', 'asc');
+                $query = $query->orderBy('name', 'asc');
             }
-            $pagination = Client::paginate(env('ITEM_PER_PAGE'));
+            $pagination = $query->paginate(env('ITEM_PER_PAGE'));
         }
 
         $pagination->appends([
