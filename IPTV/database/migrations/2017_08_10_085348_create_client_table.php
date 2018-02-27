@@ -20,8 +20,7 @@ class CreateClientTable extends Migration
             $table->integer('room');
             $table->string('welcome_message')->default('Welcome');
             $table->string('welcome_image')->default('Defaultimage.png');
-            $table->bigInteger('credit');
-            $table->bigInteger('debit')->default(0);
+            $table->bigInteger('balance')->default(0);
             $table->timestamps();
         });
 

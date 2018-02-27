@@ -1,5 +1,5 @@
 <template>
-  <div @click="onClick">
+  <div>
     <div class="pull-right">
       <img :src="rowData.thumbnail" >
     </div>
@@ -16,12 +16,8 @@
       <span>{{rowData.welcome_message}}</span>
     </div>
     <div class="inline field">
-      <label>Credits: </label>
-      <span>{{rowData.credit}} Units</span>
-    </div>
-    <div class="inline field">
-      <label>Debit: </label>
-      <span>{{rowData.debit}} Units</span>
+      <label>Balance: </label>
+      <span>{{rowData.balance}} Units</span>
     </div>
     <div class="inline field">
       <label>Added Client at: </label>
@@ -31,8 +27,16 @@
       <label>Info Updated at: </label>
       <span>{{rowData.updated_at}}</span>
     </div>
-    <div>
-      {{rowData.purchases}}
+     <div class="inline field">
+      <label><u>Purchased Items</u>: </label>
+      <div v-for="itempurchased in rowData.purchases" :key="itempurchased.id">
+        <label>Item: </label>
+        <span>{{itempurchased.purchasable.name}}</span>
+        <label>Price: </label>
+        <span>{{itempurchased.purchasable.price}}</span>
+        <label>Purchased on: </label>
+        <span>{{itempurchased.created_at}}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -46,11 +50,6 @@ export default {
     },
     rowIndex: {
       type: Number
-    }
-  },
-  methods: {
-    onClick (event) {
-      console.log('my-detail-row: on-click', event.target)
     }
   },
 }

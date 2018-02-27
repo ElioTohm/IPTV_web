@@ -59,23 +59,19 @@ export default {
       fields: [
         {
           name: "name",
-          sortField: "name"
+          sortField: "Name"
         },
         {
           name: "email",
-          sortField: "email"
+          sortField: "Email"
         },
         {
           name: "room",
-          title: "room"
+          title: "Room Number"
         },
         {
-          name: "credit",
-          title: "credit"
-        },
-        {
-          name: "debit",
-          title: "debit"
+          name: "balance",
+          title: "Balance"
         },
         {
           name: "created_at",
@@ -140,8 +136,7 @@ export default {
             form.room = 0
             form.welcome_message = ''
             form.welcome_image = ''
-            form.credit = 0
-            form.debit = 0
+            form.balance = 0
         })
         .catch(error => {
           console.log(error);
@@ -180,236 +175,4 @@ export default {
     }
   }
 };
-    // import pagination from 'laravel-vue-pagination';
-    // export default {
-    //     components: {
-    //         'pagination': pagination
-    //     },
-    //     data () {
-    //         return {
-    //             pagedata:{},
-    //             clients: [],
-    //             monitor:{
-    //                 count: 0
-    //             },
-    //             notification: {
-    //                 id: 0,
-    //                 message: ''
-    //             },
-
-    //             createForm: {
-    //                     errors: [],
-    //                     name: '',
-    //                     email : '',
-    //                     room : '',
-    //                     welcome_message : '',
-    //                     welcome_image: '',
-    //                     credit : 0,
-    //                     debit : 0, 
-    //                 },
-
-    //             editForm: {
-    //                 errors: [],
-    //                 name : '',
-    //                 email : '',
-    //                 room : '',
-    //                 welcome_message : '',
-    //                 welcome_image: '',
-    //                 credit : 0,
-    //                 debit : 0,
-    //             },
-
-    //             search: {
-    //                 errors: [],
-    //                 model: 'Client',
-    //                 query: ''
-    //             }
-    //         }
-    //     },
-    //     mounted () {
-    //         this.getClient();
-    //     },
-    //     watch: {
-    //             'search.query': function(){
-    //                 if (this.search.query != '') {
-    //                     axios.get('/search', {params : this.search})
-    //                         .then(response => {
-    //                             this.clients = response.data;
-    //                         })
-    //                         .catch(error => {
-    //                             console.log(error.response.data)
-    //                         });
-    //                 } else {
-    //                     this.getClient();
-    //                 }
-                    
-    //             }
-    //         },
-    //     methods: {
-    //         /* 
-    //         * assign the image to a model
-    //         */
-    //         createImage(file) {
-    //             let reader = new FileReader();
-    //             let vm = this;
-    //             vm.editForm.welcome_image = '';
-    //             reader.onload = (e) => {
-    //                 vm.createForm.welcome_image = e.target.result;
-    //                 vm.editForm.welcome_image = e.target.result;
-                        
-    //             };
-    //             reader.readAsDataURL(file);
-    //         },
-
-    //         /*
-    //         * create the file 
-    //         */
-    //         onFileChange(e) {
-    //             let files = e.target.files || e.dataTransfer.files;
-    //             if (!files.length)
-    //             this.createImage(files[0]);
-    //         },
-            
-    //         notificationwindows(client) {
-    //             this.notification.id = client.room
-    //             $('#modal-notify-hotelclient').modal('show');
-    //         },
-            
-    //         // send notification to client
-    //         sendnotification() {
-    //             axios.get('/clientnotification/'+this.notification.id,{
-    //                     params:{
-    //                         message: this.notification.message
-    //                     }
-    //                 })
-    //                 .then(response => {
-    //                         console.log(response)
-    //                 })
-    //                 .catch(error => {
-    //                     console.log(error.response.data)
-    //                 });
-    //         },
-
-    //         // return all clients
-    //         getClient (page) {
-    //             if (typeof page === 'undefined') {
-    //                 page = 1;
-    //             }
-    //             axios.get('/client?page=' + page)
-    //                 .then(response => {
-    //                     this.pagedata = response.data;
-    //                     this.clients = this.pagedata.data;
-    //                 })
-    //                 .catch(error => {
-    //                     console.log(error.response.data)
-    //                 });
-    //         },
-        
-    //         /**
-    //          * Show the form for adding new client.
-    //          */
-    //         showAddClientForm() {
-    //             $('#modal-add-client').modal('show');
-    //         },
-
-    //         /**
-    //          * Create a new OAuth client for the user.
-    //          */
-    //         store() {
-    //             this.persistClient(
-    //                 'post', '/client',
-    //                 this.createForm, '#modal-create-client'
-    //             );
-    //         },
-
-    //         /**
-    //          * Edit the given client.
-    //          */
-    //         edit(client) {
-    //             this.editForm.id = client.id;
-    //             this.editForm.name = client.name;
-    //             this.editForm.email = client.email
-    //             this.editForm.room = client.room;
-    //             this.editForm.welcome_message = client.welcome_message;
-    //             this.editForm.welcome_image = client.welcome_image;
-    //             this.editForm.credit = client.credit;
-    //             this.editForm.debit = client.debit;
-
-    //             $('#modal-edit-hotelclient').modal('show');
-    //         },
-
-    //         /**
-    //          * Update the client being edited.
-    //          */
-    //         update() {
-    //             this.persistClient(
-    //                 'put', '/client/' + this.editForm.id,
-    //                 this.editForm, '#modal-edit-hotelclient'
-    //             );
-    //         },
-
-    //         /**
-    //          * Persist the client to storage using the given form.
-    //          */
-    //         persistClient(method, uri, form, modal) {
-    //             form.errors = [];
-
-    //             axios[method](uri, form)
-    //                 .then(response => {
-    //                     if (typeof response.data.error != "undefined") {
-    //                         form.errors = [response.data.error];
-    //                     } else {
-    //                         this.getClient();
-
-    //                         form.errors = [];
-    //                         form.name = '';
-    //                         form.email = '';
-    //                         form.room = '';
-    //                         form.welcome_message = '';
-    //                         form.welcome_image = '';
-    //                         form.credit = '';
-    //                         form.debit = '';
-                            
-    //                         $(modal).modal('hide');
-    //                     }
-                        
-    //                 })
-    //                 .catch(error => {
-    //                     if (typeof error.response.data === 'object') {
-    //                         form.errors = _.flatten(_.toArray(error.response.data));
-    //                     } else {
-    //                         form.errors = ['Something went wrong. Please try again.'];
-    //                     }
-    //                     console.log(error.response.data)
-    //                 });
-    //         },
-
-    //         /**
-    //          * Destroy the given client.
-    //          */
-    //         destroy(client) {
-    //             this.$toasted.error("Remove "+client.name+"?", { 
-    //                 theme: "primary", 
-    //                 position: "top-center", 
-    //                 action : [{
-    //                             text : 'Delete',
-    //                             onClick : (e, toastObject) => {
-    //                                 toastObject.goAway(0);
-    //                                 axios.delete('/client/' + client.id)
-    //                                         .then(response => {
-    //                                             this.getClient();
-    //                                         });
-    //                             }
-    //                         },
-    //                         {
-    //                             text : 'Cancel',
-    //                             onClick : (e, toastObject) => {
-    //                                 toastObject.goAway(0);
-    //                             }
-    //                         }],
-    //             });
-    //         },
-            
-    //     }
-    // }
 </script>

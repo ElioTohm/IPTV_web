@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 
+use App\Channel;
+use App\Purchase;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +19,10 @@ Route::get('/registerDevice', 'ApiController@register');
 
 Route::group(['middleware' => 'auth:api'], function()
 {
+	/**
+	 * Section Protect Ott streams 
+	 * section is currently under testing 
+	 */
     Route::get('/stream/{video_id}/play', function ($video_id) {
 		return response()->download('/var/www/storage/app/public/movies/videos/' . $video_id . '/720p.m3u8', 
 									'play.m3u8', 
@@ -27,6 +34,7 @@ Route::group(['middleware' => 'auth:api'], function()
 	    							'play.ls', 
 	    							['Content-Type' => 'application/octet-stream']);
 	})->where('file', '\w*.ts\b');
+	// end section
 
 	// check for update
 	Route::get('/launcherUpdate', 'ApiController@launcherUpdateCheck');
@@ -36,4 +44,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
 	// get client info
 	Route::get('/clientInfo' , 'ApiController@getClientInfo');
+
+	// client purchase route
+	Route::post('/clientpurchase', 'ApiController@clientPurchase');
 });

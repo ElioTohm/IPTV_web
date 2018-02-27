@@ -11,6 +11,7 @@ use App\User;
 use App\oAuthClient;
 use App\AppSettings;
 use GuzzleHttp\Client as GuzzleClient;
+use App\Purchase;
 
 class ApiController extends Controller
 {
@@ -88,9 +89,9 @@ class ApiController extends Controller
     {
         $device = Device::where('id', $request->input('id'))->first(['room']);
 
-        $client = Client::where('room', $device->room)->first(["id", "name", "email", "room", "welcome_message", "welcome_image", "credit", "debit"]);
+        $client = Client::where('room', $device->room)->with("purchases")->first();
         
-        // return $client;
+        return response()->json($client);
         return response()->json([
             "id" => $client->id, 
             "name" => $client->name, 
@@ -117,6 +118,25 @@ class ApiController extends Controller
         }
     }
 
+    public function clientPurchase (Request $request)
+    {
+        
+        $client = Client::find($request->input('client_id'));
+        $purchases = $request->input('purchases');
+
+        foreach ($purchases as $purchase) {
+            if ($purchase['purchasable_type'] == "Channel") {
+                $channel = Channel::find($purchase['purchasable_id']);
+                $client->balance = $client->balance - $channel->price;
+                $client->save();
+                $purchase =  new Purchase();
+                $purchase->client_id = $client->id;
+                $channel->purachse()->save($purchase);
+            }
+        }
+
+        return response()->json($client->with("purchases")->first());        
+    }
     // unused
     // stream controller 
     public function streamFile ()

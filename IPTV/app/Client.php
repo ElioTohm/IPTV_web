@@ -34,4 +34,10 @@ class Client extends Model
     {
         return $this->hasMany('App\Purchase', 'client_id', 'id');
     }
+
+    
+    public function getwelcomeImageAttribute($value)
+    {
+        return env('APP_URL', 'localhost') . "/images/device/welcome/" . urlencode($value);
+    }
 }
