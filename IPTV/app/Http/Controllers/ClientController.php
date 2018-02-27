@@ -57,9 +57,7 @@ class ClientController extends Controller
         if ($request->get('welcome_image') !== NULL && $request->get('welcome_message') != '') {
             $client->welcome_image = $request->input('welcome_image');
         }
-        
-        $client->credit = $request->input('credit');
-        $client->debit = $request->input('debit');
+        $client->balance = $request->input('balance');
         $client->save();
 
         return $client;
@@ -75,9 +73,7 @@ class ClientController extends Controller
         $client->room = $request->input('room');
         $client->welcome_message = $request->input('welcome_message');
         $this->checkWeclomeImage ($client, $request->get('welcome_image'), $request->input('room'), FALSE);        
-        $client->credit = $request->input('credit');
-        $client->debit = $request->input('debit');
-
+        $client->balance = $request->input('balance');
         $client->save();
 
         return $client;

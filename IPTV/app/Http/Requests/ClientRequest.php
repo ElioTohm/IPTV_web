@@ -27,7 +27,7 @@ class ClientRequest extends FormRequest
              'name'  => 'required',
              'email' => 'required',
              'room' => 'required',
-             'credit' => 'required',
+             'balance' => 'required',
         ];
     }
  
@@ -37,7 +37,7 @@ class ClientRequest extends FormRequest
              'name.required' => 'Name is required',
              'email.required' => 'Email is required',
              'room.required' => 'Room is required',
-             'credit.required' => 'Credit is required',
+             'balance.required' => 'Balance is required',
         ];
     }
 }

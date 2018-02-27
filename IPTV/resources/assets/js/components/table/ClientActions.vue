@@ -55,7 +55,7 @@
                   room: data.room,
                   welcome_message: data.welcome_message,
                   welcome_image: data.welcome_image,
-                  debit: data.balance
+                  balance: data.balance
                 }
             }
           )

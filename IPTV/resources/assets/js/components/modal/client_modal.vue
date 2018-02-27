@@ -28,18 +28,11 @@
                         <input type="text" class="form-control" v-model="form.room">
                     </div>
                 </div>
-                <!-- credit -->
+                <!-- balance -->
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Credit</label>
+                    <label class="col-md-3 control-label">Balance</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" v-model="form.credit">
-                    </div>
-                </div>
-                <!-- debit -->
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Debit</label>
-                    <div class="col-md-7">
-                        <input type="text" class="form-control" v-model="form.debit">
+                        <input type="text" class="form-control" v-model="form.balance">
                     </div>
                 </div>
                 <!-- welcome message -->
@@ -81,9 +74,7 @@ export default {
                 email: '',
                 room: 0,
                 welcome_message: '',
-                // welcome_image: '',
-                credit: 0,
-                debit: 0
+                balance: 0
             },
         }
     },
@@ -106,23 +97,21 @@ export default {
             this.item = event.name
             if (this.button.text == "Add") {
                 this.action = 'post'
+                this.form.id = 0
                 this.form.name = ''
                 this.form.email = ''
                 this.form.room = 0
                 this.form.welcome_message = ''
-                // this.form.welcome_image = ''
                 this.form.credit = 0
                 this.form.debit = 0
             } else {
                 this.action = "put"
+                this.form.id = event.params.editForm.id
                 this.form.name = event.params.editForm.name
                 this.form.email = event.params.editForm.email
                 this.form.room = event.params.editForm.room
                 this.form.welcome_message = event.params.editForm.welcome_message
-                // this.form.welcome_image = event.params.editForm.welcome_image
-                this.form.credit = event.params.editForm.credit
-                this.form.debit = event.params.editForm.debit
-                console.log(event.params.editForm)
+                this.form.balance = event.params.editForm.balance
             }
         axios.get();
     },
