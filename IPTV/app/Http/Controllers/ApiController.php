@@ -12,6 +12,7 @@ use App\oAuthClient;
 use App\AppSettings;
 use GuzzleHttp\Client as GuzzleClient;
 use App\Purchase;
+use App\Movie;
 
 class ApiController extends Controller
 {
@@ -82,6 +83,13 @@ class ApiController extends Controller
         $channels = Channel::with('genres', 'stream')->get();
         //'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . urlencode($channel->thumbnail),
         return $channels;
+    }
+
+    // Get Movies 
+    public function getVODStreams (Request $request)
+    {
+        $movies = Movie::with('genres', 'stream')->get();
+        return response()->json($movies);
     }
 
     // Get Client Info

@@ -42,6 +42,9 @@ Route::group(['middleware' => 'auth:api'], function()
 	// get channel
 	Route::get('/channel' , 'ApiController@getChannel');
 
+	// movies route
+	Route::get('/vodmovies', 'ApiController@getVODStreams');
+
 	// get client info
 	Route::get('/clientInfo' , 'ApiController@getClientInfo');
 
