@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Genre extends Model
 {
@@ -13,4 +14,9 @@ class Genre extends Model
      */
     protected $table = 'genres';
     protected $hidden = array('pivot', 'created_at', 'updated_at');
+
+    public function getPosterAttribute($value)
+    {
+        return $url = Storage::disk('public')->url('/genres/' . $value);
+    }
 }

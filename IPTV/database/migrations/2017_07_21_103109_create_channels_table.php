@@ -26,6 +26,7 @@ class CreateChannelsTable extends Migration
         Schema::create('genres', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('poster');
             $table->timestamps();
         });
 

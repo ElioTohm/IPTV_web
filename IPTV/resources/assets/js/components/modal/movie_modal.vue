@@ -20,6 +20,14 @@
                         <input type="text" class="form-control" v-model="form.stream">
                     </div>
                 </div>
+
+                 <!-- price -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Price</label>
+                    <div class="col-md-7">
+                        <input type="number" class="form-control" v-model="form.price">
+                    </div>
+                </div>
                 
                 <!-- genres -->
                 <div class="form-group">
@@ -82,6 +90,7 @@ export default {
                 errors: [],
                 id: '',
                 title: '',
+                price: 0,
                 stream: '',
                 stream_type: 0,
                 poster: '',
@@ -126,12 +135,14 @@ export default {
                 this.form.poster = ''
                 this.form.stream = ''
                 this.form.id = ''
+                this.form.price = 0
                 this.form.stream_type = ''
                 this.form.errors = []
                 this.form.genres = []
             }else {
                 this.action = "put"
                 this.form.title = event.params.button.editForm.title
+                this.form.price = event.params.button.editForm.price
                 this.form.poster = event.params.button.editForm.poster
                 this.form.stream = event.params.button.editForm.stream.vid_stream
                 this.form.genres = event.params.button.editForm.genres

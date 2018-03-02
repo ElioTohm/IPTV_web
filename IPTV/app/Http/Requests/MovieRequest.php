@@ -26,7 +26,7 @@ class MovieRequest extends FormRequest
         return [
             'title' => 'required',
             'stream' => 'required',
-            'image' => 'required'
+            'price' => 'required'
         ];
     }
 
@@ -35,7 +35,7 @@ class MovieRequest extends FormRequest
         return [
             'title.required' => 'Name is required',
             'stream.required'  => 'Stream is required',
-            'image.required' => 'poster is required'
+            'price.required' => 'Price is required'
         ];
     }
 }

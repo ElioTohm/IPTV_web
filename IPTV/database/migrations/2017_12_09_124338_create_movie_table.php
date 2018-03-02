@@ -17,6 +17,7 @@ class CreateMovieTable extends Migration
         Schema::create('movies', function (Blueprint $table){
             $table->increments('id')->unsigned();
             $table->string('title');
+            $table->integer('price')->default(0);
             $table->string('poster')->default('DefaultThumbnail.png');
             $table->timestamps();
         });

@@ -8,6 +8,10 @@
       <span>{{rowData.title}}</span>
     </div>
     <div class="inline field">
+      <label>Price: </label>
+      <span>{{rowData.price}}</span>
+    </div>
+    <div class="inline field">
       <label>Stream Type: </label>
       <span>{{rowData.stream.type.name}}</span>
     </div>

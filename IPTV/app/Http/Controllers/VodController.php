@@ -62,6 +62,7 @@ class VodController extends Controller
         // create movie object
         $movie = new Movie();
         $movie->title = $request->input('title');
+        $movie->price = $request->input('price');
         $this->checkThumbnail($movie, $request->get('image'), TRUE);
         $movie->save();
         $genres = array();
@@ -91,6 +92,7 @@ class VodController extends Controller
         $stream->save();
         // update movie table
         $movie->title = $request->input('title');
+        $movie->price = $request->input('price');
         $genres = array();
         foreach ($request->input('genres') as $value) {
             array_push($genres, $value['id']);

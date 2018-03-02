@@ -50,6 +50,7 @@
                 editForm:{
                   id: data.id,
                   title: data.title,
+                  price: data.price,
                   stream: data.stream,
                   genres: data.genres,
                   poster: data.poster,
