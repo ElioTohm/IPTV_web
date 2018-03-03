@@ -134,9 +134,7 @@ class ApiController extends Controller
 
         foreach ($purchases as $purchase) {
             if ($purchase['purchasable_type'] == "Channel") {
-                $channel = Channel::find($purchase['purchasable_id']);
-                $client->balance = $client->balance - $channel->price;
-                $client->save();
+                $channel = Channel::where("number", $purchase['purchasable_id'])->first();
                 $purchase =  new Purchase();
                 $purchase->client_id = $client->id;
                 $channel->purachse()->save($purchase);

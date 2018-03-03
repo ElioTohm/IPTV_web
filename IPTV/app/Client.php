@@ -40,4 +40,15 @@ class Client extends Model
     {
         return env('APP_URL', 'localhost') . "/images/device/welcome/" . urlencode($value);
     }
+
+    public function getBalanceAttribute($value)
+    {
+        $purchases = $this->purchases;
+        $bill = 0;
+        foreach ($purchases as $purchase) {
+            $bill = $bill + $purchase->purchasable->price;
+        }
+
+        return $value - $bill;
+    }
 }
