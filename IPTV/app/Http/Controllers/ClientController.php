@@ -54,9 +54,9 @@ class ClientController extends Controller
         if ($request->input('welcome_message') !== NULL && $request->input('welcome_message') != '') {
             $client->welcome_message = $request->input('welcome_message');
         }
-        if ($request->get('welcome_image') !== NULL && $request->get('welcome_message') != '') {
-            $client->welcome_image = $request->input('welcome_image');
-        }
+        // if ($request->get('welcome_image') !== NULL && $request->get('welcome_message') != '') {
+        //     $client->welcome_image = $request->input('welcome_image');
+        // }
         $client->balance = $request->input('balance');
         $client->save();
 
@@ -72,7 +72,7 @@ class ClientController extends Controller
         $client->email = $request->input('email');
         $client->room = $request->input('room');
         $client->welcome_message = $request->input('welcome_message');
-        $this->checkWeclomeImage ($client, $request->get('welcome_image'), $request->input('room'), FALSE);        
+        // $this->checkWeclomeImage ($client, $request->get('welcome_image'), $request->input('room'), FALSE);        
         $client->balance = $request->input('balance');
         $client->save();
 

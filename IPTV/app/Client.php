@@ -25,7 +25,18 @@ class Client extends Model
     */
     public function toSearchableArray()
     {
-        $array = $this->toArray();
+        $array =  [
+            'id' => $this->id,
+            'name' => $this->title,
+            'email' => $this->email,
+            'room' => $this->room,
+            'welcome_message' => $this->welcome_message,
+            'welcome_image' => $this->welcome_image,
+            'balance' => $this->balance,
+        ];
+
+        if (!empty(self::$purchases))
+            $array = array_merge($array, self::$purchases);
 
         return $array;
     }
