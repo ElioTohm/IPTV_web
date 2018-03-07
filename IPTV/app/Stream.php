@@ -8,7 +8,7 @@ class Stream extends Model
 {
     //
     protected $table = 'streams';
-    protected $hidden = array('id', 'created_at', 'updated_at');
+    protected $hidden = array('created_at', 'updated_at');
 
     public function type ()
     {

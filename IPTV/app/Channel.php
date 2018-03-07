@@ -38,7 +38,7 @@ class Channel extends Model
 
     public function stream ()
     {
-        return $this->hasOne('App\Stream', 'channel');
+        return $this->hasOne('App\Stream', 'channel', 'number');
     }
 
     public function getThumbnailAttribute($value)
@@ -46,7 +46,7 @@ class Channel extends Model
         return $url = Storage::disk('public')->url('/channels/images/' . $value);
     }
 
-    public function purachse()
+    public function purchase()
     {
         return $this->morphMany('App\Purchase', 'purchasable');
     }

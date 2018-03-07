@@ -30,12 +30,22 @@
      <div class="inline field">
       <label><u>Purchased Items</u>: </label>
       <div v-for="itempurchased in rowData.purchases" :key="itempurchased.id">
-        <label>Item: </label>
-        <span>{{itempurchased.purchasable.name}}</span>
-        <label>Price: </label>
-        <span>{{itempurchased.purchasable.price}}</span>
-        <label>Purchased on: </label>
-        <span>{{itempurchased.created_at}}</span>
+        <div v-if="itempurchased.purchasable_type == 'App\\Channel'">
+          <label>Channel: </label>
+          <span> {{itempurchased.purchasable.name}}</span>
+          <label>Price: </label>
+          <span>{{itempurchased.purchasable.price}}</span>
+          <label>Purchased on: </label>
+          <span>{{itempurchased.created_at}}</span>
+        </div>
+        <div v-else-if="itempurchased.purchasable_type == 'App\\Movie'">
+          <label>Movie: </label>
+          <span> {{itempurchased.purchasable.title}}</span>
+          <label>Price: </label>
+          <span>{{itempurchased.purchasable.price}}</span>
+          <label>Purchased on: </label>
+          <span>{{itempurchased.created_at}}</span>
+        </div>
       </div>
     </div>
   </div>

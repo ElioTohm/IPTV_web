@@ -16,7 +16,7 @@ class CreateChannelsTable extends Migration
 
         Schema::create('channels', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('number')->unique();
+            $table->integer('number')->unsigned()->unique();
             $table->string('name');
             $table->string('thumbnail')->default('DefaultThumbnail.png');
             $table->integer('price')->default(0);

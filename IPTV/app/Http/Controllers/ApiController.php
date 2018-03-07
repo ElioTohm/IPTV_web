@@ -134,11 +134,13 @@ class ApiController extends Controller
 
         foreach ($purchases as $purchase) {
             if ($purchase['purchasable_type'] == "Channel") {
-                $channel = Channel::where("number", $purchase['purchasable_id'])->first();
-                $purchase =  new Purchase();
-                $purchase->client_id = $client->id;
-                $channel->purachse()->save($purchase);
+                $item_purchased = Channel::find($purchase['purchasable_id']);
+            } elseif ($purchase['purchasable_type'] == "Movie") {
+                $item_purchased = Movie::find($purchase['purchasable_id']);
             }
+            $purchase =  new Purchase();
+            $purchase->client_id = $client->id;
+            $item_purchased->purchase()->save($purchase);
         }
 
         return response()->json($client->with("purchases")->first());        

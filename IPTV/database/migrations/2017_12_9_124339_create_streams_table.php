@@ -24,7 +24,7 @@ class CreateStreamsTable extends Migration
             $table->string('vid_stream');
             $table->string('sub_stream')->nullable();
             $table->integer('channel')->unsigned()->nullable();
-            $table->foreign('channel')->references('id')->on('channels')
+            $table->foreign('channel')->references('number')->on('channels')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->integer('movie')->unsigned()->nullable();

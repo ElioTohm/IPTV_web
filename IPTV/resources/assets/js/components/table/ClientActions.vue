@@ -3,6 +3,9 @@
       <button class="btn btn-sm" @click="itemAction('edit', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
       <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
       <button class="btn btn-sm" @click="itemAction('checkout', rowData, rowIndex)"><i class=" glyphicon glyphicon-shopping-cart"></i></button>
+      <button class="btn btn-sm" @click="itemAction('doorbellnotify', rowData, rowIndex)">
+        <img src="http://localhost/storage/hotel/notification.png"/>
+      </button>
     </div>
   </template>
 
@@ -19,7 +22,20 @@
     },
     methods: {
       itemAction (action, data, index) {
-        if (action == 'delete') {
+        if (action == 'doorbellnotify') {
+          axios.get('/clientnotification/' + data.room, {
+            params: {
+              type:2,
+              message: "Your have a Visitor"
+            }
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        } else if (action == 'delete') {
           this.$toasted.show("Delete " + data.name + " ?", { 
             theme: "primary", 
             position: "top-center", 
@@ -71,5 +87,9 @@
     }
     .custom-actions button.ui.button > i.icon {
       margin: auto !important;
+    }
+    img {
+      height: 16px;
+      width: 16 px;
     }
   </style>
