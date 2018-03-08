@@ -38,7 +38,18 @@
                     <ul class="nav navbar-nav navbar-left">
                         @if (!Auth::guest())
                             @if (Auth::user()->role == 1)
-                                <li><router-link to="/adminindex">Admin</a></li>
+                                <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    Admin<span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <router-link to="/adminindex">App</router-link>
+                                        <router-link to="/deviceindex">Devices</router-link>
+                                    </li>
+                                </ul>
+                            </li>
                             @endif
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -48,7 +59,6 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <router-link to="/channelindex">Channels</router-link>
-                                        <router-link to="/deviceindex">Devices</router-link>
                                         <router-link to="/hotelclientindex">Clients</router-link>
                                     </li>
                                 </ul>
