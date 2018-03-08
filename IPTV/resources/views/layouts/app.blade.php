@@ -60,6 +60,7 @@
                                     <li>
                                         <router-link to="/channelindex">Channels</router-link>
                                         <router-link to="/hotelclientindex">Clients</router-link>
+                                        <router-link to="/sectionsindex">Section</router-link>
                                     </li>
                                 </ul>
                             </li>
