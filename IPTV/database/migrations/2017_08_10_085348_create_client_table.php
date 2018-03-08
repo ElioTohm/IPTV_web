@@ -18,7 +18,7 @@ class CreateClientTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->integer('room');
-            $table->string('welcome_message')->default('Welcome');
+            $table->mediumText('welcome_message')->nullable();
             $table->string('welcome_image')->default('Defaultimage.png');
             $table->bigInteger('balance')->default(0);
             $table->timestamps();
