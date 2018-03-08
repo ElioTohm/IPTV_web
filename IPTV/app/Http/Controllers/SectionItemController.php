@@ -14,7 +14,8 @@ class SectionItemController extends Controller
      */
     public function index()
     {
-        //
+        $sectionItem = SectionItem::all();
+        return $sectionItem;
     }
 
     /**
