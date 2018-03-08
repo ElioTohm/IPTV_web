@@ -24,7 +24,15 @@ Route::middleware(['auth'])->group(function () {
         return response()->view('home');
     })->where('vue_capture', '\w*index\b');
 
-    Route::get('/home', 'HomeController@index');
+    // section Resource route
+    Route::resource('sections', 'SectionController');
+    
+    // Service Resource route
+    Route::resource('services', 'ServiceController');
+
+    // SectionItem Resource route
+    Route::resource('sectionitems', 'SectionItemController');
+
     Route::get('/genreSTypes', 'VodController@getGenresNStreamTypes');
     /**
      * admin route to set app settings 
