@@ -299,6 +299,114 @@ class testDatabaseSeeder extends Seeder
                 'name' => 'City Guide',
             ]
         ]);
+
+        DB::table('section_items')->insert([
+                [
+                    "section" => 3,
+                    "name" => "La Barianata",
+                    "reservation" => true,
+                    "latitude" =>33.888630,
+                    "longitude" => 35.495480,
+                    "poster" => "bar1.png"
+                ],
+                [
+                    "section" => 3,
+                    "name" => "Poseidon Water Park",
+                    "reservation" => true,
+                    "latitude" => 33.888630,
+                    "longitude" => 35.495480,
+                    "poster" => "waterpark.png"
+                ],
+                [
+                    "section" => 3,
+                    "name" => "T-Club",
+                    "reservation" => true,
+                    "latitude" => 33.888630,
+                    "longitude" => 35.495480,
+                    "poster" => "nightlife1.png"
+                ],
+                [
+                    "section" => 3,
+                    "name" => "Castle",
+                    "latitude" => 33.888630,
+                    "reservation" => true,
+                    "longitude" => 35.495480,
+                    "poster" => "nightlife2.png"
+                ],
+                [
+                    "section" => 3,
+                    "name" => "Gladiator Ground",
+                    "reservation" => true,
+                    "latitude" => 33.888630,
+                    "longitude" => 35.495480,
+                    "poster" => "siteseeing1.png"
+                ],
+                [
+                    "section" => 3,
+                    "name" => "La Paria",
+                    "reservation" => true,
+                    "latitude" => 33.888630,
+                    "longitude" => 35.495480,
+                    "poster" => "siteseeing2.png"
+                ]
+        ]);
+
+        DB::table('section_items')->insert([
+            [
+                    "section" => 2,
+                    "name" => "Personal Trainer",
+                    "reservation" => true,
+                    "poster" => "gym1.png"
+                ],
+                [
+                    "section" => 2,
+                    "reservation" => false,
+                    "name" => "Subscription",
+                    "poster" => "gym2.png"
+                ],
+                [
+                    "section" => 2,
+                    "name" => "Sona",
+                    "reservation" => false,
+                    "poster" => "spa2.png"
+                ],
+                [
+                    "section" => 2,
+                    "name" => "Massage",
+                    "reservation" => true,
+                    "poster" => "spa1.png"
+                ],
+                [
+                    "section" => 1 ,
+                    "name" => "Cook OFF",
+                    "reservation" => true,
+                    "poster" => "resto1.png"
+                ],
+                [
+                    "section" => 1 ,
+                    "name" => "We",
+                    "reservation" => true,
+                    "poster" => "resto2.png"
+                ],
+                [
+                    "section" => 1 ,
+                    "name" => "ali",
+                    "reservation" => true,
+                    "poster" => "resto3.png"
+                ],
+                [
+                    "section" => 1 ,
+                    "name" => "Cursed",
+                    "reservation" => true,
+                    "poster" => "rest4.png"
+                ],
+                [
+                    "section" => 1 ,
+                    "name" => "My Crazy One",
+                    "reservation" => true,
+                    "poster" => "rest5.png"
+                ]
+        ]);
         
         DB::table('services')->insert([
             [
