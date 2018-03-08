@@ -12,8 +12,8 @@ class testDatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('app_settings')->insert([
-            ['app' => 'launcher',
-                'version' => 0.6],
+            'app' => 'launcher',
+            'version' => 0.6
         ]);
 
         DB::table('roles')->insert([
@@ -286,6 +286,45 @@ class testDatabaseSeeder extends Seeder
             'email' => 'client@email.com',
             'room' => 1,
             'balance' => 200,
+        ]);
+
+        DB::table('sections')->insert([
+            [
+                'name' => 'Restaurants & Bar',
+            ],
+            [
+                'name' => 'Spa & Fitness',
+            ],
+            [
+                'name' => 'City Guide',
+            ]
+        ]);
+        
+        DB::table('services')->insert([
+            [
+                'name' => 'Assistance',
+                'tag' => 'assistance'
+            ],
+            [
+                'name' => 'Room Service',
+                'tag' => 'roomservice'
+            ],
+            [
+                'name' => 'House Keeper',
+                'tag' => 'housekeeper'
+            ],
+            [
+                'name' => 'Parental Control',
+                'tag' => 'parentalcontrol'
+            ],
+            [
+                'name' => 'Instant Messaging',
+                'tag' => 'instantmessaging'
+            ],
+            [
+                'name' => 'Survey',
+                'tag' => 'survey'
+            ],
         ]);
     }
 }
