@@ -16,6 +16,7 @@ class CreateDevicesTable extends Migration
 
         Schema::table('oauth_clients', function (Blueprint $table) {
             $table->integer('assigned_to')->default(0);
+            $table->integer('registered')->default(0);
         });
 
         Schema::create('devices', function (Blueprint $table) {

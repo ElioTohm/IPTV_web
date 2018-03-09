@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class oAuthClient extends Model
 {
     protected $table = 'oauth_clients';
-    protected $fillable = ['assigned_to'];
+    protected $fillable = ['assigned_to', 'registered'];
 }

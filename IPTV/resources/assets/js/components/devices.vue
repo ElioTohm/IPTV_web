@@ -23,7 +23,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(device, index) in devices" :key="device.id">
+                        <tr v-for="device in devices" :key="device.id">
                             <td class="col-md-2">{{device.room}}</td>
                             <td class="col-md-2">{{device.authclient.secret}}</td>
                             <!-- Edit Button --> 
@@ -65,7 +65,7 @@
                             <p><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
                             <ul>
-                                <li v-for="error in createForm.errors">
+                                <li v-for="error in createForm.errors" :key="error">
                                     {{ error }}
                                 </li>
                             </ul>
@@ -114,7 +114,7 @@
                             <p><strong>Whoops!</strong> Something went wrong!</p>
                             <br>
                             <ul>
-                                <li v-for="error in editForm.errors">
+                                <li v-for="error in editForm.errors" :key="error">
                                     {{ error }}
                                 </li>
                             </ul>

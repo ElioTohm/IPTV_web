@@ -31,7 +31,7 @@ class DeviceController extends Controller
             $device->room = $request->input('room');
             $device->save();
 
-            $unsigned_oAtuh->assigned_to = 0;
+            $unsigned_oAtuh->assigned_to = 1;
             $unsigned_oAtuh->save();
 
             return $device;

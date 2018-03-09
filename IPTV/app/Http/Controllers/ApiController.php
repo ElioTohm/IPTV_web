@@ -32,7 +32,7 @@ class ApiController extends Controller
         $device = Device::where('room', $id)->first();
         $oauthclient = oAuthClient::where('id', $device->id)
                                     ->where('revoked', 0)
-                                    ->where('assigned_to', 0)
+                                    ->where('registered', 0)
                                     ->first();
 
         if ($oauthclient != null) {
@@ -57,7 +57,7 @@ class ApiController extends Controller
                 ]);
                 
                 $response = json_decode((string) $authrequest->getBody(), true);
-                $oauthclient->assigned_to = 1;
+                $oauthclient->registered = 1;
                 $oauthclient->save();
                 return response()->json([
                     'id' => $device->id,
