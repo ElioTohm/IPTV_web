@@ -13,6 +13,7 @@ use App\AppSettings;
 use GuzzleHttp\Client as GuzzleClient;
 use App\Purchase;
 use App\Movie;
+use App\Section;
 
 class ApiController extends Controller
 {
@@ -161,5 +162,11 @@ class ApiController extends Controller
                 'Content-Type' => $file->mime,
                 'Content-disposition' => 'attachment; filename="'.$file->original_name.'"',
             ]);
+    }
+
+    // section with section items
+    public function getSections ()
+    {
+        return Section::with('sectionItem')->get();
     }
 }
