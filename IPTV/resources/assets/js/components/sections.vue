@@ -1,15 +1,29 @@
 <template>
-  <div>
+<div>
     <div class="panel panel-default" v-for="section in sections" :key="section.id" >
-        <div class="panel-heading" data-toggle="collapse" :data-target=" '#' + section.id">
-            <h2>{{section.name}}</h2>
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-11" data-toggle="collapse" :data-target=" '#' + section.id">
+                    <p class="text-uppercase"><b>{{section.name}}</b></p>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-primary pull-right" @click="showModal('Add', section, null)"><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+            </div>
         </div>
-        <div class="panel-collapse collapse" v-bind:id="section.id">
+        <div class="panel-collapse collapse " v-bind:id="section.id">
             <div class="row">
                 <div class="col-md-4"  v-for="section_item in section.section_item" :key="section_item.id">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3>{{section_item.name}}</h3>
+                            <div class="row">
+                                <div class="col-xs-10">
+                                    <p class="text-uppercase"><b>{{section_item.name}}</b></p>
+                                </div>
+                                <div class="col-xs-1">
+                                    <button class="btn btn-primary pull-rights" @click="showModal('Edit', section, section_item)"><span class="glyphicon glyphicon-edit"></span></button>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -21,7 +35,7 @@
                                     {{section_item.description}}
                                 </div>
                                 <div>
-                                    <h3>Reservation</h3>
+                                    <h3>Reservation</h3>                                    
                                     {{section_item.reservation}}
                                 </div>
                                 <div>
@@ -35,11 +49,17 @@
             </div>
         </div>
     </div>
-  </div>
+    <sectionitem-modal/>
+</div>
 </template>
 
 <script>
+import SetionItemModal from './modal/sectionitem_modal.vue'
+
 export default {
+    components: {
+        'sectionitem-modal': SetionItemModal
+    },
     data() {
         return {
             sections:[],
@@ -64,19 +84,18 @@ export default {
                 this.$refs.vuetable.reload()
                 form.sections = []            
             })
-            .catch(error => {
-                for (var property in error.response.data) {
-                    this.$toasted.show(error.response.data[property][0],{
-                        action : {
-                        text : 'Ok',
-                        onClick : (e, toastObject) => {
-                            toastObject.goAway(0);
-                        }
-                        },
-                    });
-                }
-            });
         },
+        showModal(action, section, item) {
+            this.$modal.show(
+                'sectionitem', 
+                {button: {
+                    text: action
+                }, 
+                editForm:{
+                    section: section,
+                    item: item
+            }})
+        }
     },
 };
 </script>
