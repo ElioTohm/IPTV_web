@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('services', 'ServiceController');
 
     // SectionItem Resource route
-    Route::resource('sectionitems', 'SectionItemController');
+    Route::resource('sectionitem', 'SectionItemController');
 
     Route::get('/genreSTypes', 'VodController@getGenresNStreamTypes');
     /**

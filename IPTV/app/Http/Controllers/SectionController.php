@@ -15,7 +15,7 @@ class SectionController extends Controller
     public function index()
     {
         $section = Section::with('sectionItem')->get();
-        return $section;
+        return response()->json($section);
     }
 
     /**

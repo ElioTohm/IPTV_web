@@ -14,8 +14,7 @@ class SectionItemController extends Controller
      */
     public function index()
     {
-        $sectionItem = SectionItem::all();
-        return $sectionItem;
+        // 
     }
 
     /**
@@ -70,7 +69,14 @@ class SectionItemController extends Controller
      */
     public function update(Request $request, SectionItem $sectionItem)
     {
-        //
+        $sectionItem = SectionItem::find($request->input('item.id'));
+        $sectionItem->name = $request->input('item.name');
+        $sectionItem->description = $request->input('item.description');
+        $sectionItem->reservation = $request->input('item.reservation');
+        $sectionItem->latitude = $request->input('item.latitude');
+        $sectionItem->longitude = $request->input('item.longitude');
+        $sectionItem->save();
+        return $sectionItem;
     }
 
     /**
