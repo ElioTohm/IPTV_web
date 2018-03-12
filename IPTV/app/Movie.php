@@ -41,13 +41,13 @@ class Movie extends Model
         return $this->hasOne('App\Stream', 'movie');
     }
 
-    public function getPosterAttribute($value)
-    {
-        return $url = Storage::disk('public')->url('/movies/images/' . $value);
-    }
-
     public function purchase()
     {
         return $this->morphMany('App\Purchase', 'purchasable');
     }
+
+    public function getPosterAttribute($value)
+    {
+        return Storage::disk('public')->url('/movies/images/' . $value);
+    }    
 }
