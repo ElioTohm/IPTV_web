@@ -206,7 +206,11 @@ class testDatabaseSeeder extends Seeder
             [
                 'name' => 'LBCI Ott',
                 'number' => 9,
-            ]
+            ],
+            [
+                'name' => 'MBC 2 rtp',
+                'number' => 10,
+            ],
         ]);
 
         DB::table('streams')->insert([
@@ -278,7 +282,12 @@ class testDatabaseSeeder extends Seeder
                 'vid_stream' => 'http://192.168.0.102:8080/LBCI/index.m3u8',
                 'type' => 2,
                 'channel' => 9
-            ]
+            ],
+            [
+                'vid_stream' => 'rtp://224.1.10.248:1234',
+                'type' => 1,
+                'channel' => 10
+            ],
         ]);
 
         DB::table('clients')->insert([
