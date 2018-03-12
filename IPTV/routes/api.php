@@ -50,4 +50,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
 	// client purchase route
 	Route::post('/clientpurchase', 'ApiController@clientPurchase');
+
+	// section route
+	Route::get('/sections', 'ApiController@getSections');
 });
