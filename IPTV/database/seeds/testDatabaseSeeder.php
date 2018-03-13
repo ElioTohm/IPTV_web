@@ -215,17 +215,17 @@ class testDatabaseSeeder extends Seeder
 
         DB::table('streams')->insert([
             [
-                'vid_stream' => 'http://shareeftube.net/videos/movies/1/300IIriseofempire.mp4',
+                'vid_stream' => 'test.mkv',
                 'type' => 5,
                 'movie' => 1,
             ],
             [
-                'vid_stream' => 'http://shareeftube.net/videos/movies/1/300IIriseofempire.mp4',
+                'vid_stream' => 'test.mkv',
                 'type' => 5,
                 'movie' => 2,
             ],
             [
-                'vid_stream' => 'http://shareeftube.net/videos/movies/1/300IIriseofempire.mp4',
+                'vid_stream' => 'test.mkv',
                 'type' => 5,
                 'movie' => 3,
             ],
