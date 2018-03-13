@@ -35,7 +35,19 @@ class SectionItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sectionItem = new SectionItem();
+        $sectionItem->section = $request->input('section.id');
+        $sectionItem->name = $request->input('item.name');
+        $sectionItem->description = $request->input('item.description');
+        if ($request->input('item.reservation') != NULL) {
+            $sectionItem->reservation = $request->input('item.reservation');
+        }
+        if ($request->input('item.poster')) {
+            $sectionItem->poster = $request->input('item.poster');
+        }
+        $sectionItem->longitude = $request->input('item.longitude');
+        $sectionItem->latitude = $request->input('item.latitude');
+        $sectionItem->save();
     }
 
     /**
@@ -85,8 +97,10 @@ class SectionItemController extends Controller
      * @param  \App\SectionItem  $sectionItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SectionItem $sectionItem)
+    public function destroy($id)
     {
-        //
+        SectionItem::destroy($id);
+
+        return 200;
     }
 }

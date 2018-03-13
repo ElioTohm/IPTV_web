@@ -66,13 +66,7 @@ export default {
         }
     },
     mounted: function () {
-        axios.get('/sections')
-        .then(response => {
-            this.sections = response.data
-        })
-        .catch(error => {
-            console.log(error);
-        });
+        this.load();
     },
     methods: {
         /**  
@@ -81,7 +75,7 @@ export default {
         persistItem(method, uri, form) {
         axios[method](uri, form)
             .then(response => {
-                this.$refs.vuetable.reload()
+                this.load()
                 form.sections = []            
             })
         },
@@ -95,6 +89,15 @@ export default {
                     section: section,
                     item: item
             }})
+        },
+        load () {
+            axios.get('/sections')
+                .then(response => {
+                    this.sections = response.data
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
     },
 };

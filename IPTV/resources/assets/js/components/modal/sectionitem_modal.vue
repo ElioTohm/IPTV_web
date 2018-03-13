@@ -18,14 +18,14 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Description</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" v-model="form.item.description">
+                        <textarea type="text" class="form-control" v-model="form.item.description"></textarea>
                     </div>
                 </div>
                 <!-- Reservation -->
                 <div class="form-group">
                     <label class="col-md-3 control-label">Reservation</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control" v-model="form.item.reservation">
+                        <input type="checkbox" v-model="form.item.reservation">
                     </div>
                 </div>
                 <!-- latitude -->
@@ -47,17 +47,13 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" @click="addItem()">{{button.text}}</button>
+        <button v-if="button.text == 'Edit'" class="btn btn-danger" @click="removeItem()">Delete</button>
     </div>
 </modal>
 </template>
 <script>
-import multiselect from 'vue-multiselect';
-
 export default {
     name: 'ChannelModal',
-    components: {
-        'multiselect': multiselect
-    },
     data(){
         return {
             item: "",
@@ -86,11 +82,15 @@ export default {
                 this.form.section = event.params.editForm.section
                 this.form.item = event.params.editForm.item
             }
-    },
-    addItem () {
-        var route = (this.action == "post") ? '/' + this.item : '/' + this.item  + '/' + this.form.item.id
-        this.$parent.persistItem(this.action, route, this.form)
-    },
-  }
+        },
+        addItem () {
+            var route = (this.action == "post") ? '/' + this.item : '/' + this.item  + '/' + this.form.item.id
+            this.$parent.persistItem(this.action, route, this.form)
+        },
+        removeItem () {
+            var route = this.item  + '/' + this.form.item.id
+            this.$parent.persistItem('delete', route, null)
+        }
+    }
 }
 </script>

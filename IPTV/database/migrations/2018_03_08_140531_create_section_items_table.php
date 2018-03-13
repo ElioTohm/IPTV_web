@@ -21,7 +21,7 @@ class CreateSectionItemsTable extends Migration
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
             $table->string('name');
-            $table->string('poster');
+            $table->string('poster')->default('default_item.png');
             $table->mediumText('description')->nullable();
             $table->boolean('reservation')->default(False);
             $table->double('longitude', 10, 8)->nullable();
