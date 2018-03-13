@@ -61,7 +61,7 @@ class ChannelController extends Controller
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
         $channel->price = $request->input('price');
-        $this->checkThumbnail($channel, $request->get('image'), $request->input('name'), TRUE);
+        $channel->thumbnail = $request->input('thumbnail');
         $channel->save();
         $genres = array();
         foreach ($request->input('genres') as $value) {
@@ -86,7 +86,7 @@ class ChannelController extends Controller
         $channel->number = $request->input('number');
         $channel->name = $request->input('name');
         $channel->price = $request->input('price');
-        $this->checkThumbnail($channel, $request->get('image'), $request->input('name'), FALSE);
+        $channel->thumbnail = $request->input('thumbnail');
         $genres = array();
         foreach ($request->input('genres') as $value) {
             array_push($genres, $value['id']);
@@ -100,14 +100,5 @@ class ChannelController extends Controller
     {
         $channel = Channel::find($id);
         $channel->delete();
-    }
-
-    private function checkThumbnail ($channel, $image, $addchannel) {
-        if (substr( $image, 0, 10 ) === "data:image") {
-            $imagename = $channel->name . '_' . $channel->id .'.png';
-            $imagefileencoded = Image::make($image)->encode('png', 50);
-            Storage::disk('public')->put('/channels/images/' . $imagename, $imagefileencoded);
-            $channel->thumbnail = $imagename;
-        }
     }
 }

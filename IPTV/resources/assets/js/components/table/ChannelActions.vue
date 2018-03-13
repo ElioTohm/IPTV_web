@@ -52,7 +52,7 @@
                   name: data.name,
                   stream: data.stream,
                   genres: data.genres,
-                  poster: data.thumbnail,
+                  thumbnail: data.thumbnail,
                   price: data.price
                 }
               }})

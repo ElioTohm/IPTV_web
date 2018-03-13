@@ -39,7 +39,13 @@
                     <label class="col-md-3 control-label">Thumbnail</label>
 
                     <div class="col-md-7">
-                        <input class="form-control" type="file" v-on:change="onFileChange">
+                        <input class="form-control" type="text" v-model="form.thumbnail">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="btn btn-primary" for="thumbnail-selector">
+                            <input id="thumbnail-selector" type="file" style="display:none;" @change="thumbnailfilename($event)">
+                            change
+                        </label>
                     </div>
                 </div>
 
@@ -126,18 +132,8 @@ export default {
         nameWithLang ({ id, name }) {
             return `${name}`
         },
-        createImage(file) {
-            let reader = new FileReader();
-            reader.onload = (e) => {
-                    this.form.image = e.target.result;
-                };
-                reader.readAsDataURL(file);
-        },
-        onFileChange(e) {
-            let files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-                console.log('wrg length');
-            this.createImage(files[0]);
+        thumbnailfilename(event) {
+            this.form.thumbnail = event.target.files[0].name
         },
         beforeOpen (event) {
             this.button.text = event.params.button.text
@@ -156,7 +152,8 @@ export default {
                 this.action = "put"
                 this.form.number = event.params.button.editForm.number
                 this.form.name = event.params.button.editForm.name
-                this.form.thumbnail = event.params.button.editForm.thumbnail
+                var thumbnail = event.params.button.editForm.thumbnail.split('/')
+                this.form.thumbnail = thumbnail[thumbnail.length - 1]
                 this.form.stream = event.params.button.editForm.stream.vid_stream
                 this.form.genres = event.params.button.editForm.genres
                 this.form.stream_type = event.params.button.editForm.stream.type
