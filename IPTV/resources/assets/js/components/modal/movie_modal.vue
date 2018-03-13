@@ -19,6 +19,12 @@
                     <div class="col-md-7">
                         <input type="text" class="form-control" v-model="form.stream">
                     </div>
+                    <div class="col-md-2">
+                        <label class="btn btn-primary" for="stream-selector">
+                            <input id="stream-selector" type="file" style="display:none;" @change="streamfilename($event)">
+                            change
+                        </label>
+                    </div>
                 </div>
 
                  <!-- price -->
@@ -57,7 +63,13 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Poster</label>
                     <div class="col-md-7">
-                        <input class="form-control" type="file" v-on:change="onFileChange">
+                        <input class="form-control" type="text" v-model="form.poster">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="btn btn-primary" for="poster-selector">
+                            <input id="poster-selector" type="file" style="display:none;" @change="posterfilename($event)">
+                            change
+                        </label>
                     </div>
                 </div>
 
@@ -143,16 +155,24 @@ export default {
                 this.action = "put"
                 this.form.title = event.params.button.editForm.title
                 this.form.price = event.params.button.editForm.price
-                this.form.poster = event.params.button.editForm.poster
-                this.form.stream = event.params.button.editForm.stream.vid_stream
                 this.form.genres = event.params.button.editForm.genres
                 this.form.stream_type = event.params.button.editForm.stream.type
                 this.form.id = event.params.button.editForm.id
+                var poster = event.params.button.editForm.poster.split('/')
+                this.form.poster = poster[poster.length - 1]
+                var stream = event.params.button.editForm.stream.vid_stream.split('/')
+                this.form.stream = stream[stream.length - 1]
             }
     },
     addItem () {
         this.$parent.persistItem(this.action, '/' + this.item  + '/' + this.form.id, this.form)
     },
+    streamfilename (event) {
+        this.form.stream = event.target.files[0].name
+    },
+    posterfilename (event) {
+        this.form.poster = event.target.files[0].name
+    }
   }
 }
 </script>

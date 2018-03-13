@@ -63,7 +63,7 @@ class VodController extends Controller
         $movie = new Movie();
         $movie->title = $request->input('title');
         $movie->price = $request->input('price');
-        $this->checkThumbnail($movie, $request->get('image'), TRUE);
+        $movie->poster = $request->input('poster');
         $movie->save();
         $genres = array();
         foreach ($request->input('genres') as $value) {
@@ -97,7 +97,7 @@ class VodController extends Controller
         foreach ($request->input('genres') as $value) {
             array_push($genres, $value['id']);
         }
-        $this->checkThumbnail($movie, $request->get('image'), TRUE);
+        $movie->poster = $request->input('poster');
         $movie->genres()->sync($genres);
         $movie->save();
     }
@@ -112,14 +112,5 @@ class VodController extends Controller
             'genres' => $genres,
             'stream_types' => $stream_types,
         ]);
-    }
-
-    private function checkThumbnail ($movie, $image, $addmovie) {
-        if (substr( $image, 0, 10 ) === "data:image") {
-            $imagename = $movie->title . '_'. $movie->id .'.png';
-            $imagefileencoded = Image::make($image)->encode('png', 50);
-            Storage::disk('public')->put('/movies/images/' . $imagename, $imagefileencoded);
-            $movie->poster = $imagename;
-        }
     }
 }
