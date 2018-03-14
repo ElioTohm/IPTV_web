@@ -169,4 +169,84 @@ class ApiController extends Controller
     {
         return Section::with('sectionItem')->get();
     }
+
+    public function getWeather ()
+    {
+        $response  = json_decode('{
+            "query": {
+                "count": 0,
+                "created": "2018-03-14T16:13:40Z",
+                "lang": "en-US",
+                "results": {
+                    "channel": {
+                        "units": {
+                            "speed": "Km"
+                        },
+                        "wind": {
+                            "speed": "2"
+                        },
+                        "astronomy": {
+                            "sunrise": "5:26",
+                            "sunset": "6:30"
+                        },
+                        "item": {
+                            "condition": {
+                                "code": "26",
+                                "temp": "17",
+                                "text": ""
+                            },
+                            "forecast": [
+                                { 
+                                    "code": "26",
+                                    "high": "20",
+                                    "low": "17",
+                                    "text": ""
+                                },
+                                {
+                                    "code": "26",
+                                    "high": "21",
+                                    "low": "17",
+                                    "text": ""
+                                },
+                                {
+                                    "code": "31",
+                                    "high": "22",
+                                    "low": "19",
+                                    "text": ""
+                                },
+                                {
+                                    "code": "31",
+                                    "high": "22",
+                                    "low": "19",
+                                    "text": ""
+                                },
+                                {
+                                    "code": "27",
+                                    "high": "20",
+                                    "low": "17",
+                                    "text": ""
+                                },
+                                {
+                                    "code": "31",
+                                    "high": "21",
+                                    "low": "18",
+                                    "text": ""
+                                },
+                                {
+                                    "code": "31",
+                                    "high": "22",
+                                    "low": "18",
+                                    "text": ""
+                                }
+                            ],
+                            "guid": {
+                                "isPermaLink": ""
+                            }
+                        }
+                    }
+                }
+            }
+        }', true);
+	    return response()->json($response);
+    }
 }

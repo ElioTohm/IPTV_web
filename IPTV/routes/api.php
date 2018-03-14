@@ -53,4 +53,7 @@ Route::group(['middleware' => 'auth:api'], function()
 
 	// section route
 	Route::get('/sections', 'ApiController@getSections');
+
+	// provide weather to client
+	Route::get('/weather', 'ApiController@getWeather');
 });
