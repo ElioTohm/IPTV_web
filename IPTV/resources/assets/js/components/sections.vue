@@ -86,8 +86,14 @@ export default {
                     text: action
                 }, 
                 editForm:{
-                    section: section,
-                    item: item
+                    sectionid: section.id,
+                    id: item.id,
+                    name: item.name,
+                    poster: item.poster,
+                    reservation: item.reservation,
+                    longitutde: item.longitutde,
+                    latitude: item.longitutde,
+                    description: item.description,
             }})
         },
         load () {

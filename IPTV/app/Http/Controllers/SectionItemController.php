@@ -36,17 +36,13 @@ class SectionItemController extends Controller
     public function store(Request $request)
     {
         $sectionItem = new SectionItem();
-        $sectionItem->section = $request->input('section.id');
-        $sectionItem->name = $request->input('item.name');
-        $sectionItem->description = $request->input('item.description');
-        if ($request->input('item.reservation') != NULL) {
-            $sectionItem->reservation = $request->input('item.reservation');
-        }
-        if ($request->input('item.poster')) {
-            $sectionItem->poster = $request->input('item.poster');
-        }
-        $sectionItem->longitude = $request->input('item.longitude');
-        $sectionItem->latitude = $request->input('item.latitude');
+        $sectionItem->section = $request->input('sectionid');
+        $sectionItem->name = $request->input('name');
+        $sectionItem->description = $request->input('description');
+        $sectionItem->reservation = $request->input('reservation');
+        $sectionItem->poster = $request->input('poster');
+        $sectionItem->longitude = $request->input('longitude');
+        $sectionItem->latitude = $request->input('latitude');
         $sectionItem->save();
     }
 
@@ -81,12 +77,13 @@ class SectionItemController extends Controller
      */
     public function update(Request $request, SectionItem $sectionItem)
     {
-        $sectionItem = SectionItem::find($request->input('item.id'));
-        $sectionItem->name = $request->input('item.name');
-        $sectionItem->description = $request->input('item.description');
-        $sectionItem->reservation = $request->input('item.reservation');
-        $sectionItem->latitude = $request->input('item.latitude');
-        $sectionItem->longitude = $request->input('item.longitude');
+        $sectionItem = SectionItem::find($request->input('id'));
+        $sectionItem->name = $request->input('name');
+        $sectionItem->description = $request->input('description');
+        $sectionItem->reservation = $request->input('reservation');
+        $sectionItem->poster = $request->input('poster');
+        $sectionItem->latitude = $request->input('latitude');
+        $sectionItem->longitude = $request->input('longitude');
         $sectionItem->save();
         return $sectionItem;
     }
