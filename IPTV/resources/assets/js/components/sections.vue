@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="panel panel-default" v-for="section in sections" :key="section.id" >
+    <div class="panel panel-primary" v-for="section in sections" :key="section.id" >
         <div class="panel-heading">
             <div class="row">
                 <div class="col-xs-11" data-toggle="collapse" :data-target=" '#' + section.id">
@@ -11,10 +11,10 @@
                 </div>
             </div>
         </div>
-        <div class="panel-collapse collapse " v-bind:id="section.id">
-            <div class="row">
+        <div class="panel-collapse collapse panel-body" v-bind:id="section.id">
+            <div class="container row">
                 <div class="col-md-4"  v-for="section_item in section.section_item" :key="section_item.id">
-                    <div class="panel panel-default">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-10">
@@ -26,22 +26,20 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <div class="row">
+                            <div>
                                 <img :src="section_item.poster" />
                             </div>
-                            <div class="row">
-                                <div>
-                                    <h3>Description</h3>
-                                    {{section_item.description}}
-                                </div>
-                                <div>
-                                    <h3>Reservation</h3>                                    
-                                    {{section_item.reservation}}
-                                </div>
-                                <div>
-                                    <h3>Location</h3>
-                                    {{section_item.longitude}},  {{section_item.latitude}}
-                                </div>
+                            <div>
+                                <h3>Description</h3>
+                                {{section_item.description}}
+                            </div>
+                            <div>
+                                <h3>Reservation</h3>                                    
+                                {{section_item.reservation}}
+                            </div>
+                            <div>
+                                <h3>Location</h3>
+                                {{section_item.longitude}},  {{section_item.latitude}}
                             </div>
                         </div>        
                     </div>

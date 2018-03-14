@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading">
                 Application settings
             </div>
