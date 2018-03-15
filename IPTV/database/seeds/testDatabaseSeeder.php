@@ -175,43 +175,51 @@ class testDatabaseSeeder extends Seeder
             ]);
 
         DB::table('channels')->insert([
+                'name' => 'M6',
+                'number' => 3,
+            ]);
+        DB::table('channels')->insert([
             [
                 'name' => 'MBC 2',
-                'number' => 1
+                'number' => 1,
+                'thumbnail' => 'mbc2.png'
             ],
             [
                 'name' => 'MBC + Drama',
-                'number' => 2
-            ],
-            [
-                'name' => 'M6',
-                'number' => 3
+                'number' => 2,
+                'thumbnail' => 'mbcplusdrama.png'
             ],
             [
                 'name' => '6TER',
-                'number' => 4
+                'number' => 4,
+                'thumbnail' => '6ter.png'
             ],
             [
                 'name' => 'W9',
-                'number' => 5
+                'number' => 5,
+                'thumbnail' => 'w9.png'
             ],
             [
                 'name' => 'El Jadid',
                 'number' => 7,
+                'thumbnail' => 'eljadeed.jpg'
             ],
             [
                 'name' => 'OTV',
                 'number' => 8,
+                'thumbnail' => 'otv.png'
             ],
             [
                 'name' => 'LBCI Ott',
                 'number' => 9,
+                'thumbnail' => 'LBCI.jpg'
             ],
             [
                 'name' => 'MBC 2 rtp',
                 'number' => 10,
+                'thumbnail' => 'mbc2.png'
             ],
-        ]);
+            ]);
 
         DB::table('streams')->insert([
             [
