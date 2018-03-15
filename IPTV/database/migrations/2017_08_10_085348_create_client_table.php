@@ -44,7 +44,7 @@ class CreateClientTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
         Schema::dropIfExists('purchases');
+        Schema::dropIfExists('clients');
     }
 }
