@@ -75,7 +75,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            
+                            <li><router-link to="/monitorindex">Monitor</router-link></li>
                         @endif
                     </ul>
                     <!-- Right Side Of Navbar -->

@@ -18,6 +18,7 @@ export default new VueRouter({
 		{ path: '/hotelclientindex', component: hotelclients},
 		{ path: '/movieindex', component: movies},
 		{ path: '/adminindex', component: androidapp},
-		{ path: '/sectionsindex', component: sections}
+		{ path: '/sectionsindex', component: sections},
+		{ path: '/monitorindex', component: monitor},
 	]
 });
