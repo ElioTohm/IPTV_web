@@ -41,18 +41,25 @@ class ApiController extends Controller
             $result = substr($secret, 0, 4);
 
             if (strcmp($result, $sentsecret) == 0 ) {
-                $user = User::find(1);
+                // $user = User::find(1);
                 
                 // $token = $user->createToken($oauthclient->name);
                 $guzzle = new \GuzzleHttp\Client;
-                
+
+                $user = new User();
+                $user->name = 'Room' . $id;
+                $user->email = $id . '@dvb.com';
+                $user->password = bcrypt(env('DEVICE _PASS'));
+                $user->role = 4;
+                $user->save();
+
                 $authrequest = $guzzle->post(env('APP_URL') . '/oauth/token', [
                     'form_params' => [
                         'grant_type' => 'password',
-                        'client_id' => $id,
+                        'client_id' => $oauthclient->id,
                         'client_secret' => $oauthclient->secret,
-                        'username' => 'admin@admin.com',
-                        'password' => '123123',
+                        'username' => $user->email,
+                        'password' => env('DEVICE _PASS'),
                         'scope' => '',
                     ],
                 ]);

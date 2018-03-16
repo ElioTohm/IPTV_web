@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Client;
 use App\oAuthClient;
+use App\Device;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\ClientNotificationRequest;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -89,12 +90,13 @@ class ClientController extends Controller
 
     public function sendNotification ($id, ClientNotificationRequest $request) 
     {
+        $device = Device::where('room', $id)->first();
         $default_welcome_image = Storage::disk('public')->url('/device/test.png');
         $message = $request->input('message');
         $image = $request->input('image');
         $type = $request->input('type');
         
-        event(new NotificationEvent($id, ($type == '') ? 0 : $type,
+        event(new NotificationEvent($device->id, ($type == '') ? 0 : $type,
                                         ($message == '') ? 'Welcome' : $message, 
                                         ($image == '') ? $default_welcome_image : $image));
         return response()->json([

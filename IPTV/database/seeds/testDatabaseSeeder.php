@@ -20,6 +20,7 @@ class testDatabaseSeeder extends Seeder
             ['name' => 'SuperAdmin'],
             ['name' => 'Admin'],
             ['name' => 'Monitor'],
+            ['name' => 'Device']
         ]);
 
         DB::table('users')->insert([
