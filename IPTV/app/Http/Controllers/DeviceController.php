@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Device;
+use App\User;
 use App\oAuthClient;
 use App\Http\Requests\DeviceRequest;
 
@@ -58,8 +59,15 @@ class DeviceController extends Controller
         $device = Device::find($id);
         $device->delete();
 
+        $user = User::where('email', $id . '@dvb.com')
+                ->where('role', 4)
+                ->first();   
+        if ($user != NULL) {
+            $user->delete();
+        }
         $oauthclient = oAuthClient::find($id);
         $oauthclient->assigned_to = 0;
+        $oauthclient->registered = 0;
         $oauthclient->save();
 
     }
