@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Channel;
 use App\AppSettings;
 use App\Http\Requests\AndroidAppRequest;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
 
 class AdminController extends Controller
 {
@@ -35,6 +39,35 @@ class AdminController extends Controller
         return response()->json([
             'response'=> 200
         ]);
+    }
+
+    public function runTimeShift (Request $request) 
+    {
+        $channel = Channel::with('stream')->find($request->input('channel_id'));
+        
+        $exec = sprintf("ffmpeg -re -hide_banner 
+                        -i \"%s?fifo_size=50000\" 
+                        -codec copy 
+                        -map 0 
+                        -hls_time 10 
+                        -hls_list_size 3 
+                        -hls_flags delete_segments 
+                        -hls_segment_filename /var/www/storage/app/public/streams/%s/%s_%%03d.ts 
+                        /var/www/storage/app/public/streams/%s/master.m3u8", 
+                        $channel->stream->vid_stream,
+                        $channel->name,
+                        $channel->name,
+                        $channel->name);
+
+        $process = new Process($exec);
+        $process->run();
+
+        // executes after the command finishes
+        while ($process->isRunning()) {
+            // waiting for process to finish
+        }
+
+        return $process->getErrorOutput();
     }
 
 }
