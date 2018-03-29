@@ -57,18 +57,18 @@ class DeviceController extends Controller
     public function deleteDevice ($id) 
     {
         $device = Device::find($id);
+        $roomid = $device->room;
         $device->delete();
-
-        $user = User::where('email', $id . '@dvb.com')
-                ->where('role', 4)
-                ->first();   
-        if ($user != NULL) {
-            $user->delete();
-        }
+        
         $oauthclient = oAuthClient::find($id);
         $oauthclient->assigned_to = 0;
         $oauthclient->registered = 0;
         $oauthclient->save();
 
+        $user = User::where('email', $roomid . '@dvb.com')
+                ->first();   
+        if ($user != NULL) {
+            $user->delete();
+        }
     }
 }
