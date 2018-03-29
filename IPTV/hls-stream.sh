@@ -17,7 +17,8 @@ parent_dir="./storage/app/public/streams"
 if [[ ! "${target}" ]]; then
   target="${source##*/}" # leave only last component of path
 fi
-mkdir -p ${target}
+
+mkdir -p ${parent_dir}"/"${target}
 
 # static parameters that are similar for all renditions
 static_params+=" -hls_time $segment_target_duration"
@@ -26,8 +27,8 @@ static_params+=" -hls_flags delete_segments"
 
 # misc params
 misc_params="-re -hide_banner"
-cmd+=" -c:a copy -c:v copy ${static_params}"
-cmd+=" -hls_segment_filename ${parent_dir}/${target}/${target}_%03d.ts ${parent_dir}/${target}/${target}.m3u8"
+cmd+=" -codec copy -map 0 ${static_params}"
+cmd+=" -hls_segment_filename ${parent_dir}/${target}/${target}_%03d.ts ${parent_dir}/${target}/master.m3u8"
 
 # start conversion
 echo "ffmpeg ${misc_params} -i ${source} ${cmd}"
