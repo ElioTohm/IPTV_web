@@ -23,10 +23,15 @@ Vue.use(VModal)
 Vue.use(Toasted)
 Vue.use(VueRouter)
 
+// always load XmsPlayer
+import MonitorComponent from './components/monitor.vue'
 
 // Create and mount root instance.
 // Make sure to inject the router.
 // Route components will be rendered inside <router-view>.
 new Vue({
+  components: {
+    "monitor": MonitorComponent
+  },
   router,
 }).$mount('#app')

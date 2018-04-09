@@ -16,26 +16,22 @@ use App\Purchase;
 |
 */
 Route::get('/registerDevice', 'ApiController@register');
-
+	
 Route::group(['middleware' => 'auth:api'], function()
 {
 	/**
 	 * Section Protect Ott streams 
 	 * section is currently under testing 
 	 */
-    Route::get('/stream/{video_id}/play', function ($video_id) {
-		return response()->download('/var/www/storage/app/public/movies/videos/' . $video_id . '/720p.m3u8', 
-									'play.m3u8', 
-									['Content-Type' => 'application/octet-stream']);
+	Route::get('/stream/channel/{channel_id}/play', function ($channe_id) {
+		return response()->download('/var/www/storage/app/public/streams/'.$channe_id.'/master.m3u8');
 	});
 
-	Route::get('/stream/{video_id}/{file}', function ($video_id, $file) {
-	    return response()->download('/var/www/storage/app/public/movies/videos/'. $video_id .'/'. $file, 
-	    							'play.ls', 
-	    							['Content-Type' => 'application/octet-stream']);
-	})->where('file', '\w*.ts\b');
+	Route::get('/stream/channel/{channe_id}/{file}', function ($channe_id, $file) {
+		return response()->download('/var/www/storage/app/public/streams/'. $channe_id .'/'. $file);
+	})->where('file', '\w*(.ts|.m3u8)\b');
 	// end section
-
+	
 	// check for update
 	Route::get('/launcherUpdate', 'ApiController@launcherUpdateCheck');
 

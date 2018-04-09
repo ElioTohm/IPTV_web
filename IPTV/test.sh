@@ -9,8 +9,8 @@ target="${2}"
 
 #########################################################################
 
-segment_target_duration=10
-segment_list_size=3
+segment_target_duration=5
+segment_list_size=6
 parent_dir="./storage/app/public/streams"
 #########################################################################
 
@@ -29,8 +29,8 @@ static_params+=" -hls_flags delete_segments"
 misc_params=" -re -hide_banner"
 
 master_playlist+="#EXTM3U\n"
-master_playlist+="#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"audio\",LANGUAGE=\"ost\",NAME=\"Arabic\",AUTOSELECT=YES,DEFAULT=YES,URI=\"A1.m3u8\"\n"
-master_playlist+="#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"audio\",LANGUAGE=\"eng\",NAME=\"English\",AUTOSELECT=YES,DEFAULT=YES,URI=\"A2.m3u8\"\n"
+# master_playlist+="#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"audio\",LANGUAGE=\"ost\",NAME=\"Arabic\",AUTOSELECT=YES,DEFAULT=YES,URI=\"A1.m3u8\"\n"
+master_playlist+="#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID=\"audio\",LANGUAGE=\"eng\",NAME=\"English\",AUTOSELECT=YES,DEFAULT=YES,URI=\"A1.m3u8\"\n"
 master_playlist+="#EXT-X-STREAM-INF:BANDWIDTH=263851,RESOLUTION=416x234,AUDIO=\"audio\"\n"
 master_playlist+="V.m3u8\n"
 
@@ -38,8 +38,8 @@ cmd+=" -codec copy -map 0:0 ${static_params}"
 cmd+=" -hls_segment_filename ${parent_dir}/${target}/V_%03d.ts ${parent_dir}/${target}/V.m3u8"
 cmd+=" -codec copy -map 0:1 ${static_params}"
 cmd+=" -hls_segment_filename ${parent_dir}/${target}/A1%v_%03d.ts ${parent_dir}/${target}/A1.m3u8"
-cmd+=" -codec copy -map 0:2 ${static_params}"
-cmd+=" -hls_segment_filename ${parent_dir}/${target}/A2%v_%03d.ts ${parent_dir}/${target}/A2.m3u8"
+# cmd+=" -codec copy -map 0:2 ${static_params}"
+# cmd+=" -hls_segment_filename ${parent_dir}/${target}/A2%v_%03d.ts ${parent_dir}/${target}/A2.m3u8"
 
 #create master playlist file
 echo -e "${master_playlist}" > ${parent_dir}/${target}/master.m3u8

@@ -47,7 +47,7 @@ class ApiController extends Controller
                 $guzzle = new \GuzzleHttp\Client;
 
                 $user = new User();
-                $user->name = 'Room' . $id;
+                $user->name = 'Room ' . $id;
                 $user->email = $id . '@dvb.com';
                 $user->password = bcrypt(env('DEVICE _PASS'));
                 $user->role = 4;

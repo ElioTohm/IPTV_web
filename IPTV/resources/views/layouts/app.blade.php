@@ -109,7 +109,18 @@
             </div>
         </nav>
 
-        @yield('content')
+        <div class="row">
+            <div class="col-xs-2">
+                @if (!Auth::guest())
+                    <monitor></monitor>
+                @endif
+            </div>
+            <div class="col-xs-8">
+                @yield('content')
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+        
     </div>
     
     <!-- Scripts -->
