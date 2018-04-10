@@ -22,7 +22,7 @@
       itemAction (action, data, index) {
         if (action == 'doorbellnotify') {
           window.io
-          .emit("new message", {
+          .emit("Notification", {
               type:2,
               message: "Your have a Visitor",
               image: "http://192.168.0.75/storage/device/test.png"

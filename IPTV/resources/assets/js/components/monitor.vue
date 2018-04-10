@@ -26,28 +26,43 @@ export default {
     data() {
         return {
             clientcount: 0,
-            onlineDevice: []
+            onlineDevice: [],
         }
     },
     mounted () {
         var self = this
         window.io
-            .emit('add user', 'admin')
-            .on("new message", function(message) {
-                console.log(message)
-            })
+            .emit('Subscribe', 'admin')
             .on('login', function (data) {
-                self.clientcount = data.userslength
-                self.onlineDevice = data.users
+                self.clientcount = data.userslength - 1 
+                var userlist = _.pull(data.users, 'admin')
+                userlist.forEach(element => {
+                    self.onlineDevice.push({device: element})
+                });
+
             })
             .on('user joined', function (data) {
-                self.clientcount = data.userslength
-                self.onlineDevice = data.users
+                self.clientcount = data.userslength - 1
+                var userlist = _.pull(data.users, 'admin')
+                userlist.forEach(element => {
+                    self.onlineDevice.push({device: element})
+                });
             })
-            .on('user left', function name(data) {
-                self.clientcount = data.userslength
-                self.onlineDevice = data.users
-            })        
+            .on('user left', function (data) {
+                self.clientcount = data.userslength - 1
+                var userlist = _.pull(data.users, 'admin')
+                userlist.forEach(element => {
+                    self.onlineDevice.push({device: element})
+                });
+            })
+            .on('Monitoring', function (data) {
+                // Find item index using _.findIndex (thanks @AJ Richardson for comment)
+                var index = _.findIndex(self.onlineDevice, {name: data.device});
+
+                // Replace item at index using native splice
+                self.onlineDevice.splice(index, 1, {device: data.device, stream: data.stream});
+
+            })
     }
 }
 </script>
