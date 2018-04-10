@@ -43,14 +43,18 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-import Echo from "laravel-echo"
+import io from 'socket.io-client'
 
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001',
-    auth:{
-        headers: {
-            Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjFiODcxMGY3MWJiYzczZWUyMWQ1NjdlZTlmODljNGY2MmNjZTZjYzE1NjFkZjExZjIxYmViNjg3MWViZjAwZjI0MjJlZmEyYTRiZmU5YzdmIn0.eyJhdWQiOiIxIiwianRpIjoiMWI4NzEwZjcxYmJjNzNlZTIxZDU2N2VlOWY4OWM0ZjYyY2NlNmNjMTU2MWRmMTFmMjFiZWI2ODcxZWJmMDBmMjQyMmVmYTJhNGJmZTljN2YiLCJpYXQiOjE1MjIwNDc0NTQsIm5iZiI6MTUyMjA0NzQ1NCwiZXhwIjoxNTI0NzI1ODU0LCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.qEsU-naW6ZxddGxuX3xwrPfCOz_8B79S46IXGIhmMLT8ILpSHf0shl76yBjiTKuqh7zXk36U4ZJPnDWZOb2M4zfEMPaKmmXMy2krYcEZtJNxtAMeFf24r6I9NtOpivv7GuDLT58YVW-nDHlJFsOLYB_FMdO8IbQRT6_porD1rmpQWaxUeP7fkrZlaEIEOXwunhZpkTfNRwPmypkcVKEy3Zt1WCKhqiS1nh14X8b0VHkC5tmwGh9Dp2fist9dEhanUpn9_0ao8VmsHebgHX3DcmudjfqPiDGphKF6Rd-yilTVRiU9_RyPFx_sl-5FxBOLbrsJysLqOljRpqyx-6N9B-oQuybFbleVfr-acarKoNLZvq0AFm-i2v5yM_fjvaqa3s2lgH_NVtOgyIzkonLvybp1l-JkCVoc08_kP0v6Mo6kHT5AzrVlUHPvJZ2L3gweIVvK9XDxj4MTWQwlTGa5-sQqzlrBhDHERpA-9pX3siU0qFiCaOF9xnr0QxyIh3nhfNkPLz81CL9AeAER5OgVrqpcidyMyTaSVlPrRU_Hm0X_hyWngDdL9dZ8SiV8N-G6LFB46Xx1_6oqWJQzG3S4RcP8hj69jcsNKPdc6I25tnOKCY0_-JMLsKK0ElmSczkt9EC6jqfZg3eY6Cx4wC1kZzNI8-UCQG8m_1Lluq-Vrz4',
-        },
-    },
-});
+window.io = io('http://localhost:3000')
+
+// import Echo from "laravel-echo"
+
+// window.Echo = new Echo({
+//     broadcaster: 'socket.io',
+//     host: window.location.hostname + ':6001',
+//     auth:{
+//         headers: {
+//             Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjFiODcxMGY3MWJiYzczZWUyMWQ1NjdlZTlmODljNGY2MmNjZTZjYzE1NjFkZjExZjIxYmViNjg3MWViZjAwZjI0MjJlZmEyYTRiZmU5YzdmIn0.eyJhdWQiOiIxIiwianRpIjoiMWI4NzEwZjcxYmJjNzNlZTIxZDU2N2VlOWY4OWM0ZjYyY2NlNmNjMTU2MWRmMTFmMjFiZWI2ODcxZWJmMDBmMjQyMmVmYTJhNGJmZTljN2YiLCJpYXQiOjE1MjIwNDc0NTQsIm5iZiI6MTUyMjA0NzQ1NCwiZXhwIjoxNTI0NzI1ODU0LCJzdWIiOiIxIiwic2NvcGVzIjpbIioiXX0.qEsU-naW6ZxddGxuX3xwrPfCOz_8B79S46IXGIhmMLT8ILpSHf0shl76yBjiTKuqh7zXk36U4ZJPnDWZOb2M4zfEMPaKmmXMy2krYcEZtJNxtAMeFf24r6I9NtOpivv7GuDLT58YVW-nDHlJFsOLYB_FMdO8IbQRT6_porD1rmpQWaxUeP7fkrZlaEIEOXwunhZpkTfNRwPmypkcVKEy3Zt1WCKhqiS1nh14X8b0VHkC5tmwGh9Dp2fist9dEhanUpn9_0ao8VmsHebgHX3DcmudjfqPiDGphKF6Rd-yilTVRiU9_RyPFx_sl-5FxBOLbrsJysLqOljRpqyx-6N9B-oQuybFbleVfr-acarKoNLZvq0AFm-i2v5yM_fjvaqa3s2lgH_NVtOgyIzkonLvybp1l-JkCVoc08_kP0v6Mo6kHT5AzrVlUHPvJZ2L3gweIVvK9XDxj4MTWQwlTGa5-sQqzlrBhDHERpA-9pX3siU0qFiCaOF9xnr0QxyIh3nhfNkPLz81CL9AeAER5OgVrqpcidyMyTaSVlPrRU_Hm0X_hyWngDdL9dZ8SiV8N-G6LFB46Xx1_6oqWJQzG3S4RcP8hj69jcsNKPdc6I25tnOKCY0_-JMLsKK0ElmSczkt9EC6jqfZg3eY6Cx4wC1kZzNI8-UCQG8m_1Lluq-Vrz4',
+//         },
+//     },
+// });

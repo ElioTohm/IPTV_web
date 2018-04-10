@@ -31,6 +31,6 @@ class OnlineEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('Online');
+        return new PresenceChannel('Online');
     }
 }

@@ -68,7 +68,8 @@ class ApiController extends Controller
                 $oauthclient->registered = 1;
                 $oauthclient->save();
                 return response()->json([
-                    'id' => $device->id,
+                    'id' => $id,
+                    'room' => 'Room '. $id,
                     'token_type' => $response['token_type'],
                     'expires_in' => $response['expires_in'],
                     'access_token' => $response['access_token'],
@@ -153,6 +154,7 @@ class ApiController extends Controller
 
         return response()->json($client->with("purchases")->first());        
     }
+    
     // unused
     // stream controller 
     public function streamFile ()

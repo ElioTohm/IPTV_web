@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> 
+    {{-- <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>  --}}
 </head>
 <body>
     <div id="app">
@@ -75,7 +75,6 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li><router-link to="/monitorindex">Monitor</router-link></li>
                         @endif
                     </ul>
                     <!-- Right Side Of Navbar -->

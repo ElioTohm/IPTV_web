@@ -14,7 +14,7 @@
             <div class="panel-body">
                 <div v-for="device in onlineDevice" :key="device.id">
                     <div>
-                        <p>{{device.name}}</p>
+                        <p>{{device}}</p>
                     </div>
                 </div>
             </div>
@@ -23,31 +23,31 @@
 </template>
 <script>
 export default {
-  data() {
-      return {
-        clientcount: 0,
-        onlineDevice: []
-      }
-  },
-  mounted () {
-    window.Echo.join('Online')
-        .here((users) => {
-            this.onlineDevice = _.filter(users, {'role': 4});            
-            this.clientcount = this.onlineDevice.length
-        })
-        .joining((user) => {
-            if (user.role = 4) {
-                this.onlineDevice.push(user)
-                this.clientcount = this.onlineDevice.length
-            }
-        })
-        .leaving((user) => {
-            if (user.role = 4) {
-                this.onlineDevice.pop(user)
-                this.clientcount = this.onlineDevice.length
-            }
-        });
-            
-  }
+    data() {
+        return {
+            clientcount: 0,
+            onlineDevice: []
+        }
+    },
+    mounted () {
+        var self = this
+        window.io
+            .emit('add user', 'admin')
+            .on("new message", function(message) {
+                console.log(message)
+            })
+            .on('login', function (data) {
+                self.clientcount = data.userslength
+                self.onlineDevice = data.users
+            })
+            .on('user joined', function (data) {
+                self.clientcount = data.userslength
+                self.onlineDevice = data.users
+            })
+            .on('user left', function name(data) {
+                self.clientcount = data.userslength
+                self.onlineDevice = data.users
+            })        
+    }
 }
 </script>

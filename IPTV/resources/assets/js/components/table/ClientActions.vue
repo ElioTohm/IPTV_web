@@ -21,18 +21,12 @@
     methods: {
       itemAction (action, data, index) {
         if (action == 'doorbellnotify') {
-          axios.get('/clientnotification/' + data.room, {
-            params: {
+          window.io
+          .emit("new message", {
               type:2,
-              message: "Your have a Visitor"
-            }
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+              message: "Your have a Visitor",
+              image: "http://192.168.0.75/storage/device/test.png"
+            })
         } else if (action == 'delete') {
           this.$toasted.show("Delete " + data.name + " ?", { 
             theme: "primary", 
