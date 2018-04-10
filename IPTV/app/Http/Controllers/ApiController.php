@@ -104,7 +104,7 @@ class ApiController extends Controller
     // Get Client Info
     public function getClientInfo (Request $request)
     {
-        $device = Device::where('id', $request->input('id'))->first(['room']);
+        $device = Device::where('room', $request->input('id'))->first(['room']);
 
         $client = Client::where('room', $device->room)->with("purchases")->first();
         
