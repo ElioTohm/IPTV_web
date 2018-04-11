@@ -43,20 +43,12 @@ io.on('connection', function (socket) {
     users.push(username);
     addedUser = true;
     socket.emit('login', {
-      userslength: users.length,
       users: users,
     });
     // echo globally (all clients) that a person has connected
     socket.broadcast.emit('user joined', {
       username: socket.username,
-      userslength: users.length,
-      users: users,
     });
-    console.log({
-      username: socket.username,
-      userslength: users.length,
-      users: users,
-    })
   });
 
   // when the client emits 'typing', we broadcast it to others
@@ -79,8 +71,6 @@ io.on('connection', function (socket) {
       users.splice(users.indexOf(socket.username), 1)
       // echo globally that this client has left
       socket.broadcast.emit('user left', {
-        userslength: users.length,
-        users: users,
         username: socket.username
       });
     }

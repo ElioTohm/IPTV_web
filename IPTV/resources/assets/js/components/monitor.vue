@@ -14,7 +14,14 @@
             <div class="panel-body">
                 <div>
                     <ul class="list-group" v-for="device in onlineDevice" :key="device.id">
-                        <li class="list-group-item">{{device.device}} <span class="badge" v-if="device.stream"> watching {{device.stream}}</span></li>
+                        <li class="list-group-item">{{device.device}} 
+                            <span class="badge" v-if="device.stream">
+                                watching {{device.stream}}
+                            </span>
+                            <span class="badge" v-if="device.activity">
+                                in {{device.activity}}
+                            </span>
+                        </li>
                     </ul> 
                 </div>
             </div>
@@ -34,33 +41,28 @@ export default {
         window.io
             .emit('Subscribe', 'admin')
             .on('login', function (data) {
-                self.clientcount = data.userslength - 1 
                 var userlist = _.pull(data.users, 'admin')
+                self.clientcount = userlist.length  
                 userlist.forEach(element => {
                     self.onlineDevice.push({device: element})
                 });
 
             })
             .on('user joined', function (data) {
-                self.clientcount = data.userslength - 1
-                var userlist = _.pull(data.users, 'admin')
-                userlist.forEach(element => {
-                    self.onlineDevice.push({device: element})
-                });
+                self.onlineDevice.push({device: data.username})
+                self.clientcount = self.onlineDevice.length                 
             })
             .on('user left', function (data) {
-                self.clientcount = data.userslength - 1
-                var userlist = _.pull(data.users, 'admin')
-                userlist.forEach(element => {
-                    self.onlineDevice.push({device: element})
-                });
+                var index = _.findIndex(self.onlineDevice, {device: data.username});
+                self.onlineDevice.splice(index, 1);
+                self.clientcount = self.onlineDevice.length
             })
             .on('Monitoring', function (data) {
                 // Find item index using _.findIndex (thanks @AJ Richardson for comment)
-                var index = _.findIndex(self.onlineDevice, {name: data.device});
+                var index = _.findIndex(self.onlineDevice, {device: data.device});
 
                 // Replace item at index using native splice
-                self.onlineDevice.splice(index, 1, {device: data.device, stream: data.stream});
+                self.onlineDevice.splice(index, 1, data);
 
             })
     }
