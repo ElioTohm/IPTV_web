@@ -12,10 +12,10 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div v-for="device in onlineDevice" :key="device.id">
-                    <div>
-                        <p>{{device}}</p>
-                    </div>
+                <div>
+                    <ul class="list-group" v-for="device in onlineDevice" :key="device.id">
+                        <li class="list-group-item">{{device.device}} <span class="badge" v-if="device.stream"> watching {{device.stream}}</span></li>
+                    </ul> 
                 </div>
             </div>
         </div>
