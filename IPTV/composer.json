@@ -13,8 +13,6 @@
         "laravel/passport": "^3.0",
         "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",
-        "pbmedia/laravel-ffmpeg": "^1.1",
-        "php-ffmpeg/php-ffmpeg": "^0.10.0",
         "predis/predis": "^1.1",
         "teamtnt/laravel-scout-tntsearch-driver": "^3.0"
     },
