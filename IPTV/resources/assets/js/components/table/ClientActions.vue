@@ -2,7 +2,7 @@
     <div class="custom-actions">
       <button class="btn btn-sm" @click="itemAction('edit', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
       <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
-      <button class="btn btn-sm" @click="itemAction('checkout', rowData, rowIndex)"><i class="glyphicon glyphicon-shopping-cart"></i></button>
+      <!-- <button class="btn btn-sm" @click="itemAction('checkout', rowData, rowIndex)"><i class="glyphicon glyphicon-shopping-cart"></i></button> -->
       <button class="btn btn-sm" @click="itemAction('doorbellnotify', rowData, rowIndex)"><i class="glyphicon glyphicon-bell"></i></button>
     </div>
   </template>
@@ -22,7 +22,8 @@
       itemAction (action, data, index) {
         if (action == 'doorbellnotify') {
           window.io
-          .emit("Notification", {
+          .emit("Notification_", {
+              room: data.room,
               type:2,
               message: "Your have a Visitor",
               image: "http://192.168.0.75/storage/device/test.png"

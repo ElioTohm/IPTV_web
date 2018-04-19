@@ -26,6 +26,14 @@ io.on('connection', function (socket) {
   var addedUser = false;
 
   // when the client emits 'BroadCastNotification', this listens and executes
+  socket.on('Notification_', function (data) {
+    // we tell the client to execute 'BroadCastNotification'
+    socket.broadcast.emit('Notification Room ' + data.room, {
+      username: socket.username,
+      message: data
+    });
+  });
+  // when the client emits 'BroadCastNotification', this listens and executes
   socket.on('BroadCastNotification', function (data) {
     // we tell the client to execute 'BroadCastNotification'
     console.log(data)
