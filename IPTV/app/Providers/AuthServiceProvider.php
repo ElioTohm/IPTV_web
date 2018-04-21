@@ -29,9 +29,9 @@ class AuthServiceProvider extends ServiceProvider
  
         Passport::routes();
  
-        Passport::tokensExpireIn(Carbon::now()->addMonths(1));
+        Passport::tokensExpireIn(Carbon::now()->addYears(1));
  
-        Passport::refreshTokensExpireIn(Carbon::now()->addYears(1));
+        Passport::refreshTokensExpireIn(Carbon::now()->addYears(2));
 
         Passport::tokensCan([
             'iptv' => 'Ip TV access',
