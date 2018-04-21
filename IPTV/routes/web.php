@@ -84,4 +84,7 @@ Route::middleware(['auth'])->group(function () {
     */
     // notification route
     Route::get('/clientnotification/{id}', 'ClientController@sendNotification');
+
+    Route::get('/record/{id}', 'JobsController@RecordStream');
+    
 });

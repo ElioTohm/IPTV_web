@@ -10,19 +10,22 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Illuminate\Support\Facades\Storage;
+use App\Stream;
 
 class CatchUp implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $STREAM_ID;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($stream_id)
     {
-        //
+        $this->STREAM_ID = $stream_id;
     }
 
     /**
@@ -32,8 +35,9 @@ class CatchUp implements ShouldQueue
      */
     public function handle()
     {
-        $url = Storage::url('hls-stream.sh');
-        $process = new Process('bash ' . $url);
+        $stream = Stream::find($this->STREAM_ID);
+        $exec_file = Storage::url('hls-stream.sh');
+        $process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream . ' ' . $stream->id);
         $process->run();
 
         // executes after the command finishes

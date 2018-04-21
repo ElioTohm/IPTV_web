@@ -2,6 +2,7 @@
     <div class="custom-actions">
       <button class="btn btn-sm" @click="itemAction('edit', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
       <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
+      <button class="btn btn-sm" @click="itemAction('record', rowData, rowIndex)"><i class="glyphicon glyphicon-record"></i></button>
     </div>
   </template>
 
@@ -41,7 +42,7 @@
               }
             ],
           });  
-        }else{
+        } else if (action == 'edit') {
           this.$parent.$modal.show(
             'channel', 
             {button: 
@@ -56,6 +57,14 @@
                   price: data.price
                 }
               }})
+        } else {
+          axios.get('/record/' + data.id)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+          });
         }
       }
     }
