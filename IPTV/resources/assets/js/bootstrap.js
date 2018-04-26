@@ -45,7 +45,7 @@ if (token) {
 
 import io from 'socket.io-client'
 
-window.io = io('http://localhost:3000')
+window.io = io(window.location.hostname + ':3000')
 
 // import Echo from "laravel-echo"
 
