@@ -1,0 +1,11 @@
+#!/bin/bash
+php artisan scout:import 'App\Channel'
+php artisan scout:import 'App\Device'
+php artisan scout:import 'App\Genre'
+php artisan scout:import 'App\Movie'
+php artisan scout:import 'App\Purchase'
+php artisan scout:import 'App\Section'
+php artisan scout:import 'App\SectionItem'
+php artisan scout:import 'App\Serie'
+php artisan scout:import 'App\Stream'
+php artisan scout:import 'App\User'
