@@ -174,7 +174,7 @@ class testDatabaseSeeder extends Seeder
                 'poster' => 'star wars_.png',
                 'price' => 20
             ]);
-
+        
         DB::table('channels')->insert([
                 'name' => 'M6',
                 'number' => 3,
