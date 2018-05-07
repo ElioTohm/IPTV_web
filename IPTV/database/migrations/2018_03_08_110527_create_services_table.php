@@ -18,6 +18,7 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->string('tag');
             $table->string('icon')->default("default_icon.png");
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

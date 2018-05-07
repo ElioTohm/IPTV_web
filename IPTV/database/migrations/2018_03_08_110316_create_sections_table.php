@@ -17,6 +17,7 @@ class CreateSectionsTable extends Migration
             $table->increments('id')->unsigned();
             $table->string('name');
             $table->string('icon')->default("default_icon.png");
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
 

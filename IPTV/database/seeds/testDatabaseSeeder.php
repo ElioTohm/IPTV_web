@@ -308,14 +308,41 @@ class testDatabaseSeeder extends Seeder
 
         DB::table('sections')->insert([
             [
-                'name' => 'Restaurants & Bar',
+                'name' => "Hotel Info",
+                'icon'=> "info.png"
             ],
             [
-                'name' => 'Spa & Fitness',
+                'name' => "Restaurants & Bars",
+                'icon'=> "bar.png"
             ],
             [
-                'name' => 'City Guide',
-            ]
+                'name' => "Spa & Fitness",
+                'icon'=> "gym.png"
+            ],
+            [
+                'name' => "Weather",
+                'icon'=> "weather.png"
+            ],
+            [
+                'name' => "City Guide",
+                'icon'=> "compass.png" 
+            ],
+            [
+                'name' => "Live TV",
+                'icon'=> "live.png"
+            ],
+            [
+                'name' => "VOD",
+                'icon'=> "vod.png"
+            ],
+            [
+                'name' => "Your Account",
+                'icon'=> "account.png"
+            ],
+            [
+                'name' => "Applications",
+                'icon'=> "info.png"
+            ],
         ]);
 
         DB::table('section_items')->insert([
@@ -429,27 +456,39 @@ class testDatabaseSeeder extends Seeder
         DB::table('services')->insert([
             [
                 'name' => 'Assistance',
-                'tag' => 'assistance'
+                'tag' => 'assistance',
+                'active' => true,
+                'icon' => 'assistance.png'
             ],
             [
                 'name' => 'Room Service',
-                'tag' => 'roomservice'
+                'tag' => 'roomservice',
+                'active' => true,
+                'icon' => 'roomservice.png'
             ],
             [
                 'name' => 'House Keeper',
-                'tag' => 'housekeeper'
+                'tag' => 'housekeeper',
+                'active' => true,
+                'icon' => 'housekeeper.png'
             ],
             [
                 'name' => 'Parental Control',
-                'tag' => 'parentalcontrol'
+                'tag' => 'parentalcontrol',
+                'active' => true,
+                'icon' => 'parentalcontrol.png'
             ],
             [
                 'name' => 'Instant Messaging',
-                'tag' => 'instantmessaging'
+                'tag' => 'instantmessaging',
+                'active' => true,
+                'icon' => 'instantmessaging.png'
             ],
             [
                 'name' => 'Survey',
-                'tag' => 'survey'
+                'tag' => 'survey',
+                'active' => true,
+                'icon' => 'survey.png'
             ],
         ]);
     }

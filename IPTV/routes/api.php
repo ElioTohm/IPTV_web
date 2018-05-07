@@ -16,7 +16,13 @@ use App\Purchase;
 |
 */
 Route::get('/registerDevice', 'ApiController@register');
-	
+
+
+// section route
+Route::get('/sections', 'ApiController@getSections');
+
+	// services client
+	Route::get('/services', 'ApiController@getServices');
 Route::group(['middleware' => 'auth:api'], function()
 {
 	/**
@@ -47,8 +53,6 @@ Route::group(['middleware' => 'auth:api'], function()
 	// client purchase route
 	Route::post('/clientpurchase', 'ApiController@clientPurchase');
 
-	// section route
-	Route::get('/sections', 'ApiController@getSections');
 
 	// provide weather to client
 	Route::get('/weather', 'ApiController@getWeather');

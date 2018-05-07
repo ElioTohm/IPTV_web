@@ -14,6 +14,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use App\Purchase;
 use App\Movie;
 use App\Section;
+use App\Service;
 
 class ApiController extends Controller
 {
@@ -39,7 +40,7 @@ class ApiController extends Controller
         if ($oauthclient != null) {
             $secret = $oauthclient->secret;
             $result = substr($secret, 0, 4);
-
+            
             if (strcmp($result, $sentsecret) == 0 ) {
                 // $user = User::find(1);
                 
@@ -176,7 +177,14 @@ class ApiController extends Controller
     // section with section items
     public function getSections ()
     {
-        return Section::with('sectionItem')->get();
+        return Section::with('sectionItem')->where('active', true)->get();
+    }
+
+
+    // service 
+    public function getServices ()
+    {
+        return Service::where('active', true)->get();
     }
 
     public function getWeather ()
