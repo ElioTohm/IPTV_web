@@ -44,7 +44,7 @@ class Stream extends Model
     public function getVidStreamAttribute($value)
     {
         if ($this->channel == NULL) {
-            return Storage::disk('public')->url('movies/' . $value);
+            return Storage::disk('public')->url('store/movies/' . $value);
         } else {
             return $value;
         }
