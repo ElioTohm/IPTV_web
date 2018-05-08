@@ -50,7 +50,7 @@ class ApiController extends Controller
                 $user = new User();
                 $user->name = 'Room ' . $id;
                 $user->email = $id . '@dvb.com';
-                $user->password = bcrypt(env('DEVICE _PASS'));
+                $user->password = bcrypt(env('DEVICE_PASS'));
                 $user->role = 4;
                 $user->save();
 
@@ -60,7 +60,7 @@ class ApiController extends Controller
                         'client_id' => $oauthclient->id,
                         'client_secret' => $oauthclient->secret,
                         'username' => $user->email,
-                        'password' => env('DEVICE _PASS'),
+                        'password' => env('DEVICE_PASS'),
                         'scope' => '',
                     ],
                 ]);
