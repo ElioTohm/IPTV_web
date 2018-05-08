@@ -9,9 +9,9 @@ target="${2}"
 
 #########################################################################
 
-segment_target_duration=5
-segment_list_size=6
-parent_dir="./storage/app/public/streams"
+segment_target_duration=10
+segment_list_size=3
+parent_dir="./storage/app/public/store/streams/"
 #########################################################################
 
 if [[ ! "${target}" ]]; then
@@ -26,9 +26,11 @@ static_params+=" -hls_list_size $segment_list_size"
 static_params+=" -hls_flags delete_segments"
 
 # misc params
-misc_params=" -re -hide_banner -y -vsync 0 -hwaccel auto"
+misc_params="-re -hide_banner -y -vsync 0 -hwaccel auto -stream_loop -1"
+cmd+=" -codec copy -map 0:v -map 0:a ${static_params}"
+cmd+=" -hls_segment_filename ${parent_dir}/${target}/${target}_%03d.ts ${parent_dir}/${target}/master.m3u8"
 
-# exec
-ffmpeg ${misc_params} -i ${source} -c: copy -hls_time 10 -hls_list_size 3 \
--hls_flags delete_segments -hls_segment_filename ${parent_dir}/${target}/'file%03d.ts' \
- ${parent_dir}/${target}/playlist.m3u8
+# start conversion
+echo "ffmpeg ${misc_params} -i ${source} ${cmd}"
+
+ffmpeg ${misc_params} -i ${source} ${cmd}
