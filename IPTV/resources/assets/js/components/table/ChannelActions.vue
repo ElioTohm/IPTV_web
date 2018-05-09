@@ -59,9 +59,11 @@
                 }
               }})
         } else if (action == 'catchup') {
+          // this.$parent.persistItem(get, '/catchup/' + data.id, null)
+          self = this
           axios.get('/catchup/' + data.id)
           .then(response => {
-            console.log(response);
+            self.$parent.refresh()
           })
           .catch(error => {
             console.log(error);
