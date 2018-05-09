@@ -17,6 +17,8 @@ class CatchUp implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     
     protected $STREAM_ID;
+    protected $PID;
+    protected $process;
 
     /**
      * Create a new job instance.
@@ -37,19 +39,29 @@ class CatchUp implements ShouldQueue
     {
         $stream = Stream::find($this->STREAM_ID);
         $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
-        $process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' 8640');
-        $process->run(function ($type, $buffer) {
-            // if (Process::ERR === $type) {
+        $this->process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' 8640');
+        $this->process->run(function ($type, $buffer) {
             echo $buffer;
-            // } else {
-            //     echo 'OUT > '.$buffer;
-            // }
         });
+        $pid = $this->process->getPid();
         
         // while ($process->isRunning()) {
         //     // waiting for process to finish
         // }
         
-        echo $process->getOutput();        
+        echo $this->process->getOutput();        
     }
+    
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        echo $exception;
+        $this->process->signal(SIGKILL);
+    }
+
 }
