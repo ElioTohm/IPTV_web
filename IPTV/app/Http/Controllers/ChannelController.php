@@ -51,12 +51,7 @@ class ChannelController extends Controller
     }
 
     public function addChannel (ChannelRequest $request) 
-    {
-        // create stream object
-        $stream = new Stream();
-        $stream->vid_stream = $request->input('stream');
-        $stream->type = $request->input('stream_type.id');
-        
+    {        
         // create channel object
         $channel = new Channel();
         $channel->number = $request->input('number');
@@ -64,13 +59,20 @@ class ChannelController extends Controller
         $channel->price = $request->input('price');
         $channel->thumbnail = $request->input('thumbnail');
         $channel->save();
+
         $genres = array();
         foreach ($request->input('genres') as $value) {
             array_push($genres, $value['id']);
         }
         $channel->genres()->sync($genres);
-        $stream->channel = $channel->id;
+
+        // create stream object
+        $stream = new Stream();
+        $stream->vid_stream = $request->input('stream');
+        $stream->type = $request->input('stream_type.id');
+        $stream->channel = $channel->number;
         $stream->save();
+
         return $channel;
     }
 
