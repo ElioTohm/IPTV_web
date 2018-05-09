@@ -15,6 +15,13 @@ use App\Stream;
 class CatchUp implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 5;
 
     protected $STREAM_ID;
 
@@ -37,15 +44,12 @@ class CatchUp implements ShouldQueue
     {
         $stream = Stream::find($this->STREAM_ID);
         $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
-        $process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id);
-        $process->run(function ($type, $buffer) {
-            if (Process::ERR === $type) {
-                echo 'ERR > '.$buffer;
-            }
-        });
-        while ($process->isRunning()) {
-            // waiting for process to finish
-        }
+        $process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' 8640');
+        $process->run();
+        
+        // while ($process->isRunning()) {
+        //     // waiting for process to finish
+        // }
         
         echo $process->getOutput();        
     }

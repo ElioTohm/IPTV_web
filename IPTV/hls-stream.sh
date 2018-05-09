@@ -6,11 +6,12 @@
 
 source="${1}"
 target="${2}"
+duration="${3}"
 
 #########################################################################
 
 segment_target_duration=10
-segment_list_size=3
+segment_list_size=$duration
 parent_dir="./storage/app/public/store/streams"
 #########################################################################
 
