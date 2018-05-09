@@ -17,7 +17,6 @@ class CatchUp implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     
     protected $STREAM_ID;
-    protected $PID;
     protected $process;
 
     /**
@@ -43,13 +42,9 @@ class CatchUp implements ShouldQueue
         $this->process->run(function ($type, $buffer) {
             echo $buffer;
         });
-        $pid = $this->process->getPid();
         
-        // while ($process->isRunning()) {
-        //     // waiting for process to finish
-        // }
-        
-        echo $this->process->getOutput();        
+        echo $this->process->getPid();
+
     }
     
     /**
