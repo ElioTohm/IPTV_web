@@ -36,7 +36,7 @@ class CatchUp implements ShouldQueue
     public function handle()
     {
         $stream = Stream::find($this->STREAM_ID);
-        $exec_file = Storage::url('hls-stream.sh');
+        $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
         $process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream . ' ' . $stream->id);
         $process->run();
 
