@@ -7,12 +7,12 @@
 source="${1}"
 target="${2}"
 duration="${3}"
+parent_dir="${4}"
 
 #########################################################################
 
 segment_target_duration=10
 segment_list_size=$duration
-parent_dir="hom/user/IPTV/storage/app/public/store/streams"
 #########################################################################
 
 if [[ ! "${target}" ]]; then
@@ -29,7 +29,7 @@ static_params+=" -hls_flags delete_segments"
 # misc params
 misc_params="-re -hide_banner -y -vsync 0 -hwaccel auto -stream_loop -1"
 cmd+=" -codec copy -map 0:v -map 0:a ${static_params}"
-cmd+=" -hls_segment_filename ${parent_dir}/${target}/${target}_%03d.ts ${parent_dir}/${target}/master.m3u8"
+cmd+=" -hls_segment_filename ${parent_dir}/${target}_%03d.ts ${parent_dir}/${target}/master.m3u8"
 
 # start conversion
 echo "ffmpeg ${misc_params} -i ${source} ${cmd}"
