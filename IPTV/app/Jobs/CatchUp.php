@@ -41,8 +41,6 @@ class CatchUp implements ShouldQueue
         $process->run(function ($type, $buffer) {
             if (Process::ERR === $type) {
                 echo 'ERR > '.$buffer;
-            } else {
-                echo 'OUT > '.$buffer;
             }
         });
         while ($process->isRunning()) {
@@ -50,12 +48,5 @@ class CatchUp implements ShouldQueue
         }
         
         echo $process->getOutput();        
-
-        // executes after the command finishes
-        // if (!$process->isSuccessful()) {
-        //     throw new ProcessFailedException($process);
-        // }
-
-        // echo $process->getOutput();
     }
 }
