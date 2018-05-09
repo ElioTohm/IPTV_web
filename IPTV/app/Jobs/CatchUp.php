@@ -38,13 +38,24 @@ class CatchUp implements ShouldQueue
         $stream = Stream::find($this->STREAM_ID);
         $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
         $process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream . ' ' . $stream->id);
-        $process->run();
+        $process->run(function ($type, $buffer) {
+            if (Process::ERR === $type) {
+                echo 'ERR > '.$buffer;
+            } else {
+                echo 'OUT > '.$buffer;
+            }
+        });
+        while ($process->isRunning()) {
+            // waiting for process to finish
+        }
+        
+        echo $process->getOutput();        
 
         // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
+        // if (!$process->isSuccessful()) {
+        //     throw new ProcessFailedException($process);
+        // }
 
-        echo $process->getOutput();
+        // echo $process->getOutput();
     }
 }
