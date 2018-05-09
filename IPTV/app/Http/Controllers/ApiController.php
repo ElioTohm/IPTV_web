@@ -93,7 +93,8 @@ class ApiController extends Controller
         $channels = Channel::with('genres', 'stream')->get();
         $channels = $channels->map(function ($channel, $key) {
             if ($channel->stream->catchup) {
-                $channel->stream->vid_stream = Storage::disk('public')->url('store/stream/'.$channel->stream->id.'/master.m3u8');   
+                $channel->stream->vid_stream = Storage::disk('public')->url('store/streams/'.$channel->stream->id.'/master.m3u8');
+                $channel->stream->type = 2;
             }
 
             return $channel;
