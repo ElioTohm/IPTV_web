@@ -39,12 +39,7 @@ class CatchUp implements ShouldQueue
         $stream = Stream::find($this->STREAM_ID);
         $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
         $this->process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' 8640');
-        $this->process->run(function ($type, $buffer) {
-            echo $buffer;
-        });
-        
-        echo $this->process->getPid();
-
+        $this->process->run();
     }
     
     /**
@@ -55,7 +50,6 @@ class CatchUp implements ShouldQueue
      */
     public function failed(Exception $exception)
     {
-        echo $exception;
         $this->process->signal(SIGKILL);
     }
 
