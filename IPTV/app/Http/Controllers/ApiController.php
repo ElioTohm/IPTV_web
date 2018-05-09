@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Channel;
 use App\Genre;
@@ -91,7 +91,13 @@ class ApiController extends Controller
     public function getChannel (Request $request) 
     {
         $channels = Channel::with('genres', 'stream')->get();
-        //'thumbnail' => env('APP_URL', 'localhost') . "/images/device/channels/" . urlencode($channel->thumbnail),
+        $channels = $channels->map(function ($channel, $key) {
+            if ($channel->stream->catchup) {
+                $channel->stream->vid_stream = Storage::disk('public')->url('store/stream/'.$channel->stream->id.'/master.m3u8');   
+            }
+
+            return $channel;
+        });
         return $channels;
     }
 

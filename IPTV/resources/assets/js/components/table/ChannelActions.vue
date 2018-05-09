@@ -2,7 +2,8 @@
     <div class="custom-actions">
       <button class="btn btn-sm" @click="itemAction('edit', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
       <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
-      <button class="btn btn-sm" @click="itemAction('catchup', rowData, rowIndex)"><i class="glyphicon glyphicon-record"></i></button>
+      <button v-if="rowData.stream.catchup" class="btn btn-sm btn-primary" @click="itemAction('catchup', rowData, rowIndex)"><i class="glyphicon glyphicon-record"></i></button>
+      <button v-else class="btn btn-sm" @click="itemAction('catchup', rowData, rowIndex)"><i class="glyphicon glyphicon-record"></i></button>
     </div>
   </template>
 
