@@ -12,7 +12,7 @@ duration="${3}"
 
 segment_target_duration=10
 segment_list_size=$duration
-parent_dir="./storage/app/public/store/streams"
+parent_dir="hom/user/IPTV/storage/app/public/store/streams"
 #########################################################################
 
 if [[ ! "${target}" ]]; then
