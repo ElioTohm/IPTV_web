@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Jobs\CatchUp;
 use App\Channel;
 use App\Genre;
 use App\StreamType;
@@ -100,5 +101,12 @@ class ChannelController extends Controller
     {
         $channel = Channel::find($id);
         $channel->delete();
+    }
+
+    public function catchup ($channel_id) 
+    {
+        $channel = Channel::find($channel_id);
+        return $channel->stream()->id);
+        dispatch(new ProcessPodcast();        
     }
 }

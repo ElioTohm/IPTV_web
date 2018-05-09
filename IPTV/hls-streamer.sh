@@ -11,7 +11,7 @@ target="${2}"
 
 segment_target_duration=10
 segment_list_size=3
-parent_dir="./storage/app/public/store/streams/"
+parent_dir="./storage/app/public/store/streams"
 #########################################################################
 
 if [[ ! "${target}" ]]; then

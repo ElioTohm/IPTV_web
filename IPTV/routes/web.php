@@ -86,5 +86,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/clientnotification/{id}', 'ClientController@sendNotification');
 
     Route::get('/record/{id}', 'JobsController@RecordStream');
+
+    /*
+     *  Job Routes 
+     */
+    Route::get('/catchup/{channel_id}', 'ChannelController@catchup');
     
 });
