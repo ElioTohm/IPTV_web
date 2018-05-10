@@ -34,4 +34,4 @@ cmd+=" -hls_segment_filename ${parent_dir}/${target}/${target}_%03d.ts ${parent_
 # start conversion
 echo "ffmpeg ${misc_params} -i ${source} ${cmd}"
 
-/home/user/bin/ffmpeg ${misc_params} -i ${source} ${cmd} </dev/null >/dev/null 2>/var/log/ffmpeg-${target}.log &
+ffmpeg ${misc_params} -i ${source} ${cmd} </dev/null >/dev/null 2>/home/user/logs/ffmpeg-${target}.log &
