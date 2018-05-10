@@ -43,7 +43,7 @@ class Channel extends Model
 
     public function getThumbnailAttribute($value)
     {
-        return $url = Storage::disk('public')->url('store/channels/images/' . $value);
+        return $url = Storage::disk('public')->url('channels/images/' . $value);
     }
 
     public function purchase()
