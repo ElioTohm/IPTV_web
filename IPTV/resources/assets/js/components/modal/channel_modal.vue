@@ -111,7 +111,7 @@ export default {
                 name: '',
                 stream: '',
                 stream_type: 0,
-                thumbnail: '',
+                thumbnail: 'none',
                 genres : [],
                 image : '',
                 price : 0

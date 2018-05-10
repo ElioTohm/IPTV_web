@@ -107,7 +107,7 @@ export default {
                 stream_type: 0,
                 poster: '',
                 genres : [],
-                image : '',
+                image : 'none',
             },
         }
     },
