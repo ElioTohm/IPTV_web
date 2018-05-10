@@ -107,7 +107,7 @@ export default {
                 stream_type: 0,
                 poster: '',
                 genres : [],
-                image : 'none',
+                image : '',
             },
         }
     },
@@ -144,7 +144,7 @@ export default {
             if (this.button.text == "Add"){
                 this.action = "post"
                 this.form.title = ''
-                this.form.poster = ''
+                this.form.poster = 'none'
                 this.form.stream = ''
                 this.form.id = ''
                 this.form.price = 0

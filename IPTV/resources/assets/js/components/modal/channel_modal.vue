@@ -111,7 +111,7 @@ export default {
                 name: '',
                 stream: '',
                 stream_type: 0,
-                thumbnail: 'none',
+                thumbnail: '',
                 genres : [],
                 image : '',
                 price : 0
@@ -142,7 +142,7 @@ export default {
                 this.action = 'post'
                 this.form.number = ''
                 this.form.name = ''
-                this.form.thumbnail = ''
+                this.form.thumbnail = 'none'
                 this.form.stream = ''
                 this.form.id = ''
                 this.form.stream_type = ''
