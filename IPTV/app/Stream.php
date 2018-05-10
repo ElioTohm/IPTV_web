@@ -41,13 +41,4 @@ class Stream extends Model
         return $this->hasOne('App\Movie', 'id', 'movie');
     }
 
-    public function getVidStreamAttribute($value)
-    {
-        if ($this->channel == NULL) {
-            return Storage::disk('public')->url('store/movies/' . $value);
-        } else {
-            return $value;
-        }
-        
-    }
 }

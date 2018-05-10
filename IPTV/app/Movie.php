@@ -48,6 +48,6 @@ class Movie extends Model
 
     public function getPosterAttribute($value)
     {
-        return Storage::disk('public')->url('/movies/images/' . $value);
+        return Storage::disk('public')->url('store/movies/images/' . $value);
     }    
 }

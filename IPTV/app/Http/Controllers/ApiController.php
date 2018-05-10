@@ -93,7 +93,7 @@ class ApiController extends Controller
         $channels = Channel::with('genres', 'stream')->get();
         $channels = $channels->map(function ($channel, $key) {
             if ($channel->stream->catchup) {
-                $channel->stream->vid_stream = Storage::disk('public')->url('store/streams/'.$channel->stream->id.'/master.m3u8');
+                $channel->stream->vid_stream = Storage::disk('public')->url('streams/'.$channel->stream->id.'/master.m3u8');
                 $channel->stream->type = 2;
             }
 
@@ -106,6 +106,13 @@ class ApiController extends Controller
     public function getVODStreams (Request $request)
     {
         $movies = Movie::with('genres', 'stream')->get();
+        $movies = $movies->map(function ($movies, $key) {
+            if ($movies->stream->channel == NULL) {
+                $movies->stream->vid_stream = Storage::disk('public')->url('store/movies/'.$movies->stream->vid_stream);
+            }
+
+            return $movies;
+        });
         return response()->json($movies);
     }
 
@@ -123,7 +130,7 @@ class ApiController extends Controller
             "email" => $client->email, 
             "room" => $client->room, 
             "welcome_message" => $client->welcome_message, 
-            "welcome_image" => env('APP_URL', 'localhost') . "/images/device/welcome/" . urlencode($client->welcome_image), 
+            "welcome_image" => env('APP_URL', 'localhost') . "/store/images/device/welcome/" . urlencode($client->welcome_image), 
             "credit" => $client->credit, 
             "debit" => $client->debit
         ]);
