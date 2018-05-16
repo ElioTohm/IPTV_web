@@ -7,9 +7,9 @@
                         Devices 
                     </span>
 
-                    <a class="action-link" @click="showAddDeviceForm">
+                    <button class="btn btn-info" @click="showAddDeviceForm">
                         Add New Device
-                    </a>
+                    </button>
                 </div>  
             </div>
             <div class="panel-body">
