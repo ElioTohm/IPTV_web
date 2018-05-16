@@ -24,7 +24,10 @@ app.use(express.static(__dirname + '/public'));
 io.on('connection', function (socket) {
 
   var addedUser = false;
-
+  socket.on('restart', function (data) {
+    // we tell the client to execute 'BroadCastNotification'
+    socket.broadcast.emit('restart', 'now');
+  });
   // when the client emits 'BroadCastNotification', this listens and executes
   socket.on('Notification_', function (data) {
     // we tell the client to execute 'BroadCastNotification'

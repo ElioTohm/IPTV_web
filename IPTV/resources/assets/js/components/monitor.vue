@@ -1,13 +1,21 @@
 <template>
     <div>
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <h2><b>Monitoring</b></h2>
-                    </div>
-                    <div class="col-xs-6">
-                        <h3 class="pull-right">Online: {{ clientcount }}</h3>
+            <div class="panel-heading clear-fix">
+                <div class="row form-inline">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <p>
+                                    <b>Monitoring
+                                        <span class="badge"> {{clientcount}}</span>
+                                    </b>
+                                </p>
+                            </div>
+                            <div class="col-xs-6">
+                                <button class="btn btn-info pull-right" v-on:click="restartDevices()">Restart all</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,6 +73,14 @@ export default {
                 self.onlineDevice.splice(index, 1, data);
 
             })
+    },
+    methods: {
+        restartDevices () {
+            // window.io.on('connect', (socket) => {
+            //     console.log(socket);    
+                window.io.emit('restart', 'now');
+            // });           
+        }
     }
 }
 </script>
