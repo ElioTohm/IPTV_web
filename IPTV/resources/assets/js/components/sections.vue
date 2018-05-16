@@ -3,11 +3,14 @@
     <div class="panel panel-primary" v-for="section in sections" :key="section.id" >
         <div class="panel-heading">
             <div class="row">
-                <div class="col-xs-11" data-toggle="collapse" :data-target=" '#' + section.id">
+                <div class="col-xs-10" data-toggle="collapse" :data-target=" '#' + section.id">
                     <p class="text-uppercase"><b>{{section.name}}</b></p>
                 </div>
                 <div class="col-xs-1">
-                    <button class="btn btn-primary pull-right" @click="showModal('Add', section, null)"><span class="glyphicon glyphicon-plus"></span></button>
+                    <button class="btn btn-primary pull-right" @click="activatetoggle('Add', section, null)">Activate <span class="glyphicon glyphicon-check"></span></button>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-primary pull-right" @click="Add('Add', section, null)">Add <span class="glyphicon glyphicon-plus"></span></button>
                 </div>
             </div>
         </div>
@@ -21,7 +24,7 @@
                                     <p class="text-uppercase"><b>{{section_item.name}}</b></p>
                                 </div>
                                 <div class="col-xs-1">
-                                    <button class="btn btn-primary pull-rights" @click="showModal('Edit', section, section_item)"><span class="glyphicon glyphicon-edit"></span></button>
+                                    <button class="btn btn-primary pull-rights" @click="Edit('Edit', section, section_item)"><span class="glyphicon glyphicon-edit"></span></button>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +80,7 @@ export default {
                 form.sections = []            
             })
         },
-        showModal(action, section, item) {
+        Edit(action, section, item) {
             this.$modal.show(
                 'sectionitem', 
                 {button: {
@@ -92,6 +95,16 @@ export default {
                     longitutde: item.longitutde,
                     latitude: item.longitutde,
                     description: item.description,
+            }})
+        },
+        Add (action, section) {
+            this.$modal.show(
+                'sectionitem', 
+                {button: {
+                    text: action
+                }, 
+                editForm:{
+                    sectionid: section.id,
             }})
         },
         load () {
