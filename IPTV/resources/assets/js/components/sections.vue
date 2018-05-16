@@ -7,14 +7,15 @@
                     <p class="text-uppercase"><b>{{section.name}}</b></p>
                 </div>
                 <div class="col-xs-1">
-                    <button class="btn btn-primary pull-right" @click="activatetoggle('Add', section, null)">Activate <span class="glyphicon glyphicon-check"></span></button>
+                    <button v-if="section.active" class="btn btn-success pull-right" @click="activatetoggle(section)">Activate <span class="glyphicon glyphicon-check"></span></button>
+                    <button v-else class="btn btn-warning pull-right" @click="activatetoggle(section)">Activate <span class="glyphicon glyphicon-check"></span></button>
                 </div>
                 <div class="col-xs-1">
-                    <button class="btn btn-primary pull-right" @click="Add('Add', section, null)">Add <span class="glyphicon glyphicon-plus"></span></button>
+                    <button v-if="section.has_sub_sections" class="btn btn-primary pull-right" @click="Add('Add', section)">Add <span class="glyphicon glyphicon-plus"></span></button>
                 </div>
             </div>
         </div>
-        <div class="panel-collapse collapse panel-body" v-bind:id="section.id">
+        <div v-if="section.has_sub_sections" class="panel-collapse collapse panel-body" v-bind:id="section.id">
             <div class="container row">
                 <div class="col-md-4"  v-for="section_item in section.section_item" :key="section_item.id">
                     <div class="panel panel-info">
@@ -70,6 +71,16 @@ export default {
         this.load();
     },
     methods: {
+        // Load Items
+        load (section) {
+            axios.get('/sections')
+                .then(response => {
+                    this.sections = response.data
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        },
         /**  
         * Persist the item to storage using the given form.
         */
@@ -107,14 +118,9 @@ export default {
                     sectionid: section.id,
             }})
         },
-        load () {
-            axios.get('/sections')
-                .then(response => {
-                    this.sections = response.data
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+        activatetoggle(data, toggle) {
+            console.log(data);
+            this.persistItem('put', '/sections/' + data.id, null)
         }
     },
 };

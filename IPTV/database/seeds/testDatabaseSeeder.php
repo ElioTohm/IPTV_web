@@ -309,39 +309,48 @@ class testDatabaseSeeder extends Seeder
         DB::table('sections')->insert([
             [
                 'name' => "Hotel Info",
-                'icon'=> "info.png"
-            ],
-            [
-                'name' => "Restaurants & Bars",
-                'icon'=> "bar.png"
+                'icon'=> "info.png",
+                'has_sub_sections' => FALSE
             ],
             [
                 'name' => "Spa & Fitness",
-                'icon'=> "gym.png"
-            ],
-            [
-                'name' => "Weather",
-                'icon'=> "weather.png"
+                'icon'=> "gym.png",
+                'has_sub_sections' => TRUE
             ],
             [
                 'name' => "City Guide",
-                'icon'=> "compass.png" 
+                'icon'=> "compass.png",
+                'has_sub_sections' => TRUE 
+            ],
+            [
+                'name' => "Restaurants & Bars",
+                'icon'=> "bar.png",
+                'has_sub_sections' => TRUE
+            ],
+            [
+                'name' => "Weather",
+                'icon'=> "weather.png",
+                'has_sub_sections' => FALSE
             ],
             [
                 'name' => "Live TV",
-                'icon'=> "live.png"
+                'icon'=> "live.png",
+                'has_sub_sections' => FALSE
             ],
             [
                 'name' => "VOD",
-                'icon'=> "vod.png"
+                'icon'=> "vod.png",
+                'has_sub_sections' => FALSE
             ],
             [
                 'name' => "Your Account",
-                'icon'=> "account.png"
+                'icon'=> "account.png",
+                'has_sub_sections' => FALSE
             ],
             [
                 'name' => "Applications",
-                'icon'=> "info.png"
+                'icon'=> "info.png",
+                'has_sub_sections' => FALSE
             ],
         ]);
 
@@ -422,31 +431,31 @@ class testDatabaseSeeder extends Seeder
                     "poster" => "spa1.png"
                 ],
                 [
-                    "section" => 1 ,
+                    "section" => 4 ,
                     "name" => "Cook OFF",
                     "reservation" => true,
                     "poster" => "resto1.png"
                 ],
                 [
-                    "section" => 1 ,
+                    "section" => 4 ,
                     "name" => "We",
                     "reservation" => true,
                     "poster" => "resto2.png"
                 ],
                 [
-                    "section" => 1 ,
+                    "section" => 4 ,
                     "name" => "ali",
                     "reservation" => true,
                     "poster" => "resto3.png"
                 ],
                 [
-                    "section" => 1 ,
+                    "section" => 4 ,
                     "name" => "Cursed",
                     "reservation" => true,
                     "poster" => "rest4.png"
                 ],
                 [
-                    "section" => 1 ,
+                    "section" => 4 ,
                     "name" => "My Crazy One",
                     "reservation" => true,
                     "poster" => "rest5.png"

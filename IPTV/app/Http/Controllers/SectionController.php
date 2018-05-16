@@ -70,7 +70,9 @@ class SectionController extends Controller
      */
     public function update(Request $request, Section $section)
     {
-        //
+        $section->active = !$section->active;
+        $section->save();
+        return $section;
     }
 
     /**

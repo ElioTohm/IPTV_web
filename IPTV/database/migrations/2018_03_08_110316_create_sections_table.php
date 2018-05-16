@@ -18,6 +18,7 @@ class CreateSectionsTable extends Migration
             $table->string('name');
             $table->string('icon')->default("default_icon.png");
             $table->boolean('active')->default(true);
+            $table->boolean('has_sub_sections')->default(FALSE);
             $table->timestamps();
         });
 
