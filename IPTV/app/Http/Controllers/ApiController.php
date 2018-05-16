@@ -93,7 +93,7 @@ class ApiController extends Controller
         $channels = Channel::with('genres', 'stream')->get();
         $channels = $channels->map(function ($channel, $key) {
             if ($channel->stream->catchup) {
-                $channel->stream->vid_stream = Storage::disk('public')->url('streams/'.$channel->stream->id.'/master.m3u8');
+                $channel->stream->vid_stream = Storage::disk('store')->url('streams/'.$channel->stream->id.'/master.m3u8');
                 $channel->stream->type = 2;
             }
 
@@ -108,7 +108,7 @@ class ApiController extends Controller
         $movies = Movie::with('genres', 'stream')->get();
         $movies = $movies->map(function ($movies, $key) {
             if ($movies->stream->channel == NULL) {
-                $movies->stream->vid_stream = Storage::disk('public')->url('store/movies/'.$movies->stream->vid_stream);
+                $movies->stream->vid_stream = Storage::disk('store')->url('movies/'.$movies->stream->vid_stream);
             }
 
             return $movies;
