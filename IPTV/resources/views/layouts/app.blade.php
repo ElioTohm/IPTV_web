@@ -108,16 +108,18 @@
             </div>
         </nav>
 
-        <div class="row">
-            <div class="col-xs-2">
-                @if (!Auth::guest())
-                    <monitor></monitor>
-                @endif
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-2">
+                    @if (!Auth::guest())
+                        <monitor></monitor>
+                    @endif
+                </div>
+                <div class="col-xs-8">
+                    @yield('content')
+                </div>
+                <div class="col-xs-2"></div>
             </div>
-            <div class="col-xs-8">
-                @yield('content')
-            </div>
-            <div class="col-xs-2"></div>
         </div>
         
     </div>
