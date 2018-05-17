@@ -148,7 +148,7 @@ class ApiController extends Controller
         $enduserapp = AppSettings::where('app', 'launcher')->first();
 
         if ($request->get('version') < $enduserapp->version) {
-            return response()->download(storage_path('app/public/private/apk/' . $enduserapp->apk_path),
+            return response()->download(storage_path('app/private/' . $enduserapp->apk_path),
                                         $enduserapp->apk_path, 
                                         ['Content-Type' => 'application/octet-stream']);
         } else {
