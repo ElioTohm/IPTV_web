@@ -16,7 +16,6 @@ use App\Purchase;
 |
 */
 Route::get('/registerDevice', 'ApiController@register');
-Route::get('/vodmovies', 'ApiController@getVODStreams');
 
 Route::group(['middleware' => 'auth:api'], function()
 {
@@ -40,7 +39,7 @@ Route::group(['middleware' => 'auth:api'], function()
 	Route::get('/channel' , 'ApiController@getChannel');
 
 	// movies route
-	
+	Route::get('/vodmovies', 'ApiController@getVODStreams');
 
 	// get client info
 	Route::get('/clientInfo' , 'ApiController@getClientInfo');

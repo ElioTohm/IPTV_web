@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SectionController extends Controller
 {
@@ -14,8 +15,16 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $section = Section::with('sectionItem')->get();
-        return response()->json($section);
+        $sections = Section::with('sectionItem')->get();
+        $sections->transform(function ($section) {
+            $section->icon = Storage::disk('public')->url('/hotel/images/' . $section->icon);
+            $section->sectionItem->transform(function ($sectionitem){
+                $sectionitem->poster = Storage::disk('public')->url('/hotel/images/' . $sectionitem->poster);
+                return $sectionitem;
+            });
+            return $section;
+        }); 
+        return response()->json($sections);
     }
 
     /**

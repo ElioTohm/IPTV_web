@@ -24,8 +24,4 @@ class SectionItem extends Model
         return $array;
     }
 
-    public function getPosterAttribute($value)
-    {
-        return $url = Storage::disk('public')->url('/hotel/images/' . $value);
-    }
 }

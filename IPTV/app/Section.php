@@ -28,10 +28,5 @@ class Section extends Model
     {
         return $this->hasMany('App\SectionItem', 'section', 'id');
     }
-
-    public function getIconAttribute($value)
-    {
-        return $url = Storage::disk('public')->url('/hotel/images/' . $value);
-    }
-
+    
 }

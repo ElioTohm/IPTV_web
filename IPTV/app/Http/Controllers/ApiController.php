@@ -197,7 +197,16 @@ class ApiController extends Controller
     // section with section items
     public function getSections ()
     {
-        return Section::with('sectionItem')->where('active', true)->get();
+        $sections = Section::with('sectionItem')->where('active', true)->get();
+        $sections->transform(function ($section) {
+            $section->icon = Storage::disk('public')->url('/hotel/images/' . $section->icon);
+            $section->sectionItem->transform(function ($sectionitem){
+                $sectionitem->poster = Storage::disk('public')->url('/hotel/images/' . $sectionitem->poster);
+                return $sectionitem;
+            });
+            return $section;
+        });  
+        return $sections;
     }
 
     // service 
