@@ -199,9 +199,9 @@ class ApiController extends Controller
     {
         $sections = Section::with('sectionItem')->where('active', true)->get();
         $sections->transform(function ($section) {
-            $section->icon = Storage::disk('public')->url('/hotel/images/' . $section->icon);
+            $section->icon = Storage::disk('public_api')->url('/hotel/images/' . $section->icon);
             $section->sectionItem->transform(function ($sectionitem){
-                $sectionitem->poster = Storage::disk('public')->url('/hotel/images/' . $sectionitem->poster);
+                $sectionitem->poster = Storage::disk('public_api')->url('/hotel/images/' . $sectionitem->poster);
                 return $sectionitem;
             });
             return $section;
@@ -212,7 +212,12 @@ class ApiController extends Controller
     // service 
     public function getServices ()
     {
-        return Service::where('active', true)->get();
+        $services = Service::where('active', true)->get();
+        $services->transform(function ($service) {
+            $service->icon = Storage::disk('public_api')->url('/hotel/images/' . $service->icon);
+            return $service;
+        });  
+        return $services;
     }
 
     public function getWeather ()

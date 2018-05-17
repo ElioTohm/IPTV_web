@@ -24,8 +24,4 @@ class Service extends Model
         return $array;
     }
 
-    public function getIconAttribute($value)
-    {
-        return $url = Storage::disk('public')->url('/hotel/images/' . $value);
-    }
 }
