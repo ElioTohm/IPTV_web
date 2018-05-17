@@ -58,16 +58,22 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'public_api' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_API_URL').'/storage',
+            'visibility' => 'public',
+        ],
         'vod' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').env('VOD_DIR'),
+            'url' => env('APP_API_URL').env('VOD_DIR'),
             'visibility' => 'public',
         ],
         'catchup' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').env('CATCHUP_DIR'),
+            'url' => env('APP_API_URL').env('CATCHUP_DIR'),
             'visibility' => 'public',
         ],
         's3' => [

@@ -97,6 +97,10 @@ class ApiController extends Controller
                 $channel->stream->type = 2;
             }
 
+            $url = $channel->thumbnail;
+            $pos = strrpos($url, '/');
+            $value = $pos === false ? $url : substr($url, $pos + 1);
+            $channel->thumbnail = Storage::disk('public_api')->url('channels/images/' . $value);
             return $channel;
         });
         return $channels;
@@ -106,11 +110,15 @@ class ApiController extends Controller
     public function getVODStreams (Request $request)
     {
         $movies = Movie::with('genres', 'stream')->get();
-        $movies = $movies->map(function ($movies, $key) {
-            if ($movies->stream->channel == NULL) {
-                $movies->stream->vid_stream = Storage::disk('vod')->url('movies/'.$movies->stream->vid_stream);
+        $movies = $movies->map(function ($movie, $key) {
+            if ($movie->stream->channel == NULL) {
+                $movie->stream->vid_stream = Storage::disk('vod')->url('movies/'.$movie->stream->vid_stream);
             }
-
+            
+            $url = $movie->poster;
+            $pos = strrpos($url, '/');
+            $value = $pos === false ? $url : substr($url, $pos + 1);
+            $movies->poster = Storage::disk('public_api')->url('movies/images/' . $value);
             return $movies;
         });
         return response()->json($movies);
@@ -130,7 +138,7 @@ class ApiController extends Controller
             "email" => $client->email, 
             "room" => $client->room, 
             "welcome_message" => $client->welcome_message, 
-            "welcome_image" => env('APP_URL', 'localhost') . "/images/device/welcome/" . urlencode($client->welcome_image), 
+            "welcome_image" => env('APP_API_URL') . "/images/device/welcome/" . urlencode($client->welcome_image), 
             "credit" => $client->credit, 
             "debit" => $client->debit
         ]);
