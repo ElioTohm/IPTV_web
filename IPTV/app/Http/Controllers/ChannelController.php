@@ -39,11 +39,6 @@ class ChannelController extends Controller
             $pagination = $query->paginate(env('ITEM_PER_PAGE'));
             // transform image and 
             $pagination->getCollection()->transform(function ($channel) {
-                    if ($channel->stream->catchup) {
-                        $channel->stream->vid_stream = Storage::disk('catchup')->url('streams/'.$channel->stream->id.'/master.m3u8');
-                        $channel->stream->type = 2;
-                    }
-
                     $url = explode('/',$channel->thumbnail);
                     $channel->thumbnail = Storage::disk('public')->url('channels/images/' . $url[sizeof($url) - 1]);
                     return $channel;
