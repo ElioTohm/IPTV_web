@@ -42,6 +42,16 @@ class VodController extends Controller
             $pagination = $query->paginate(env('ITEM_PER_PAGE'));
         }
 
+        $pagination->getCollection()->transform(function ($movie) {
+            if ($movie->stream->channel == NULL) {
+                $movie->stream->vid_stream = Storage::disk('vod')->url('movies/'.$movie->stream->vid_stream);
+            }
+            
+            $url = explode('/',$movie->poster);
+            $movie->poster = Storage::disk('public')->url('movies/images/' . $url[ sizeof($url) - 1]);
+            return $movie;
+        });
+
         $pagination->appends([
             'sort' => $request->sort,
             'filter' => $request->filter,

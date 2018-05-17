@@ -90,37 +90,35 @@ class ApiController extends Controller
     // Get Channels
     public function getChannel (Request $request) 
     {
-        $channels = Channel::with('genres', 'stream')->get();
-        $channels = $channels->map(function ($channel, $key) {
-            if ($channel->stream->catchup) {
-                $channel->stream->vid_stream = Storage::disk('catchup')->url('streams/'.$channel->stream->id.'/master.m3u8');
-                $channel->stream->type = 2;
-            }
+        $channels = Channel::with('genres', 'stream')
+            ->get()
+            ->transform(function ($channel) {
+                if ($channel->stream->catchup) {
+                    $channel->stream->vid_stream = Storage::disk('catchup')->url('streams/'.$channel->stream->id.'/master.m3u8');
+                    $channel->stream->type = 2;
+                }
 
-            $url = $channel->thumbnail;
-            $pos = strrpos($url, '/');
-            $value = $pos === false ? $url : substr($url, $pos + 1);
-            $channel->thumbnail = Storage::disk('public_api')->url('channels/images/' . $value);
-            return $channel;
-        });
+                $url = explode('/',$channel->thumbnail);
+                $channel->thumbnail = Storage::disk('public_api')->url('channels/images/' . $url[sizeof($url) - 1]);
+                return $channel;
+            });
         return $channels;
     }
 
     // Get Movies 
     public function getVODStreams (Request $request)
     {
-        $movies = Movie::with('genres', 'stream')->get();
-        $movies = $movies->map(function ($movie, $key) {
-            if ($movie->stream->channel == NULL) {
-                $movie->stream->vid_stream = Storage::disk('vod')->url('movies/'.$movie->stream->vid_stream);
-            }
-            
-            $url = $movie->poster;
-            $pos = strrpos($url, '/');
-            $value = $pos === false ? $url : substr($url, $pos + 1);
-            $movies->poster = Storage::disk('public_api')->url('movies/images/' . $value);
-            return $movies;
-        });
+        $movies = Movie::with('genres', 'stream')
+            ->get()
+            ->transform(function ($movie) {
+                if ($movie->stream->channel == NULL) {
+                    $movie->stream->vid_stream = Storage::disk('vod')->url('movies/'.$movie->stream->vid_stream);
+                }
+                
+                $url = explode('/',$movie->poster);
+                $movie->poster = Storage::disk('public_api')->url('movies/images/' . $url[ sizeof($url) - 1]);
+                return $movie;
+            });
         return response()->json($movies);
     }
 

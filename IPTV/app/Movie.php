@@ -46,8 +46,4 @@ class Movie extends Model
         return $this->morphMany('App\Purchase', 'purchasable');
     }
 
-    public function getPosterAttribute($value)
-    {
-        return Storage::disk('public')->url('movies/images/' . $value);
-    }    
 }
