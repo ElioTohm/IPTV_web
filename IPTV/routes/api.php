@@ -17,8 +17,6 @@ use App\Purchase;
 */
 Route::get('/registerDevice', 'ApiController@register');
 
-Route::get('/sections', 'ApiController@getSections');
-
 Route::group(['middleware' => 'auth:api'], function()
 {
 	/**
@@ -50,7 +48,7 @@ Route::group(['middleware' => 'auth:api'], function()
 	Route::post('/clientpurchase', 'ApiController@clientPurchase');
 
 	// section route
-	// Route::get('/sections', 'ApiController@getSections');
+	Route::get('/sections', 'ApiController@getSections');
 
 	// services client
 	Route::get('/services', 'ApiController@getServices');
