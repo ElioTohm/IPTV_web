@@ -114,10 +114,7 @@ class ChannelController extends Controller
     public function catchup ($channel_id) 
     {
         $channel = Channel::with('stream')->find($channel_id);
-        $stream = Stream::find($channel->stream->id);
-        $stream->catchup = true;
-        $stream->save();
-        dispatch(new CatchUp($channel->stream->id));
+        dispatch(new CatchUp($channel));
         return 200;   
     }
 }

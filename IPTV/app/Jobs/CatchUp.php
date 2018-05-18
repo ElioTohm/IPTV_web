@@ -11,22 +11,22 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Illuminate\Support\Facades\Storage;
 use App\Stream;
+use App\Process;
 
 class CatchUp implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     
-    protected $STREAM_ID;
-    protected $process;
+    protected $CHANNEL;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($stream_id)
+    public function __construct($channel)
     {
-        $this->STREAM_ID = $stream_id;
+        $this->CHANNEL = $channel;
     }
 
     /**
@@ -36,12 +36,21 @@ class CatchUp implements ShouldQueue
      */
     public function handle()
     {
-        $stream = Stream::find($this->STREAM_ID);
+        $stream = Stream::find($this->CHANNEL->stream->id);
+        $stream->catchup = true;
+        $stream->save();
         $logpath = env('HOME_ENV_PATH') .'/storage/log/worker.log';
         $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
-        $pid = exec('bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' '. intdiv(env('DURATION_CATCHUP'), 60). ' '. env('HOME_ENV_PATH').'/storage/app/public/store/streams');
-        // $this->process = new Process('bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' '. intdiv(env('DURATION_CATCHUP'), 60). ' '. env('HOME_ENV_PATH').'/storage/app/public/store/streams');
-        // $this->process->run();
+        $executable = 'bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' '. intdiv(env('DURATION_CATCHUP'), 60). ' '. env('HOME_ENV_PATH').'/storage/app/public/store/streams';
+        $pid = exec($executable);
+
+        $process = new Process();
+        $process->pid = $pid;
+        $process->name = $this->CHANNEL->name;
+        $process->stream = $stream->vid_stream;
+        $process->log =' var/log/ffmpeg-'. $stream->id .'.log';
+        $process->command = $executable;        
+        $process->save();
     }
 
 }
