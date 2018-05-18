@@ -11,7 +11,6 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Illuminate\Support\Facades\Storage;
 use App\Stream;
-use App\Catchup;
 
 class CatchUp implements ShouldQueue
 {
