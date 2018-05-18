@@ -11,6 +11,8 @@ use App\Stream;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Requests\ChannelRequest;
 use Illuminate\Support\Facades\Storage;
+use App\JobProcess;
+
 
 class ChannelController extends Controller
 {
