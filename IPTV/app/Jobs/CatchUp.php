@@ -43,8 +43,8 @@ class CatchUp implements ShouldQueue
         // $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
         // $executable = 'bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' '. intdiv(env('DURATION_CATCHUP'), 60). ' '. env('HOME_ENV_PATH').'/storage/app/public/store/streams';
         $path = env('HOME_ENV_PATH').'/storage/app/public/store/streams';
-        $cmd = " -codec copy -map 0:v -map 0:a  -hls_time 10 -hls_list_size 6 -hls_flags delete_segments -hls_segment_filename $path/0/0_%03d.ts $path/0/master.m3u8"
-        $pid = shell_exec('/home/user/bin/ffmpeg -re -hide_banner -y -hwaccel auto -vsync 0 -stream_loop -1 -i '.$stream->vid_stream.'?fifo_size=1000000 '.$cmd.' </dev/null >/dev/null 2>/var/log/ffmpeg-'. $stream->id .'.log &');
+        $cmd = " -codec copy -map 0:v -map 0:a  -hls_time 10 -hls_list_size 6 -hls_flags delete_segments -hls_segment_filename $path/0/0_%03d.ts $path/0/master.m3u8";
+        $pid = exec('/home/user/bin/ffmpeg -re -hide_banner -y -hwaccel auto -vsync 0 -stream_loop -1 -i '.$stream->vid_stream.'?fifo_size=1000000 '.$cmd.' </dev/null >/dev/null 2>/var/log/ffmpeg-'. $stream->id .'.log &');
 
         $process = new JobProcess();
         $process->pid = $pid;
