@@ -129,7 +129,7 @@ class ChannelController extends Controller
 
         $process = new JobProcess();
         $process->pid = $pid;
-        $process->name = $this->channel->name;
+        $process->name = $channel->name;
         $process->stream = $stream->vid_stream;
         $process->log =' var/log/ffmpeg-'. $stream->id .'.log';
         $process->command = 'catchup';        
