@@ -42,7 +42,7 @@ class CatchUp implements ShouldQueue
         $logpath = env('HOME_ENV_PATH') .'/storage/log/worker.log';
         $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
         $executable = 'bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' '. intdiv(env('DURATION_CATCHUP'), 60). ' '. env('HOME_ENV_PATH').'/storage/app/public/store/streams';
-        $pid = exec($executable);
+        $pid = exec($executable . '</dev/null >/dev/null 2>/var/log/ffmpeg-'. $stream->id .'.log &');
 
         $process = new JobProcess();
         $process->pid = $pid;

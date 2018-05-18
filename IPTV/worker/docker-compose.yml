@@ -1,9 +1,0 @@
-version: '2'
-services:
-  worker:
-    build: .
-    volumes:
-      - /home/elio/Desktop/work/web/webappiptv/IPTV:/home/worker
-    ports:
-      - 7070:80
-    tty: true
