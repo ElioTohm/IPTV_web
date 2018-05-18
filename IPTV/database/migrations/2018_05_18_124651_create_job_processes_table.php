@@ -16,7 +16,7 @@ class CreateJobProcessesTable extends Migration
         Schema::create('job_processes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pid');
-            $table->integer('name');
+            $table->string('name');
             $table->string('stream');
             $table->string('log');
             $table->string('command');
