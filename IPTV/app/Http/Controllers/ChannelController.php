@@ -116,24 +116,7 @@ class ChannelController extends Controller
     public function catchup ($channel_id) 
     {
         $channel = Channel::with('stream')->find($channel_id);
-        // dispatch(new CatchUp($channel));
-        $stream = Stream::find($channel->stream->id);
-        $stream->catchup = true;
-        $stream->save();
-        // $logpath = env('HOME_ENV_PATH') .'/storage/log/worker.log';
-        // $exec_file = env('HOME_ENV_PATH') . 'hls-stream.sh';
-        // $executable = 'bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' '. intdiv(env('DURATION_CATCHUP'), 60). ' '. env('HOME_ENV_PATH').'/storage/app/public/store/streams';
-        $path = env('HOME_ENV_PATH').'/storage/app/public/store/streams';
-        $cmd = " -codec copy -map 0:v -map 0:a  -hls_time 10 -hls_list_size 6 -hls_flags delete_segments -hls_segment_filename $path/$stream->id/$stream->id_%03d.ts $path/$stream->id/master.m3u8";
-        $pid = exec('/home/user/bin/ffmpeg -re -hide_banner -y -hwaccel auto -vsync 0 -stream_loop -1 -i '.$stream->vid_stream.'?fifo_size=1000000 '.$cmd.' </dev/null >/dev/null 2>/var/log/ffmpeg-'. $stream->id .'.log &');
-
-        $process = new JobProcess();
-        $process->pid = $pid;
-        $process->name = $channel->name;
-        $process->stream = $stream->vid_stream;
-        $process->log =' var/log/ffmpeg-'. $stream->id .'.log';
-        $process->command = 'catchup';        
-        $process->save();
+        dispatch(new CatchUp($channel));
         return 200;   
     }
 }
