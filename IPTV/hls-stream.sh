@@ -27,7 +27,7 @@ static_params+=" -hls_list_size $segment_list_size"
 static_params+=" -hls_flags delete_segments"
 
 # misc params
-misc_params="-re -hide_banner -y -hwaccel auto -stream_loop -1"
+misc_params="-re -hide_banner -y -hwaccel auto -vsync 0 -stream_loop -1"
 cmd+=" -codec copy -map 0:v -map 0:a ${static_params}"
 cmd+=" -hls_segment_filename ${parent_dir}/${target}/${target}_%03d.ts ${parent_dir}/${target}/master.m3u8"
 
