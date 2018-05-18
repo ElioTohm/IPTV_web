@@ -11,7 +11,7 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Illuminate\Support\Facades\Storage;
 use App\Stream;
-use App\Process;
+use App\JobProcess;
 
 class CatchUp implements ShouldQueue
 {
@@ -44,7 +44,7 @@ class CatchUp implements ShouldQueue
         $executable = 'bash ' . $exec_file . ' ' . $stream->vid_stream .  '?fifo_size=1000000 ' . $stream->id . ' '. intdiv(env('DURATION_CATCHUP'), 60). ' '. env('HOME_ENV_PATH').'/storage/app/public/store/streams';
         $pid = exec($executable);
 
-        $process = new Process();
+        $process = new JobProcess();
         $process->pid = $pid;
         $process->name = $this->CHANNEL->name;
         $process->stream = $stream->vid_stream;
