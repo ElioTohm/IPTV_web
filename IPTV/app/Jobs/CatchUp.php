@@ -45,7 +45,7 @@ class CatchUp implements ShouldQueue
         $path = env('HOME_ENV_PATH').'/storage/app/public/store/streams';
         $cmd = " -codec copy -map 0:v -map 0:a  -hls_time 10 -hls_list_size 6 -hls_flags delete_segments -hls_segment_filename $path/$stream->id/$stream->id_%03d.ts $path/$stream->id/master.m3u8";
         exec('nohup /home/user/bin/ffmpeg -re -hide_banner -y -hwaccel auto -vsync 0 -stream_loop -1 -i '.$stream->vid_stream.'?fifo_size=1000000 '.$cmd.' </dev/null >/dev/null 2>/var/log/ffmpeg-'. $stream->id .'.log  & echo $!', $op);
-
+        
         $process = new JobProcess();
         $process->pid = $op[0];
         $process->name = $this->CHANNEL->name;
