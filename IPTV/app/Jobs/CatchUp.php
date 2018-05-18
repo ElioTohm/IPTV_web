@@ -47,7 +47,7 @@ class CatchUp implements ShouldQueue
         exec('nohup /home/user/bin/ffmpeg -re -hide_banner -y -hwaccel auto -vsync 0 -stream_loop -1 -i '.$stream->vid_stream.'?fifo_size=1000000 '.$cmd.' </dev/null >/dev/null 2>/var/log/ffmpeg-'. $stream->id .'.log &', $pid);
 
         $process = new JobProcess();
-        $process->pid = (int)$op[0];
+        $process->pid = (int)$pid[0];
         $process->name = $this->CHANNEL->name;
         $process->stream = $stream->vid_stream;
         $process->log =' var/log/ffmpeg-'. $stream->id .'.log';
