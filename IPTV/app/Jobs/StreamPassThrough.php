@@ -7,6 +7,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Storage;
+use App\Stream;
+use App\JobProcess;
+
 
 class StreamPassThrough implements ShouldQueue
 {
@@ -37,7 +41,7 @@ class StreamPassThrough implements ShouldQueue
 
         // create dir for stream
         $path = env('HOME_ENV_PATH').'/storage/app/public/store/streams';
-        Storage::disk('catchup')::makeDirectory($stream->id);
+        Storage::disk('catchup')::makeDirectory('passthrough/' . $stream->id);
         
         // ffmpeg parameters for command
         $hls_time = 10;
