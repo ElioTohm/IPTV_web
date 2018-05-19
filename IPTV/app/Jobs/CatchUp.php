@@ -42,7 +42,7 @@ class CatchUp implements ShouldQueue
 
         // create dir for stream
         $path = env('HOME_ENV_PATH').'/storage/app/public/store/streams';
-        Storage::makeDirectory('app/public/store/streams' . $stream->id);
+        Storage::makeDirectory('/storage/app/public/store/streams' . $stream->id);
         
         // ffmpeg parameters for command
         $hls_time = 10;
