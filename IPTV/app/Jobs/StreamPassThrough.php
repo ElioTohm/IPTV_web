@@ -41,7 +41,7 @@ class StreamPassThrough implements ShouldQueue
 
         // create dir for stream
         $path = env('HOME_ENV_PATH').'/storage/app/public/store/streams';
-        Storage::disk('catchup')::makeDirectory('passthrough/' . $stream->id);
+        Storage::makeDirectory($path . $stream->id);
         
         // ffmpeg parameters for command
         $hls_time = 10;
