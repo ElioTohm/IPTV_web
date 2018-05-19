@@ -59,7 +59,7 @@ class CatchUp implements ShouldQueue
         $process->pid = $op[0];
         $process->name = $this->CHANNEL->name;
         $process->stream = $stream->vid_stream;
-        $process->log =' var/log/ffmpeg-'. $stream->id .'.log';
+        $process->log ='/var/log/ffmpeg-'. $stream->id .'.log';
         $process->command = 'catchup';        
         $process->save();
     }
