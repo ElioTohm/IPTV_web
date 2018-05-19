@@ -51,11 +51,11 @@ class StreamPassThrough implements ShouldQueue
         $cmd = " -codec copy -map 0:v -map 0:a -hls_allow_cache 0  -hls_time 1 -hls_list_size 5 -hls_flags delete_segments -hls_segment_filename $path/$stream->id/$stream->id_%03d.ts $path/$stream->id/master.m3u8";
 
         // execute command as no hop and add echo $! to get pid of process
-        exec("nohup /home/user/bin/ffmpeg $header_cmd  -i $stream->vid_stream?fifo_size=1000000 $cmd  $tail_cmd", $op);
+        $pid = exec("nohup /home/user/bin/ffmpeg $header_cmd  -i $stream->vid_stream?fifo_size=1000000 $cmd");
         
         // save information of the process
         $process = new JobProcess();
-        $process->pid = $op[0];
+        $process->pid = $pid;
         $process->name = $this->CHANNEL->name;
         $process->stream = $stream->vid_stream;
         $process->log =' var/log/ffmpeg-'. $stream->id .'.log';
