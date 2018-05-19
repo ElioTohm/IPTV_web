@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Jobs\CatchUp;
+use App\Jobs\StreamPassThrough;
 use App\Channel;
 use App\Genre;
 use App\StreamType;
@@ -111,10 +112,19 @@ class ChannelController extends Controller
         $channel->delete();
     }
 
+    // Convert UDP to hls and save up to 24h 
     public function catchup ($channel_id) 
     {
         $channel = Channel::with('stream')->find($channel_id);
         dispatch(new CatchUp($channel));
         return 200;   
+    }
+
+    // convert UDP to hls save nothing 
+    public function channelPathThrough($channel_id) 
+    {
+        $channel = Channel::with('stream')->find($channel_id);
+        dispatch(new StreamPassThrough($channel));
+        return 200; 
     }
 }

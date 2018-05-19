@@ -4,6 +4,7 @@
       <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
       <button v-if="rowData.stream.catchup" class="btn btn-sm btn-primary" @click="itemAction('catchup', rowData, rowIndex)"><i class="glyphicon glyphicon-record"></i></button>
       <button v-else class="btn btn-sm" @click="itemAction('catchup', rowData, rowIndex)"><i class="glyphicon glyphicon-record"></i></button>
+      <button class="btn btn-sm" @click="itemAction('passthrough', rowData, rowIndex)"><i class="glyphicon glyphicon-hdd"></i></button>
     </div>
   </template>
 
@@ -59,11 +60,17 @@
                 }
               }})
         } else if (action == 'catchup') {
-          // this.$parent.persistItem(get, '/catchup/' + data.id, null)
-          self = this
           axios.get('/catchup/' + data.id)
           .then(response => {
-            self.$parent.refresh()
+            this.$parent.refresh()
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        } else if (action == 'passthrough') {
+          axios.get('/channelpassthrough/' + data.id)
+          .then(response => {
+            this.$parent.refresh()
           })
           .catch(error => {
             console.log(error);

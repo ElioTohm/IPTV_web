@@ -91,5 +91,5 @@ Route::middleware(['auth'])->group(function () {
      *  Job Routes 
      */
     Route::get('/catchup/{channel_id}', 'ChannelController@catchup');
-    
+    Route::get('/channelpassthrough/{channel_id}', 'ChannelController@channelPathThrough') ;
 });
