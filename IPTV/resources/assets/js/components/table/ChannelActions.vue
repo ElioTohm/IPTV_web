@@ -62,7 +62,7 @@
         } else if (action == 'catchup') {
           axios.get('/catchup/' + data.id)
           .then(response => {
-            this.$parent.refresh()
+            this.$parent.reload()
           })
           .catch(error => {
             console.log(error);
@@ -70,7 +70,7 @@
         } else if (action == 'passthrough') {
           axios.get('/channelpassthrough/' + data.id)
           .then(response => {
-            this.$parent.refresh()
+            this.$parent.reload()
           })
           .catch(error => {
             console.log(error);
