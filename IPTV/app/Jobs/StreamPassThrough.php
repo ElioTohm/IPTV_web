@@ -48,10 +48,10 @@ class StreamPassThrough implements ShouldQueue
         $hls_list_size = 5;
         $header_cmd = '-re -hide_banner -y -hwaccel auto -stream_loop -1';
         $tail_cmd = "</dev/null >/dev/null 2>". env('HOME_ENV_PATH') ."/storage/logs/ffmpeg-$stream->id.log & echo $!";
-        $cmd = " -codec copy -ignore_unknown -map 0:v -map 0:a -hls_allow_cache 0  -hls_list_size $hls_list_size -hls_list_size $hls_list_size -hls_flags delete_segments -hls_segment_filename $path/$stream->id/$stream->id_%03d.ts $path/$stream->id/master.m3u8";
+        $cmd = " -codec copy -map 0:v -map 0:a -ignore_unknown -hls_allow_cache 0  -hls_list_size $hls_list_size -hls_list_size $hls_list_size -hls_flags delete_segments -hls_segment_filename $path/$stream->id/$stream->id_%03d.ts $path/$stream->id/master.m3u8";
 
         // execute command as no hop and add echo $! to get pid of process
-        exec("nohup /home/".env('USER')."/bin/ffmpeg $header_cmd  -i \"$stream->vid_stream?overrun_nonfatal=1&fifo_size=100000\" $cmd  $tail_cmd", $op);
+        exec("/home/".env('USER')."/bin/ffmpeg $header_cmd  -i \"$stream->vid_stream?overrun_nonfatal=1&fifo_size=100000\" $cmd  $tail_cmd", $op);
         
         // save information of the process
         $process = new JobProcess();
