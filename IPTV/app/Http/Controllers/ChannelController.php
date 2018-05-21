@@ -59,28 +59,30 @@ class ChannelController extends Controller
 
     public function addChannel (ChannelRequest $request) 
     {        
-        // create channel object
-        $channel = new Channel();
-        $channel->number = $request->input('number');
-        $channel->name = $request->input('name');
-        $channel->price = $request->input('price');
-        $channel->thumbnail = $request->input('thumbnail');
-        $channel->save();
+        if (Channel::all()->count() == env('CHANNEL_LIMIT')) {
+            // create channel object
+            $channel = new Channel();
+            $channel->number = $request->input('number');
+            $channel->name = $request->input('name');
+            $channel->price = $request->input('price');
+            $channel->thumbnail = $request->input('thumbnail');
+            $channel->save();
 
-        $genres = array();
-        foreach ($request->input('genres') as $value) {
-            array_push($genres, $value['id']);
+            $genres = array();
+            foreach ($request->input('genres') as $value) {
+                array_push($genres, $value['id']);
+            }
+            $channel->genres()->sync($genres);
+
+            // create stream object
+            $stream = new Stream();
+            $stream->vid_stream = $request->input('stream');
+            $stream->type = $request->input('stream_type.id');
+            $stream->channel = $channel->number;
+            $stream->save();
+
+            return $channel;
         }
-        $channel->genres()->sync($genres);
-
-        // create stream object
-        $stream = new Stream();
-        $stream->vid_stream = $request->input('stream');
-        $stream->type = $request->input('stream_type.id');
-        $stream->channel = $channel->number;
-        $stream->save();
-
-        return $channel;
     }
 
     public function updateChannel ($id, ChannelRequest $request) 
