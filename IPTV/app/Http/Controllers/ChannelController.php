@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Jobs\CatchUp;
-use App\Jobs\StreamPassThrough;
+use App\Jobs\HandleJobProcess;
 use App\Channel;
 use App\Genre;
 use App\StreamType;
@@ -13,6 +13,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Requests\ChannelRequest;
 use Illuminate\Support\Facades\Storage;
 use App\JobProcess;
+
 
 class ChannelController extends Controller
 {
@@ -127,13 +128,10 @@ class ChannelController extends Controller
     public function setOriginalStream ($channel_id) 
     {
         $channel = Channel::with('stream')->find($channel_id);
-        // dispatch(new CatchUp($channel, $catchup_time));
         $stream = Stream::find($channel->stream->id);
         $stream->catchup = false;
         $stream->save();
-        $jobprocess = JobProcess::where('name', $channel->name)->first();
-        exec("kill -9 $jobprocess->pid");  
-        $jobprocess->delete();
+        dispatch(new HandleJobProcess($channel));
         return 200;   
     }
 }
