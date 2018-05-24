@@ -132,7 +132,7 @@ class ChannelController extends Controller
         $stream->catchup = false;
         $stream->save();
         $jobprocess = JobProcess::where('name', $channel->name)->first();
-        exec("kill $jobprocess->pid");  
+        exec("kill -9 $jobprocess->pid");  
         $jobprocess->delete();
         return 200;   
     }
