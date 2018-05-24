@@ -51,7 +51,7 @@ class CatchUp implements ShouldQueue
         $hls_list_size = $this->CATCHUP_TIME/10;
         $header_cmd = '-re -hide_banner -y -hwaccel auto -stream_loop -1';
         $tail_cmd = "</dev/null >/dev/null 2>". env('HOME_ENV_PATH') ."/storage/logs/ffmpeg-$stream->id.log & echo $!";
-        $map = " -ignore_unknown -codec copy -map 0:v -map 0:a "
+        $map = " -ignore_unknown -codec copy -map 0:v -map 0:a ";
         $output = "-hls_time $hls_time -hls_list_size $hls_list_size -hls_flags delete_segments -hls_segment_filename $path/$stream->id/$stream->id_%03d.ts $path/$stream->id/master.m3u8";
 
         // execute command as no hop and add echo $! to get pid of process
