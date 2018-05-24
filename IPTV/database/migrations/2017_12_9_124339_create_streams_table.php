@@ -24,6 +24,7 @@ class CreateStreamsTable extends Migration
             $table->string('vid_stream');
             $table->string('sub_stream')->nullable();
             $table->boolean('catchup')->default(false);
+            $table->integer('catchup_time')->default('75600');
             $table->integer('channel')->unsigned()->nullable();
             $table->foreign('channel')->references('number')->on('channels')
                   ->onDelete('cascade')
