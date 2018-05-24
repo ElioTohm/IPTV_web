@@ -40,6 +40,7 @@ class CatchUp implements ShouldQueue
     {
         $stream = Stream::find($this->CHANNEL->stream->id);
         $stream->catchup = true;
+        $stream->catchup_time = $this->CATCHUP_TIME;
         $stream->save();
 
         // create dir for stream
