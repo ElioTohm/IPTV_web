@@ -1,0 +1,36 @@
+version: '3'
+
+### MailDev ##############################################
+maildev:
+  build: ./maildev
+  ports:
+    - "${MAILDEV_HTTP_PORT}:80"
+    - "${MAILDEV_SMTP_PORT}:25"
+  networks:
+    - frontend
+    - backend
+
+### SocketIO#############################################
+nginx:
+  restart: always 
+  build: ./cluster-nginx/nginx
+  links:
+    - socket-1
+  ports:
+   - "3000:80"
+
+socket-1:
+  restart: always 
+  build: ./cluster-nginx/server
+  links:
+    - redis
+  expose:
+    - "3000"
+  environment:
+    - NAME=socket-1
+
+redis:
+  restart: always 
+  image: redis:alpine
+  expose:
+    - "6379"
