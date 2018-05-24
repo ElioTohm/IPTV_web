@@ -2,16 +2,16 @@
     <div class="custom-actions">
       <button class="btn btn-sm" @click="itemAction('edit', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
       <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
-      <button v-if="rowData.stream.catchup && rowData.stream.catchup_time == 75600" class="btn btn-sm btn-primary" @click="catchup(rowData, 75600)">
+      <button v-if="rowData.stream.catchup && rowData.stream.catchup_time == 75600" class="btn btn-sm btn-primary">
         <i class="glyphicon glyphicon-record"></i>
       </button>
-      <button v-else class="btn btn-sm" @click="itemAction('catchup', rowData, rowIndex)">
+      <button v-else class="btn btn-sm" @click="catchup(rowData, 75600)">
         <i class="glyphicon glyphicon-record">
       </i></button>
-      <button v-if="rowData.stream.catchup && rowData.stream.catchup_time < 75600" class="btn btn-sm btn-primary" @click="catchup(rowData, 600)">
+      <button v-if="rowData.stream.catchup && rowData.stream.catchup_time < 75600" class="btn btn-sm btn-primary">
         <i class="glyphicon glyphicon-hdd"></i>
       </button>
-      <button v-else class="btn btn-sm" @click="itemAction('catchup', rowData, rowIndex)">
+      <button v-else class="btn btn-sm" @click="catchup(rowData, 600)">
         <i class="glyphicon glyphicon-hdd"></i>
       </button>
     </div>

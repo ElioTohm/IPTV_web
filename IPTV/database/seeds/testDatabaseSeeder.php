@@ -209,11 +209,6 @@ class testDatabaseSeeder extends Seeder
                 'name' => 'OTV',
                 'number' => 8,
                 'thumbnail' => 'otv.png'
-            ],
-            [
-                'name' => 'LBCI Ott',
-                'number' => 9,
-                'thumbnail' => 'LBCI.jpg'
             ]
         ]);
 
@@ -281,11 +276,6 @@ class testDatabaseSeeder extends Seeder
                 'vid_stream' => 'udp://@224.1.1.26:1234',
                 'type' => 1,
                 'channel' => 8
-            ],
-            [
-                'vid_stream' => 'http://192.168.0.102:8080/LBCI/index.m3u8',
-                'type' => 2,
-                'channel' => 9
             ]
         ]);
 
