@@ -59,7 +59,7 @@ class ChannelController extends Controller
 
     public function addChannel (ChannelRequest $request) 
     {        
-        if (Channel::all()->count() == env('CHANNEL_LIMIT')) {
+        if (Channel::all()->count() <= env('CHANNEL_LIMIT')) {
             // create channel object
             $channel = new Channel();
             $channel->number = $request->input('number');
@@ -115,18 +115,10 @@ class ChannelController extends Controller
     }
 
     // Convert UDP to hls and save up to 24h 
-    public function catchup ($channel_id) 
+    public function StreamToHLSconvert ($channel_id, $catchup_time) 
     {
         $channel = Channel::with('stream')->find($channel_id);
-        dispatch(new CatchUp($channel));
+        dispatch(new CatchUp($channel, $catchup_time));
         return 200;   
-    }
-
-    // convert UDP to hls save nothing 
-    public function channelPathThrough($channel_id) 
-    {
-        $channel = Channel::with('stream')->find($channel_id);
-        dispatch(new StreamPassThrough($channel));
-        return 200; 
     }
 }

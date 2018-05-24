@@ -18,15 +18,17 @@ class CatchUp implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     
     protected $CHANNEL;
+    protected $CATCHUP_TIME;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($channel)
+    public function __construct($channel, $catchup_time)
     {
         $this->CHANNEL = $channel;
+        $this->CATCHUP_TIME = $catchup_time;
     }
 
     /**
@@ -46,7 +48,7 @@ class CatchUp implements ShouldQueue
         
         // ffmpeg parameters for command
         $hls_time = 10;
-        $hls_list_size = 6;
+        $hls_list_size = $this->CATCHUP_TIME/10;
         $header_cmd = '-re -hide_banner -y -hwaccel auto -stream_loop -1';
         $tail_cmd = "</dev/null >/dev/null 2>". env('HOME_ENV_PATH') ."/storage/logs/ffmpeg-$stream->id.log & echo $!";
         $map = " -ignore_unknown -codec copy -map 0:v -map 0:a "
@@ -66,3 +68,5 @@ class CatchUp implements ShouldQueue
     }
 
 }
+
+ffmpeg -stream_loop -1 -i "udp://@224.1.10.14:1234?overrun_nonfatal=1&fifo_size=200000" -ignore_unknown -codec copy -map 0:v -map 0:a -hls_time 10 -hls_list_size 10 -hls_flags delete_segments -hls_segment_filename /tmp/1_%03d.ts /tmp/master.m3u8

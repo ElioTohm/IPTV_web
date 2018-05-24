@@ -47,6 +47,7 @@
                                     <li>
                                         <router-link to="/adminindex">App</router-link>
                                         <router-link to="/deviceindex">Devices</router-link>
+                                        <router-link to="/sectionsindex">Device Menu</router-link>
                                     </li>
                                 </ul>
                             </li>
@@ -60,7 +61,6 @@
                                     <li>
                                         <router-link to="/channelindex">Channels</router-link>
                                         <router-link to="/hotelclientindex">Clients</router-link>
-                                        <router-link to="/sectionsindex">Section</router-link>
                                     </li>
                                 </ul>
                             </li>

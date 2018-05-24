@@ -2,9 +2,18 @@
     <div class="custom-actions">
       <button class="btn btn-sm" @click="itemAction('edit', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
       <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
-      <button v-if="rowData.stream.catchup" class="btn btn-sm btn-primary" @click="itemAction('catchup', rowData, rowIndex)"><i class="glyphicon glyphicon-record"></i></button>
-      <button v-else class="btn btn-sm" @click="itemAction('catchup', rowData, rowIndex)"><i class="glyphicon glyphicon-record"></i></button>
-      <button class="btn btn-sm" @click="itemAction('passthrough', rowData, rowIndex)"><i class="glyphicon glyphicon-hdd"></i></button>
+      <button v-if="rowData.stream.catchup && rowData.stream.catchup_time == 75600" class="btn btn-sm btn-primary" @click="catchup(rowData, 75600)">
+        <i class="glyphicon glyphicon-record"></i>
+      </button>
+      <button v-else class="btn btn-sm" @click="itemAction('catchup', rowData, rowIndex)">
+        <i class="glyphicon glyphicon-record">
+      </i></button>
+      <button v-if="rowData.stream.catchup && rowData.stream.catchup_time < 75600" class="btn btn-sm btn-primary" @click="catchup(rowData, 600)">
+        <i class="glyphicon glyphicon-hdd"></i>
+      </button>
+      <button v-else class="btn btn-sm" @click="itemAction('catchup', rowData, rowIndex)">
+        <i class="glyphicon glyphicon-hdd"></i>
+      </button>
     </div>
   </template>
 
@@ -20,6 +29,15 @@
       }
     },
     methods: {
+       catchup (data, time) {
+        axios.get('/catchup/' + data.id + '/' + time)
+          .then(response => {
+            this.$parent.reload()
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      },
       itemAction (action, data, index) {
         if (action == 'delete') {
           this.$toasted.show("Delete " + data.name + " ?", { 
@@ -59,22 +77,6 @@
                   price: data.price
                 }
               }})
-        } else if (action == 'catchup') {
-          axios.get('/catchup/' + data.id)
-          .then(response => {
-            this.$parent.reload()
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        } else if (action == 'passthrough') {
-          axios.get('/channelpassthrough/' + data.id)
-          .then(response => {
-            this.$parent.reload()
-          })
-          .catch(error => {
-            console.log(error);
-          });
         }
       }
     }
