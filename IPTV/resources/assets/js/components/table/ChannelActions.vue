@@ -3,16 +3,22 @@
       <button class="btn btn-sm" @click="itemAction('edit', rowData, rowIndex)"><i class="glyphicon glyphicon-pencil"></i></button>
       <button class="btn btn-sm" @click="itemAction('delete', rowData, rowIndex)"><i class="glyphicon glyphicon-trash"></i></button>
       <button v-if="rowData.stream.catchup && rowData.stream.catchup_time == 75600" class="btn btn-sm btn-primary">
-        <i class="glyphicon glyphicon-record"></i>
+        Catchup <i class="glyphicon glyphicon-record"></i>
       </button>
       <button v-else class="btn btn-sm" @click="catchup(rowData, 75600)">
-        <i class="glyphicon glyphicon-record">
+        Catchup <i class="glyphicon glyphicon-record">
       </i></button>
       <button v-if="rowData.stream.catchup && rowData.stream.catchup_time < 75600" class="btn btn-sm btn-primary">
-        <i class="glyphicon glyphicon-hdd"></i>
+        PassThrough <i class="glyphicon glyphicon-hdd"></i>
       </button>
       <button v-else class="btn btn-sm" @click="catchup(rowData, 600)">
-        <i class="glyphicon glyphicon-hdd"></i>
+        PassThrough <i class="glyphicon glyphicon-hdd"></i>
+      </button>
+      <button v-if="!rowData.stream.catchup" class="btn btn-sm btn-primary" @click="catchup(rowData, 600)">
+        Original <i class="ionicons ion-network"></i>
+      </button>
+      <button v-else class="btn btn-sm" @click="disableCatchup(rowData)">
+        Original <i class="ionicons ion-network"></i>
       </button>
     </div>
   </template>
@@ -31,6 +37,15 @@
     methods: {
        catchup (data, time) {
         axios.get('/catchup/' + data.id + '/' + time)
+          .then(response => {
+            this.$parent.reload()
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      },
+      disableCatchup (data) {
+        axios.get('/disablecatchup/' + data.id)
           .then(response => {
             this.$parent.reload()
           })

@@ -91,4 +91,5 @@ Route::middleware(['auth'])->group(function () {
      *  Job Routes 
      */
     Route::get('/catchup/{channel_id}/{catchup_time}', 'ChannelController@StreamToHLSconvert');
+    Route::get('/disablecatchup/{channel_id}', 'ChannelController@setOriginalStream');
 });

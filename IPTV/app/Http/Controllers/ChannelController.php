@@ -12,6 +12,7 @@ use App\Stream;
 use Intervention\Image\ImageManagerStatic as Image;
 use App\Http\Requests\ChannelRequest;
 use Illuminate\Support\Facades\Storage;
+use App\JobProcess;
 
 class ChannelController extends Controller
 {
@@ -119,6 +120,20 @@ class ChannelController extends Controller
     {
         $channel = Channel::with('stream')->find($channel_id);
         dispatch(new CatchUp($channel, $catchup_time));
+        return 200;   
+    }
+
+    // Convert UDP to hls and save up to 24h 
+    public function setOriginalStream ($channel_id) 
+    {
+        $channel = Channel::with('stream')->find($channel_id);
+        // dispatch(new CatchUp($channel, $catchup_time));
+        $stream = Stream::find($channel->stream->id);
+        $stream->catchup = false;
+        $stream->save();
+        $jobprocess = JobProcess::where('name', $channel->name)->first();
+        exec("kill $jobprocess->pid");  
+        $jobprocess->delete();
         return 200;   
     }
 }
