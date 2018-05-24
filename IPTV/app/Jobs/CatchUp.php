@@ -68,5 +68,3 @@ class CatchUp implements ShouldQueue
     }
 
 }
-
-ffmpeg -stream_loop -1 -i "udp://@224.1.10.14:1234?overrun_nonfatal=1&fifo_size=200000" -ignore_unknown -codec copy -map 0:v -map 0:a -hls_time 10 -hls_list_size 10 -hls_flags delete_segments -hls_segment_filename /tmp/1_%03d.ts /tmp/master.m3u8
