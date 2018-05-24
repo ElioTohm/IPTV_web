@@ -5,7 +5,7 @@ maildev:
   ports:
     - "${MAILDEV_HTTP_PORT}:80"
     - "${MAILDEV_SMTP_PORT}:25"
-    restart: always
+  restart: always
 
 ### SocketIO#############################################
 nginx:
