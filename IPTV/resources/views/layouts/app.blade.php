@@ -37,7 +37,7 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
                         @if (!Auth::guest())
-                            @if (Auth::user()->role == 1)
+                            @if (Auth::user()->role < 3)
                                 <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Admin<span class="caret"></span>
@@ -47,7 +47,9 @@
                                     <li>
                                         <router-link to="/adminindex">App</router-link>
                                         <router-link to="/deviceindex">Devices</router-link>
+                                        @if (Auth::user()->role == 1)
                                         <router-link to="/sectionsindex">Device Menu</router-link>
+                                        @endif
                                     </li>
                                 </ul>
                             </li>
