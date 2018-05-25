@@ -35,7 +35,7 @@ class HandleJobProcess implements ShouldQueue
         $jobprocess = JobProcess::where('name', $this->CHANNEL->name)->first();
         exec("kill -15 $jobprocess->pid");  
         $path = env('HOME_ENV_PATH').'/storage/app/public/store/streams';
-        Storage::deleteDirectory("/public/store/streams/". $this->CHANNEL->stream->id));
+        Storage::deleteDirectory("/public/store/streams/". $this->CHANNEL->stream->id);
         $jobprocess->delete();
     }
 }
