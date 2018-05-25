@@ -61,30 +61,28 @@ class ChannelController extends Controller
 
     public function addChannel (ChannelRequest $request) 
     {        
-        if (Channel::all()->count() <= env('CHANNEL_LIMIT')) {
-            // create channel object
-            $channel = new Channel();
-            $channel->number = $request->input('number');
-            $channel->name = $request->input('name');
-            $channel->price = $request->input('price');
-            $channel->thumbnail = $request->input('thumbnail');
-            $channel->save();
+        // create channel object
+        $channel = new Channel();
+        $channel->number = $request->input('number');
+        $channel->name = $request->input('name');
+        $channel->price = $request->input('price');
+        $channel->thumbnail = $request->input('thumbnail');
+        $channel->save();
 
-            $genres = array();
-            foreach ($request->input('genres') as $value) {
-                array_push($genres, $value['id']);
-            }
-            $channel->genres()->sync($genres);
-
-            // create stream object
-            $stream = new Stream();
-            $stream->vid_stream = $request->input('stream');
-            $stream->type = $request->input('stream_type.id');
-            $stream->channel = $channel->number;
-            $stream->save();
-
-            return $channel;
+        $genres = array();
+        foreach ($request->input('genres') as $value) {
+            array_push($genres, $value['id']);
         }
+        $channel->genres()->sync($genres);
+
+        // create stream object
+        $stream = new Stream();
+        $stream->vid_stream = $request->input('stream');
+        $stream->type = $request->input('stream_type.id');
+        $stream->channel = $channel->number;
+        $stream->save();
+
+        return $channel;
     }
 
     public function updateChannel ($id, ChannelRequest $request) 
@@ -119,9 +117,11 @@ class ChannelController extends Controller
     // Convert UDP to hls and save up to 24h 
     public function StreamToHLSconvert ($channel_id, $catchup_time) 
     {
-        $channel = Channel::with('stream')->find($channel_id);
-        dispatch(new CatchUp($channel, $catchup_time));
-        return 200;   
+        if (Channel::all()->count() <= env('CHANNEL_LIMIT')) {
+            $channel = Channel::with('stream')->find($channel_id);
+            dispatch(new CatchUp($channel, $catchup_time));
+            return 200;   
+        }
     }
 
     // Convert UDP to hls and save up to 24h 
