@@ -38,7 +38,7 @@
        catchup (data, time) {
         axios.get('/catchup/' + data.id + '/' + time)
           .then(response => {
-            this.$parent.reload()
+            setTimeout(() => this.$parent.reload(), 2000);
           })
           .catch(error => {
             console.log(error);
@@ -47,7 +47,7 @@
       disableCatchup (data) {
         axios.get('/disablecatchup/' + data.id)
           .then(response => {
-            this.$parent.reload()
+            setTimeout(() => this.$parent.reload(), 2000);
           })
           .catch(error => {
             console.log(error);
