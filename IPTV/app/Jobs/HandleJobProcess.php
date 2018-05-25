@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\JobProcess;
-use App\JobProcess;
+use Illuminate\Support\Facades\Storage;
 
 class HandleJobProcess implements ShouldQueue
 {
