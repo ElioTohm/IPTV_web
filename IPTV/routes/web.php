@@ -2,6 +2,8 @@
 
 use App\Notifications\DeviceNotification;
 use App\User;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +22,21 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    
+    Route::get('/changepassword', function () {
+        return view("auth.passwords.reset");
+    });
+
+    Route::post('/resetpass', function (Request $request) {
+        $user_id = Auth::user()->id;
+        $obj_user = User::find($user_id);
+        if ($request['password_confirmation'] == $request['password']) {
+            $obj_user->password = Hash::make($request['password_confirmation']);
+            $obj_user->save(); 
+            return redirect('hotelclientindex');
+        }
+    });
+    
     Route::get('/{vue_capture?}', function () {
         return response()->view('home');
     })->where('vue_capture', '\w*index\b');

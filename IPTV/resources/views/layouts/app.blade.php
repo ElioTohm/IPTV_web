@@ -102,6 +102,9 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <li>
+                                        <a href="/changepassword">Change Password</a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif
