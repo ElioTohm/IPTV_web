@@ -44,7 +44,7 @@ class VodController extends Controller
 
         $pagination->getCollection()->transform(function ($movie) {
             $url = explode('/',$movie->poster);
-            $movie->poster = Storage::disk('public')->url('movies/images/' . $url[ sizeof($url) - 1]);
+            $movie->poster = Storage::disk('vod')->url('images/' . $url[ sizeof($url) - 1]);
             return $movie;
         });
 

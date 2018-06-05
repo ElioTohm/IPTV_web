@@ -58,6 +58,10 @@ Route::middleware(['auth'])->group(function () {
             ->middleware('check_admin');
     Route::post('/admin/launcherapp', 'AdminController@updateLauncherApp')
             ->middleware('check_admin');
+    Route::get('/admin/storages', 'AdminController@getStorages');
+    Route::post('/admin/storages', 'AdminController@addStorage');
+    Route::put('/admin/storages/{id}', 'AdminController@updateStorage');
+    Route::delete('/admin/storages/{id}', 'AdminController@removeStorage');
 
     /**
      * Channels controller and view

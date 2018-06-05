@@ -94,12 +94,12 @@ class ApiController extends Controller
             ->get()
             ->transform(function ($channel) {
                 if ($channel->stream->catchup) {
-                    $channel->stream->vid_stream = Storage::disk('catchup')->url('streams/'.$channel->stream->id.'/master.m3u8');
+                    $channel->stream->vid_stream = Storage::disk('catchup_api')->url('streams/'.$channel->stream->id.'/master.m3u8');
                     $channel->stream->type = 2;
                 }
 
                 $url = explode('/',$channel->thumbnail);
-                $channel->thumbnail = Storage::disk('public_api')->url('channels/images/' . $url[sizeof($url) - 1]);
+                $channel->thumbnail = Storage::disk('catchup_api')->url('channels/images/' . $url[sizeof($url) - 1]);
                 return $channel;
             });
         return $channels;
@@ -112,11 +112,11 @@ class ApiController extends Controller
             ->get()
             ->transform(function ($movie) {
                 if ($movie->stream->channel == NULL) {
-                    $movie->stream->vid_stream = Storage::disk('vod')->url('movies/'.$movie->stream->vid_stream);
+                    $movie->stream->vid_stream = Storage::disk('vod_api')->url(.$movie->stream->vid_stream);
                 }
                 
                 $url = explode('/',$movie->poster);
-                $movie->poster = Storage::disk('public_api')->url('movies/images/' . $url[ sizeof($url) - 1]);
+                $movie->poster = Storage::disk('vod_api')->url('images/' . $url[ sizeof($url) - 1]);
                 return $movie;
             });
         return response()->json($movies);

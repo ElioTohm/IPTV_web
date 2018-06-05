@@ -7,6 +7,7 @@ const devices = (resolve) => require(['./components/devices.vue'], resolve)
 const androidapp = (resolve) => require(['./components/androidapp.vue'], resolve)
 const movies = (resolve)  => require(['./components/movies.vue'], resolve)
 const sections = (resolve) => require(['./components/sections.vue'], resolve)
+const storage = (resolve) => require(['./components/storage.vue'], resolve)
 
 export default new VueRouter({
     mode: 'history',
@@ -18,5 +19,6 @@ export default new VueRouter({
 		{ path: '/movieindex', component: movies},
 		{ path: '/adminindex', component: androidapp},
 		{ path: '/sectionsindex', component: sections},
+		{ path: '/storageindex', component: storage},
 	]
 });

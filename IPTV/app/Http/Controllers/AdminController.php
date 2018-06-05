@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Channel;
 use App\AppSettings;
+use App\WebStorage;
 use App\Http\Requests\AndroidAppRequest;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -41,23 +41,46 @@ class AdminController extends Controller
         ]);
     }
 
-    public function runTimeShift (Request $request) 
+    public function getStorages () 
     {
-        $channel = Channel::with('stream')->find($request->input('channel_id'));
-        
-        $exec = sprintf("ffmpeg -re -hide_banner 
-                        -i \"%s?fifo_size=50000\" 
-                        -codec copy 
-                        -map 0 
-                        -hls_time 10 
-                        -hls_list_size 3 
-                        -hls_flags delete_segments 
-                        -hls_segment_filename /var/www/storage/app/public/streams/%s/%s_%%03d.ts 
-                        /var/www/storage/app/public/streams/%s/master.m3u8", 
-                        $channel->stream->vid_stream,
-                        $channel->name,
-                        $channel->name,
-                        $channel->name);
+        return WebStorage::all();
+    }
+
+    public function addStorage (Request $request) 
+    {
+        $storage = new WebStorage ();
+        $storage->server_url = $request->input('server_url');
+        $storage->server_dir = $request->input('server_dir');
+        $storage->local_dir = $request->input('local_dir');
+        // $this->mountNFSStorage($storage);
+        $storage->save();
+        return 200;
+    }
+
+    public function updateStorage (Request $request) 
+    {
+        $storage = WebStorage::find($request->input('id'));
+        $storage->server_url = $request->input('server_url');
+        $storage->server_dir = $request->input('server_dir');
+        $storage->local_dir = $request->input('local_dir');
+        // $this->mountNFSStorage($storage);
+        $storage->save();
+    }
+
+    public function removeStorage ($id)
+    {
+        $storage = WebStorage::find($id);
+        $storage->delete();
+        return 200;
+    }
+
+    // mount storage
+    private function mountNFSStorage (Storage $storage) 
+    {
+        $exec = sprintf("mount -F nfs %s:/%s /%s", 
+                        $storage->server_name,
+                        $storage->server_dir,
+                        $storage->local_dir);
 
         $process = new Process($exec);
         $process->run();
@@ -69,5 +92,5 @@ class AdminController extends Controller
 
         return $process->getErrorOutput();
     }
-
+    
 }
