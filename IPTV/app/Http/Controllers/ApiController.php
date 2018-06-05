@@ -112,7 +112,7 @@ class ApiController extends Controller
             ->get()
             ->transform(function ($movie) {
                 if ($movie->stream->channel == NULL) {
-                    $movie->stream->vid_stream = Storage::disk('vod_api')->url(.$movie->stream->vid_stream);
+                    $movie->stream->vid_stream = Storage::disk('vod_api')->url($movie->stream->vid_stream);
                 }
                 
                 $url = explode('/',$movie->poster);
