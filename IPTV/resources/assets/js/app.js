@@ -25,13 +25,15 @@ Vue.use(VueRouter)
 
 // always load XmsPlayer
 import MonitorComponent from './components/monitor.vue'
+import Messaging from './components/messaging.vue'
 
 // Create and mount root instance.
 // Make sure to inject the router.
 // Route components will be rendered inside <router-view>.
 new Vue({
   components: {
-    "monitor": MonitorComponent
+    "monitor": MonitorComponent,
+    "messaging" : Messaging
   },
   router,
 }).$mount('#app')

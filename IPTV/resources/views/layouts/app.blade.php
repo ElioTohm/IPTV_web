@@ -49,6 +49,7 @@
                                         <router-link to="/deviceindex">Devices</router-link>
                                         @if (Auth::user()->role == 1)
                                         <router-link to="/sectionsindex">Device Menu</router-link>
+                                        <router-link to="/ipcamsindex">IP Cameras</router-link>
                                         {{-- <router-link to="/storageindex">Storage</router-link> --}}
                                         @endif
                                     </li>

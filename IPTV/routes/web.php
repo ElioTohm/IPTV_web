@@ -22,7 +22,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    
+    Route::resource('ipcams', 'IpCamController');
+
+
     Route::get('/changepassword', function () {
         return view("auth.passwords.reset");
     });
