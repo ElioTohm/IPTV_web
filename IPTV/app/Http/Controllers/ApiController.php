@@ -42,9 +42,6 @@ class ApiController extends Controller
             $result = substr($secret, 0, 4);
             
             if (strcmp($result, $sentsecret) == 0 ) {
-                // $user = User::find(1);
-                
-                // $token = $user->createToken($oauthclient->name);
                 $guzzle = new \GuzzleHttp\Client;
 
                 $user = new User();
@@ -99,7 +96,7 @@ class ApiController extends Controller
                 }
 
                 $url = explode('/',$channel->thumbnail);
-                $channel->thumbnail = Storage::disk('catchup_api')->url('channels/images/' . $url[sizeof($url) - 1]);
+                $channel->thumbnail = Storage::disk('public_api')->url('channels/images/' . $url[sizeof($url) - 1]);
                 return $channel;
             });
         return $channels;
@@ -222,6 +219,7 @@ class ApiController extends Controller
 
     public function getWeather ()
     {
+        $url = sprintf("api.openweathermap.org/data/2.5/forecast?lat=%s&lon=%s&appid=%s",env('WEATHER_LAT'),env('WEATHER_LOG'),env('WEATHER_APPID'));
         $response  = json_decode('{
             "query": {
                 "count": 0,
