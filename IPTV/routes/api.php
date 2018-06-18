@@ -19,19 +19,10 @@ Route::get('/registerDevice', 'ApiController@register');
 
 Route::group(['middleware' => 'auth:api'], function()
 {
-	/**
-	 * Section Protect Ott streams 
-	 * section is currently under testing 
-	 */
-	Route::get('/stream/channel/{channel_id}/play', function ($channe_id) {
-		return response()->download('/var/www/storage/app/public/streams/'.$channe_id.'/master.m3u8');
+	Route::get('/stream/keys/{stream_id}' , function ($stream_id) {
+		return response()->download(storage_path('app/private/keys/')."$stream_id.key");
 	});
 
-	Route::get('/stream/channel/{channe_id}/{file}', function ($channe_id, $file) {
-		return response()->download('/var/www/storage/app/public/streams/'. $channe_id .'/'. $file);
-	})->where('file', '\w*(.ts|.m3u8)\b');
-	// end section
-	
 	// check for update
 	Route::get('/launcherUpdate', 'ApiController@launcherUpdateCheck');
 
