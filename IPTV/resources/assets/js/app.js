@@ -25,7 +25,7 @@ Vue.use(VueRouter)
 
 // always load XmsPlayer
 import MonitorComponent from './components/monitor.vue'
-import Messaging from './components/messaging.vue'
+import Messaging from './components/chat/chat.vue'
 
 // Create and mount root instance.
 // Make sure to inject the router.
@@ -33,7 +33,7 @@ import Messaging from './components/messaging.vue'
 new Vue({
   components: {
     "monitor": MonitorComponent,
-    "messaging" : Messaging
+    "messaging" : Messaging,
   },
   router,
 }).$mount('#app')

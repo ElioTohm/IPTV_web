@@ -461,18 +461,18 @@ class testDatabaseSeeder extends Seeder
                 'active' => true,
                 'icon' => 'housekeeper.png'
             ],
-            [
-                'name' => 'Parental Control',
-                'tag' => 'parentalcontrol',
-                'active' => true,
-                'icon' => 'parentalcontrol.png'
-            ],
-            [
-                'name' => 'Instant Messaging',
-                'tag' => 'instantmessaging',
-                'active' => true,
-                'icon' => 'instantmessaging.png'
-            ],
+            // [
+            //     'name' => 'Parental Control',
+            //     'tag' => 'parentalcontrol',
+            //     'active' => true,
+            //     'icon' => 'parentalcontrol.png'
+            // ],
+            // [
+            //     'name' => 'Instant Messaging',
+            //     'tag' => 'instantmessaging',
+            //     'active' => true,
+            //     'icon' => 'instantmessaging.png'
+            // ],
             [
                 'name' => 'Survey',
                 'tag' => 'survey',

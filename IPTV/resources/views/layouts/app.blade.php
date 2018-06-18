@@ -122,10 +122,14 @@
                         <monitor></monitor>
                     @endif
                 </div>
-                <div class="col-xs-8">
+                <div id="main" class="col-xs-8">
                     @yield('content')
                 </div>
-                <div class="col-xs-2"></div>
+                <div class="col-xs-2">
+                    @if (!Auth::guest())
+                    <messaging></messaging>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

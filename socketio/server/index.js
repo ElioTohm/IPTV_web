@@ -14,22 +14,28 @@ io.adapter(redis({ host: 'redis', port: 6379 }));
 var users = [];
 
 server.listen(port, function () {
-  console.log('Server listening at port %d', port);
-  console.log('Hello, I\'m %s, how can I help?', serverName);
+  console.log('%s is on listening at port %d', serverName, port);
 });
 
 // Routing
 app.use(express.static(__dirname + '/public'));
 
 io.on('connection', function (socket) {
-
   var addedUser = false;
-  socket.on('restart', function (data) {
+  
+  // client sent message
+  socket.on('send_message', function (message) {
+    console.log(message);
+    io.emit('message_received', {message: message});
+  });
+  
+  socket.on('restart', function () {
     // we tell the client to execute 'BroadCastNotification'
     socket.broadcast.emit('restart', 'now');
   });
   // when the client emits 'BroadCastNotification', this listens and executes
   socket.on('Notification_', function (data) {
+    console.log(data)
     // we tell the client to execute 'BroadCastNotification'
     socket.broadcast.emit('Notification Room ' + data.room, {
       username: socket.username,
@@ -42,7 +48,8 @@ io.on('connection', function (socket) {
     console.log(data)
     socket.broadcast.emit('BroadCastNotification', {
       username: socket.username,
-      message: data
+      message: data,
+      image: data
     });
   });
 
